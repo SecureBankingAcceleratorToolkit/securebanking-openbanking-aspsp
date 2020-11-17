@@ -25,11 +25,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.forgerock.openbanking.aspsp</groupId>
-    <artifactId>forgerock-openbanking-mock-aspsp</artifactId>
+    <groupId>com.forgerock.sba.ob</groupId>
+    <artifactId>forgerock-sba-ob-mock-aspsp</artifactId>
     <packaging>jar</packaging>
-    <name>mock-aspsp</name>
-    <description>Mock ASPSP, where all bank related Open Banking data is stored</description>
+    <name>sba-mock-aspsp</name>
+    <description>A mock Open Banking ASPSP for the Secure Banking Accelerator Toolkit</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
