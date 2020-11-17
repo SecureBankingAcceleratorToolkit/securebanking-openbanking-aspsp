@@ -1,2 +1,2 @@
-# openbanking-mock-aspsp
-A mock bank for the Open Banking Accelerator Toolkit
+## Mock Open Banking ASPSP
+A mock Open Banking ASPSP for the Secure Banking Accelerator Toolkit

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2020 ForgeRock AS.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.forgerock.sba.ob</groupId>
+    <artifactId>forgerock-sba-ob-mock-aspsp</artifactId>
+    <packaging>jar</packaging>
+    <name>sba-mock-aspsp</name>
+    <description>A mock Open Banking ASPSP for the Secure Banking Accelerator Toolkit</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.4.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <organization>
+        <name>ForgeRock</name>
+        <url>http://www.forgerock.org</url>
+    </organization>
+    <url>http://www.forgerock.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>11</java.version>
+
+        <ob.uk.datamodel.version>3.1.2.24</ob.uk.datamodel.version>
+
+        <validation-api.version>2.0.1.Final</validation-api.version>
+        <lombok.version>1.18.16</lombok.version>
+        <bouncycastle.version>1.67</bouncycastle.version>
+        <model-mapper.version>2.3.8</model-mapper.version>
+
+        <assertj.core.version>3.18.1</assertj.core.version>
+        <mockito.core.version>3.5.15</mockito.core.version>
+        <flapdoodle-mongo.version>2.2.0</flapdoodle-mongo.version>
+
+        <dockerfile-maven-plugin.version>1.4.12</dockerfile-maven-plugin.version>
+        <license-maven-plugin.version>3.0</license-maven-plugin.version>
+    </properties>
+
+    <dependencies>
+        <!-- Internal dependencies -->
+        <dependency>
+            <groupId>com.forgerock.openbanking.uk</groupId>
+            <artifactId>openbanking-uk-datamodel</artifactId>
+            <version>${ob.uk.datamodel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.forgerock.openbanking.uk</groupId>
+            <artifactId>openbanking-uk-datamodel</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+            <version>${ob.uk.datamodel.version}</version>
+        </dependency>
+
+        <!-- External dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${validation-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>${bouncycastle.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${model-mapper.version}</version>
+        </dependency>
+
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <version>${flapdoodle-mongo.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+            <version>${assertj.core.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>${license-maven-plugin.version}</version>
+                <configuration>
+                    <header>file://${project.basedir}/legal/LICENSE.txt</header>
+                    <includes>
+                        <include>**/*.java</include>
+                        <include>pom.xml</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>format</goal>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <scm>
+        <connection>scm:git:git@github.com:SecureBankingAcceleratorToolkit/sba-ob-aspsp.git</connection>
+        <developerConnection>scm:git:git@github.com:SecureBankingAcceleratorToolkit/sba-ob-aspsp.git</developerConnection>
+        <url>https://github.com/SecureBankingAcceleratorToolkit/sba-ob-aspsp.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>maven.forgerock.org-community</id>
+            <name>maven.forgerock.org-releases</name>
+            <url>https://maven.forgerock.org:443/repo/community</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven.forgerock.org-community-snapshots</id>
+            <name>maven.forgerock.org-snapshots</name>
+            <url>https://maven.forgerock.org:443/repo/community</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>maven.forgerock.org-community</id>
+            <name>maven.forgerock.org-releases</name>
+            <url>https://maven.forgerock.org:443/repo/community</url>
+        </repository>
+        <repository>
+            <id>maven.forgerock.org-community-snapshots</id>
+            <name>maven.forgerock.org-snapshots</name>
+            <url>https://maven.forgerock.org:443/repo/community</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>https://repo1.maven.org/maven2</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>jcenter</id>
+            <url>https://jcenter.bintray.com/</url>
+        </repository>
+    </repositories>
+</project>
