@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.forgerock.openbanking.aspsp.utils;
+package com.forgerock.openbanking.aspsp.common.util;
 
 import com.forgerock.openbanking.aspsp.common.OBVersion;
 import lombok.extern.slf4j.Slf4j;

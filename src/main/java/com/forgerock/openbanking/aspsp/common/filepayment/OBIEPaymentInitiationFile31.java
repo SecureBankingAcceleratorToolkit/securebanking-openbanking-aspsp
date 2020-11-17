@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.forgerock.openbanking.aspsp.common.error.FileParseException;
 import com.forgerock.openbanking.aspsp.common.error.OBErrorException;
 import com.forgerock.openbanking.aspsp.common.error.OBRIErrorType;
-import com.forgerock.openbanking.aspsp.common.utils.JsonUtils;
+import com.forgerock.openbanking.aspsp.common.util.JsonUtils;
 import com.forgerock.openbanking.aspsp.persistence.document.payment.PaymentFileType;
 import com.forgerock.openbanking.aspsp.persistence.domain.common.FRAmount;
 import com.forgerock.openbanking.aspsp.persistence.domain.payment.FRFilePayment;

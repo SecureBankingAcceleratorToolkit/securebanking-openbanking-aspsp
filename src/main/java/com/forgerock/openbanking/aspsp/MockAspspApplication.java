@@ -18,15 +18,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.forgerock.openbanking.aspsp.common.utils;
+package com.forgerock.openbanking.aspsp;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+@SpringBootApplication
+@EnableMongoRepositories
+public class MockAspspApplication {
 
-public class JsonUtils {
-    public static Stream<JsonNode> streamArray(JsonNode node) {
-        return StreamSupport.stream(node.spliterator(), false);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(MockAspspApplication.class, args);
+	}
+
 }

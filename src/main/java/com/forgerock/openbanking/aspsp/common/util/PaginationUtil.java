@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.forgerock.openbanking.aspsp.utils;
+package com.forgerock.openbanking.aspsp.common.util;
 
 import org.joda.time.DateTime;
 import org.springframework.web.util.UriComponentsBuilder;
