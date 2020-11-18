@@ -169,9 +169,9 @@
     </build>
 
     <scm>
-        <connection>scm:git:git@github.com:SecureBankingAcceleratorToolkit/openbanking-mock-aspsp.git</connection>
-        <developerConnection>scm:git:git@github.com:SecureBankingAcceleratorToolkit/openbanking-mock-aspsp.git</developerConnection>
-        <url>https://github.com/SecureBankingAcceleratorToolkit/openbanking-mock-aspsp.git</url>
+        <connection>scm:git:git@github.com:SecureBankingAcceleratorToolkit/sba-ob-aspsp.git</connection>
+        <developerConnection>scm:git:git@github.com:SecureBankingAcceleratorToolkit/sba-ob-aspsp.git</developerConnection>
+        <url>https://github.com/SecureBankingAcceleratorToolkit/sba-ob-aspsp.git</url>
         <tag>HEAD</tag>
     </scm>
 
