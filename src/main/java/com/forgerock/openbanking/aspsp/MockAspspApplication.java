@@ -25,11 +25,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-@EnableMongoRepositories
+@EnableMongoRepositories(basePackages = "com.forgerock.openbanking.aspsp.persistence.repository")
 public class MockAspspApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MockAspspApplication.class, args);
 	}
-
 }
