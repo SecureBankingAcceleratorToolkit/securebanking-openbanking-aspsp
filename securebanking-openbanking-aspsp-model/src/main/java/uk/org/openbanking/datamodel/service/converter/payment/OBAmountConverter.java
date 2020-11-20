@@ -62,6 +62,10 @@ public class OBAmountConverter {
         return toAmount(new OBWriteDomestic2DataInitiationInstructedAmount(), amount);
     }
 
+    public static OBWriteDomestic2DataInitiationInstructedAmount toOBWriteDomestic2DataInitiationInstructedAmount(OBWriteDomestic2DataInitiationInstructedAmount amount) {
+        return toAmount(new OBWriteDomestic2DataInitiationInstructedAmount(), amount);
+    }
+
     public static OBWriteDomestic2DataInitiationInstructedAmount toOBWriteDomestic2DataInitiationInstructedAmount(OBDomestic2InstructedAmount amount) {
         return toAmount(new OBWriteDomestic2DataInitiationInstructedAmount(), amount);
     }
