@@ -67,6 +67,14 @@
             <artifactId>joda-time</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
@@ -77,6 +85,22 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <profiles>
         <profile>
@@ -104,8 +128,12 @@
                                     <!--<inputSpec>${project.basedir}/src/main/resources/specification/payment-initiation-swagger.yaml</inputSpec>-->
                                     <output>${project.build.directory}/generated-sources/swagger</output>
                                     <generatorName>spring</generatorName>
-                                    <modelPackage>uk.org.openbanking.datamodel</modelPackage>
+                                    <!-- Change the package here as per the chosen spec above -->
+                                    <modelPackage>uk.org.openbanking.datamodel.account</modelPackage>
                                     <generateApis>false</generateApis>
+                                    <configOptions>
+                                        <dateLibrary>joda</dateLibrary>
+                                    </configOptions>
                                     <addCompileSourceRoot>false</addCompileSourceRoot>
                                 </configuration>
                             </execution>

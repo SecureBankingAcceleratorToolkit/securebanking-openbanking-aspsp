@@ -35,7 +35,7 @@
 
     <modules>
         <module>securebanking-openbanking-aspsp-model</module>
-        <module>securebanking-openbanking-aspsp-mock</module>
+        <module>securebanking-openbanking-aspsp-simulator</module>
     </modules>
 
     <parent>
@@ -54,6 +54,8 @@
         <springfox.version>2.10.5</springfox.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <joda-time.version>2.10.8</joda-time.version>
+        <jackson-joda.version>2.9.7</jackson-joda.version>
+        <jackson.version>2.11.3</jackson.version>
         <guava.version>30.0-jre</guava.version>
         <lombok.version>1.18.16</lombok.version>
         <bouncycastle.version>1.67</bouncycastle.version>
@@ -78,7 +80,7 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>securebanking-openbanking-aspsp-mock</artifactId>
+                <artifactId>securebanking-openbanking-aspsp-simulator</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -102,6 +104,21 @@
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>${joda-time.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-joda</artifactId>
+                <version>${jackson-joda.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
@@ -131,6 +148,13 @@
             </dependency>
 
             <!-- Test dependencies -->
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>securebanking-openbanking-aspsp-model</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
             <dependency>
                 <groupId>de.flapdoodle.embed</groupId>
                 <artifactId>de.flapdoodle.embed.mongo</artifactId>
@@ -186,7 +210,8 @@
     </build>
 
     <scm>
-        <connection>scm:git:git@github.com:SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp.git</connection>
+        <connection>scm:git:git@github.com:SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp.git
+        </connection>
         <developerConnection>scm:git:git@github.com:SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp.git
         </developerConnection>
         <url>https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp.git</url>
