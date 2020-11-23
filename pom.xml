@@ -65,9 +65,9 @@
         <mockito.core.version>3.5.15</mockito.core.version>
         <flapdoodle-mongo.version>2.2.0</flapdoodle-mongo.version>
 
-        <dockerfile-maven-plugin.version>1.4.12</dockerfile-maven-plugin.version>
         <license-maven-plugin.version>3.0</license-maven-plugin.version>
         <openapi-generator.version>4.3.1</openapi-generator.version>
+        <git-changelog-maven-plugin.version>1.63</git-changelog-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -201,10 +201,48 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>se.bjurr.gitchangelog</groupId>
+                <artifactId>git-changelog-maven-plugin</artifactId>
+                <version>${git-changelog-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>changelog</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>git-changelog</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                        <configuration>
+                            <noIssueName>test</noIssueName>
+                            <templateContent>
+                                <![CDATA[
+# Git Changelog Maven plugin changelog
+Changelog of Git Changelog Maven plugin.
+{{#tags}}
+## {{name}}
+ {{#issues}}
+  {{#hasLink}}
+### {{name}} [{{issue}}]({{link}}) {{title}}
+  {{/hasLink}}
+  {{#commits}}
+[{{hash}}](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/{{hash}}) {{authorName}} *{{commitTime}}*
+{{{message}}}
+  {{/commits}}
+ {{/issues}}
+{{/tags}}
+]]>
+                            </templateContent>
+                            <file>CHANGELOG.md</file>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

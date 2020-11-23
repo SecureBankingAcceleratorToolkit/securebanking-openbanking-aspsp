@@ -34,6 +34,12 @@ mvn clean install -Pcode-gen
 This will generate classes from the swagger specification into `securebanking-openbanking-aspsp-mock/target/generated-sources/swagger`.
 From here, the generated classes can be copied to the source folder under `src/main/java`.
 
+> CAUTION: When copying the newly generated files, be careful not to overwrite existing classes.
+
+This is because most of them have been generated using `swagger-codegen-cli-2.4.5.jar`, which is older than the
+`openapi-generator` maven plugin we are using. Also, we use a shared generic version of `Links`, `Meta`, `OBError1` and
+`OBErrorResponse1`.
+
 Note that the OB Read/Write API consists of several yaml files, however the `openapi-generator-maven-plugin` currently
 only generates code from one swagger file. Because of this, each individual yaml file is listed within the plugin and should
 be commented/uncommented as necessary.
