@@ -20,6 +20,14 @@ Issue: https://github.com/SecureBankingAcceleratorToolkit/SecureBankingAccelerat
 - Rename module to securebanking-openbanking-aspsp-simulator
 
 Issue: https://github.com/SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit/issues/2
+### GitHub [#5](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/pull/5) 2: Add CHANGELOG.md generation to pom.xml
+[84d81622e49af84](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/84d81622e49af84) Matt Wills *2020-11-23 14:23:52*
+2: Add CHANGELOG.md generation to pom.xml (#5)
+
+- Include first CHANGELOG.md
+- Minor addition to README.md
+
+Issue: https://github.com/SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit/issues/2
 [b4d0e28645d0542](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/b4d0e28645d0542) Matt Wills *2020-11-19 13:05:05*
 2: Initial SpringBoot project
 
