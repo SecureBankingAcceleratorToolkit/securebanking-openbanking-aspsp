@@ -40,7 +40,6 @@ import org.joda.time.DateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import uk.org.openbanking.datamodel.account.Links;
 import uk.org.openbanking.datamodel.account.Meta;
 import uk.org.openbanking.datamodel.payment.OBWriteDomestic2;
 import uk.org.openbanking.datamodel.payment.OBWriteDomesticResponse5;
@@ -52,6 +51,7 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.Optional;
 
+import static com.forgerock.securebanking.openbanking.aspsp.api.common.LinksHelper.createDomesticPaymentLink;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.common.FRAccountIdentifierConverter.toOBDebtorIdentification1;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRWriteDomesticConsentConverter.toOBWriteDomestic2DataInitiation;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRWriteDomesticConverter.toFRWriteDomestic;
@@ -156,8 +156,7 @@ public class DomesticPaymentsApiController implements DomesticPaymentsApi {
                         .status(toOBWriteDomesticResponse5DataStatus(frDomesticConsent.getStatus()))
                         .consentId(frDomesticConsent.getId())
                         .debtor(toOBDebtorIdentification1(frDomesticConsent.getDomesticConsent().getData().getInitiation().getDebtorAccount())))
-                .links(new Links())
+                .links(createDomesticPaymentLink(this.getClass(), frPaymentSubmission.getId()))
                 .meta(new Meta());
     }
-
 }

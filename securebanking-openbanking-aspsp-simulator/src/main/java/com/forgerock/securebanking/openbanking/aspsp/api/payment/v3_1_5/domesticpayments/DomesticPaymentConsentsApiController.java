@@ -37,7 +37,6 @@ import org.joda.time.DateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import uk.org.openbanking.datamodel.account.Links;
 import uk.org.openbanking.datamodel.account.Meta;
 import uk.org.openbanking.datamodel.payment.*;
 
@@ -46,6 +45,7 @@ import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.forgerock.securebanking.openbanking.aspsp.api.common.LinksHelper.createDomesticPaymentConsentLink;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.common.FRAccountIdentifierConverter.toOBDebtorIdentification1;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRDataAuthorisationConverter.toOBWriteDomesticConsent4DataAuthorisation;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRDataSCASupportDataConverter.toOBWriteDomesticConsent4DataSCASupportData;
@@ -184,8 +184,7 @@ public class DomesticPaymentConsentsApiController implements DomesticPaymentCons
                         .scASupportData(toOBWriteDomesticConsent4DataSCASupportData(domesticConsent.getDomesticConsent().getData().getScASupportData()))
                         .debtor(toOBDebtorIdentification1(domesticConsent.getInitiation().getDebtorAccount()))
                 )
-                // TODO #6 - use discovery endpoints to determine links
-                .links(new Links())
+                .links(createDomesticPaymentConsentLink(this.getClass(), domesticConsent.getId()))
                 .risk(toOBRisk1(domesticConsent.getRisk()))
                 .meta(new Meta());
     }

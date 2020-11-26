@@ -68,7 +68,7 @@ public class DomesticPaymentConsentsApiControllerTest {
         assertThat(consentData.getConsentId()).isNotNull();
         // convert from new to old before comparing (due to missing fields on older versions)
         assertThat(consentData.getInitiation()).isEqualTo(toOBWriteDomestic2DataInitiation(paymentConsent.getData().getInitiation()));
-        //  TODO #6 - assert links are correct
+        assertThat(response.getBody().getLinks().getSelf().endsWith("/domestic-payment-consents/" + consentData.getConsentId())).isTrue();
     }
 
     @Test
@@ -87,7 +87,7 @@ public class DomesticPaymentConsentsApiControllerTest {
         OBWriteDomesticConsentResponse5Data consentData = response.getBody().getData();
         assertThat(consentData.getConsentId()).isNotNull();
         assertThat(consentData.getInitiation()).isEqualTo(toOBWriteDomestic2DataInitiation(paymentConsent.getData().getInitiation()));
-        //  TODO #6 - assert links are correct
+        assertThat(response.getBody().getLinks().getSelf().endsWith("/domestic-payment-consents/" + consentData.getConsentId())).isTrue();
     }
 
     private String paymentConsentsUrl() {
