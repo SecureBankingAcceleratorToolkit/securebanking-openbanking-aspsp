@@ -28,6 +28,13 @@ Issue: https://github.com/SecureBankingAcceleratorToolkit/SecureBankingAccelerat
 - Minor addition to README.md
 
 Issue: https://github.com/SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit/issues/2
+### GitHub [#6](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/pull/6) Added self link in responses
+[eb13c6640053956](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/eb13c6640053956) Matt Wills *2020-11-26 15:11:09*
+5: Add self link in responses (#6)
+
+- Use Spring HATEOAS to generate a self link for a resource
+
+Issue: https://github.com/SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit/issues/5
 [b4d0e28645d0542](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/b4d0e28645d0542) Matt Wills *2020-11-19 13:05:05*
 2: Initial SpringBoot project
 
