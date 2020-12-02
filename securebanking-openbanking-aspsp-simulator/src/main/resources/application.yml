@@ -1,0 +1,660 @@
+aspsp:
+  # TODO = what should this be? OB uses https://matls.rs.aspsp
+  baseUrl: http://localhost:8080
+  discovery:
+    financialId: 0015800001041REAAY
+  available-apis:
+    paymentInitiationAPI:
+      - version: v3.0
+        links:
+          CreateDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/domestic-payment-consents
+          GetDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/domestic-payment-consents/{ConsentId}
+          CreateDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.0/pisp/domestic-payments
+          GetDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.0/pisp/domestic-payments/{DomesticPaymentId}
+          CreateDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/domestic-scheduled-payment-consents
+          GetDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/domestic-scheduled-payment-consents/{ConsentId}
+          CreateDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.0/pisp/domestic-scheduled-payments
+          GetDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.0/pisp/domestic-scheduled-payments/{DomesticScheduledPaymentId}
+          CreateDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/domestic-standing-order-consents
+          GetDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/domestic-standing-order-consents/{ConsentId}
+          CreateDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.0/pisp/domestic-standing-orders
+          GetDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.0/pisp/domestic-standing-orders/{DomesticStandingOrderId}
+          CreateInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/international-payment-consents
+          GetInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/international-payment-consents/{ConsentId}
+          CreateInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.0/pisp/international-payments
+          GetInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.0/pisp/international-payments/{InternationalPaymentId}
+          CreateInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/international-scheduled-payment-consents
+          GetInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/international-scheduled-payment-consents/{ConsentId}
+          CreateInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.0/pisp/international-scheduled-payments
+          GetInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.0/pisp/international-scheduled-payments/{InternationalScheduledPaymentId}
+          CreateInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/international-standing-order-consents
+          GetInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/international-standing-order-consents/{ConsentId}
+          CreateInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.0/pisp/international-standing-orders
+          GetInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.0/pisp/international-standing-orders/{InternationalStandingOrderId}
+          CreateFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/file-payment-consents
+          GetFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.0/pisp/file-payment-consents/{ConsentId}
+          CreateFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.0/pisp/file-payment-consents/{ConsentId}/file
+          GetFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.0/pisp/file-payment-consents/{ConsentId}/file
+          CreateFilePayment: ${aspsp.baseUrl}/open-banking/v3.0/pisp/file-payments
+          GetFilePayment: ${aspsp.baseUrl}/open-banking/v3.0/pisp/file-payments/{FilePaymentId}
+          GetFilePaymentReport: ${aspsp.baseUrl}/open-banking/v3.0/pisp/file-payments/{ConsentId}/report-file
+      - version: v3.1
+        links:
+          CreateDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/domestic-payment-consents
+          GetDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/domestic-payment-consents/{ConsentId}
+          GetDomesticPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1/pisp/domestic-payment-consents/{ConsentId}/funds-confirmation
+          CreateDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1/pisp/domestic-payments
+          GetDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1/pisp/domestic-payments/{DomesticPaymentId}
+          CreateDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/domestic-scheduled-payment-consents
+          GetDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/domestic-scheduled-payment-consents/{ConsentId}
+          CreateDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1/pisp/domestic-scheduled-payments
+          GetDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1/pisp/domestic-scheduled-payments/{DomesticScheduledPaymentId}
+          CreateDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/domestic-standing-order-consents
+          GetDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/domestic-standing-order-consents/{ConsentId}
+          CreateDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1/pisp/domestic-standing-orders
+          GetDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1/pisp/domestic-standing-orders/{DomesticStandingOrderId}
+          CreateInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-payment-consents
+          GetInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-payment-consents/{ConsentId}
+          GetInternationalPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-payments
+          GetInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-payments/{InternationalPaymentId}
+          CreateInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-scheduled-payment-consents
+          GetInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-scheduled-payment-consents/{ConsentId}
+          GetInternationalScheduledPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-scheduled-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-scheduled-payments
+          GetInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-scheduled-payments/{InternationalScheduledPaymentId}
+          CreateInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-standing-order-consents
+          GetInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-standing-order-consents/{ConsentId}
+          CreateInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-standing-orders
+          GetInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1/pisp/international-standing-orders/{InternationalStandingOrderId}
+          CreateFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/file-payment-consents
+          GetFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1/pisp/file-payment-consents/{ConsentId}
+          CreateFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1/pisp/file-payment-consents/{ConsentId}/file
+          GetFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1/pisp/file-payment-consents/{ConsentId}/file
+          CreateFilePayment: ${aspsp.baseUrl}/open-banking/v3.1/pisp/file-payments
+          GetFilePayment: ${aspsp.baseUrl}/open-banking/v3.1/pisp/file-payments/{FilePaymentId}
+          GetFilePaymentReport: ${aspsp.baseUrl}/open-banking/v3.1/pisp/file-payments/{ConsentId}/report-file
+      - version: v3.1.1
+        links:
+          CreateDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/domestic-payment-consents
+          GetDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/domestic-payment-consents/{ConsentId}
+          GetDomesticPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/domestic-payment-consents/{ConsentId}/funds-confirmation
+          CreateDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/domestic-payments
+          GetDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/domestic-payments/{DomesticPaymentId}
+          CreateDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/domestic-scheduled-payment-consents
+          GetDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/domestic-scheduled-payment-consents/{ConsentId}
+          CreateDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/domestic-scheduled-payments
+          GetDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/domestic-scheduled-payments/{DomesticScheduledPaymentId}
+          CreateDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/domestic-standing-order-consents
+          GetDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/domestic-standing-order-consents/{ConsentId}
+          CreateDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/domestic-standing-orders
+          GetDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/domestic-standing-orders/{DomesticStandingOrderId}
+          CreateInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-payment-consents
+          GetInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-payment-consents/{ConsentId}
+          GetInternationalPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-payments
+          GetInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-payments/{InternationalPaymentId}
+          CreateInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-scheduled-payment-consents
+          GetInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-scheduled-payment-consents/{ConsentId}
+          GetInternationalScheduledPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-scheduled-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-scheduled-payments
+          GetInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-scheduled-payments/{InternationalScheduledPaymentId}
+          CreateInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-standing-order-consents
+          GetInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-standing-order-consents/{ConsentId}
+          CreateInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-standing-orders
+          GetInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/international-standing-orders/{InternationalStandingOrderId}
+          CreateFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/file-payment-consents
+          GetFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/file-payment-consents/{ConsentId}
+          CreateFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/file-payment-consents/{ConsentId}/file
+          GetFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/file-payment-consents/{ConsentId}/file
+          CreateFilePayment: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/file-payments
+          GetFilePayment: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/file-payments/{FilePaymentId}
+          GetFilePaymentReport: ${aspsp.baseUrl}/open-banking/v3.1.1/pisp/file-payments/{ConsentId}/report-file
+      - version: v3.1.2
+        links:
+          CreateDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/domestic-payment-consents
+          GetDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/domestic-payment-consents/{ConsentId}
+          GetDomesticPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/domestic-payment-consents/{ConsentId}/funds-confirmation
+          CreateDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/domestic-payments
+          GetDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/domestic-payments/{DomesticPaymentId}
+          CreateDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/domestic-scheduled-payment-consents
+          GetDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/domestic-scheduled-payment-consents/{ConsentId}
+          CreateDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/domestic-scheduled-payments
+          GetDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/domestic-scheduled-payments/{DomesticScheduledPaymentId}
+          CreateDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/domestic-standing-order-consents
+          GetDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/domestic-standing-order-consents/{ConsentId}
+          CreateDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/domestic-standing-orders
+          GetDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/domestic-standing-orders/{DomesticStandingOrderId}
+          CreateInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-payment-consents
+          GetInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-payment-consents/{ConsentId}
+          GetInternationalPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-payments
+          GetInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-payments/{InternationalPaymentId}
+          CreateInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-scheduled-payment-consents
+          GetInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-scheduled-payment-consents/{ConsentId}
+          GetInternationalScheduledPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-scheduled-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-scheduled-payments
+          GetInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-scheduled-payments/{InternationalScheduledPaymentId}
+          CreateInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-standing-order-consents
+          GetInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-standing-order-consents/{ConsentId}
+          CreateInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-standing-orders
+          GetInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/international-standing-orders/{InternationalStandingOrderId}
+          CreateFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/file-payment-consents
+          GetFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/file-payment-consents/{ConsentId}
+          CreateFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/file-payment-consents/{ConsentId}/file
+          GetFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/file-payment-consents/{ConsentId}/file
+          CreateFilePayment: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/file-payments
+          GetFilePayment: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/file-payments/{FilePaymentId}
+          GetFilePaymentReport: ${aspsp.baseUrl}/open-banking/v3.1.2/pisp/file-payments/{ConsentId}/report-file
+      - version: v3.1.3
+        links:
+          CreateDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/domestic-payment-consents
+          GetDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/domestic-payment-consents/{ConsentId}
+          GetDomesticPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/domestic-payment-consents/{ConsentId}/funds-confirmation
+          CreateDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/domestic-payments
+          GetDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/domestic-payments/{DomesticPaymentId}
+          CreateDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/domestic-scheduled-payment-consents
+          GetDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/domestic-scheduled-payment-consents/{ConsentId}
+          CreateDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/domestic-scheduled-payments
+          GetDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/domestic-scheduled-payments/{DomesticScheduledPaymentId}
+          CreateDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/domestic-standing-order-consents
+          GetDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/domestic-standing-order-consents/{ConsentId}
+          CreateDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/domestic-standing-orders
+          GetDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/domestic-standing-orders/{DomesticStandingOrderId}
+          CreateInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-payment-consents
+          GetInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-payment-consents/{ConsentId}
+          GetInternationalPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-payments
+          GetInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-payments/{InternationalPaymentId}
+          CreateInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-scheduled-payment-consents
+          GetInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-scheduled-payment-consents/{ConsentId}
+          GetInternationalScheduledPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-scheduled-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-scheduled-payments
+          GetInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-scheduled-payments/{InternationalScheduledPaymentId}
+          CreateInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-standing-order-consents
+          GetInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-standing-order-consents/{ConsentId}
+          CreateInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-standing-orders
+          GetInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/international-standing-orders/{InternationalStandingOrderId}
+          CreateFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/file-payment-consents
+          GetFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/file-payment-consents/{ConsentId}
+          CreateFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/file-payment-consents/{ConsentId}/file
+          GetFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/file-payment-consents/{ConsentId}/file
+          CreateFilePayment: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/file-payments
+          GetFilePayment: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/file-payments/{FilePaymentId}
+          GetFilePaymentReport: ${aspsp.baseUrl}/open-banking/v3.1.3/pisp/file-payments/{ConsentId}/report-file
+      - version: v3.1.4
+        links:
+          CreateDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/domestic-payment-consents
+          GetDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/domestic-payment-consents/{ConsentId}
+          GetDomesticPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/domestic-payment-consents/{ConsentId}/funds-confirmation
+          CreateDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/domestic-payments
+          GetDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/domestic-payments/{DomesticPaymentId}
+          CreateDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/domestic-scheduled-payment-consents
+          GetDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/domestic-scheduled-payment-consents/{ConsentId}
+          CreateDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/domestic-scheduled-payments
+          GetDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/domestic-scheduled-payments/{DomesticScheduledPaymentId}
+          CreateDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/domestic-standing-order-consents
+          GetDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/domestic-standing-order-consents/{ConsentId}
+          CreateDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/domestic-standing-orders
+          GetDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/domestic-standing-orders/{DomesticStandingOrderId}
+          CreateInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-payment-consents
+          GetInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-payment-consents/{ConsentId}
+          GetInternationalPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-payments
+          GetInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-payments/{InternationalPaymentId}
+          CreateInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-scheduled-payment-consents
+          GetInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-scheduled-payment-consents/{ConsentId}
+          GetInternationalScheduledPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-scheduled-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-scheduled-payments
+          GetInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-scheduled-payments/{InternationalScheduledPaymentId}
+          CreateInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-standing-order-consents
+          GetInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-standing-order-consents/{ConsentId}
+          CreateInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-standing-orders
+          GetInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/international-standing-orders/{InternationalStandingOrderId}
+          CreateFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/file-payment-consents
+          GetFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/file-payment-consents/{ConsentId}
+          CreateFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/file-payment-consents/{ConsentId}/file
+          GetFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/file-payment-consents/{ConsentId}/file
+          CreateFilePayment: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/file-payments
+          GetFilePayment: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/file-payments/{FilePaymentId}
+          GetFilePaymentReport: ${aspsp.baseUrl}/open-banking/v3.1.4/pisp/file-payments/{ConsentId}/report-file
+      - version: v3.1.5
+        links:
+          CreateDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/domestic-payment-consents
+          GetDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/domestic-payment-consents/{ConsentId}
+          GetDomesticPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/domestic-payment-consents/{ConsentId}/funds-confirmation
+          CreateDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/domestic-payments
+          GetDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/domestic-payments/{DomesticPaymentId}
+          CreateDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/domestic-scheduled-payment-consents
+          GetDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/domestic-scheduled-payment-consents/{ConsentId}
+          CreateDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/domestic-scheduled-payments
+          GetDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/domestic-scheduled-payments/{DomesticScheduledPaymentId}
+          CreateDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/domestic-standing-order-consents
+          GetDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/domestic-standing-order-consents/{ConsentId}
+          CreateDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/domestic-standing-orders
+          GetDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/domestic-standing-orders/{DomesticStandingOrderId}
+          CreateInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-payment-consents
+          GetInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-payment-consents/{ConsentId}
+          GetInternationalPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-payments
+          GetInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-payments/{InternationalPaymentId}
+          CreateInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-scheduled-payment-consents
+          GetInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-scheduled-payment-consents/{ConsentId}
+          GetInternationalScheduledPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-scheduled-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-scheduled-payments
+          GetInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-scheduled-payments/{InternationalScheduledPaymentId}
+          CreateInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-standing-order-consents
+          GetInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-standing-order-consents/{ConsentId}
+          CreateInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-standing-orders
+          GetInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/international-standing-orders/{InternationalStandingOrderId}
+          CreateFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/file-payment-consents
+          GetFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/file-payment-consents/{ConsentId}
+          CreateFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/file-payment-consents/{ConsentId}/file
+          GetFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/file-payment-consents/{ConsentId}/file
+          CreateFilePayment: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/file-payments
+          GetFilePayment: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/file-payments/{FilePaymentId}
+          GetFilePaymentReport: ${aspsp.baseUrl}/open-banking/v3.1.5/pisp/file-payments/{ConsentId}/report-file
+      - version: v3.1.6
+        links:
+          CreateDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/domestic-payment-consents
+          GetDomesticPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/domestic-payment-consents/{ConsentId}
+          GetDomesticPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/domestic-payment-consents/{ConsentId}/funds-confirmation
+          CreateDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/domestic-payments
+          GetDomesticPayment: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/domestic-payments/{DomesticPaymentId}
+          CreateDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/domestic-scheduled-payment-consents
+          GetDomesticScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/domestic-scheduled-payment-consents/{ConsentId}
+          CreateDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/domestic-scheduled-payments
+          GetDomesticScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/domestic-scheduled-payments/{DomesticScheduledPaymentId}
+          CreateDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/domestic-standing-order-consents
+          GetDomesticStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/domestic-standing-order-consents/{ConsentId}
+          CreateDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/domestic-standing-orders
+          GetDomesticStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/domestic-standing-orders/{DomesticStandingOrderId}
+          CreateInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-payment-consents
+          GetInternationalPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-payment-consents/{ConsentId}
+          GetInternationalPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-payments
+          GetInternationalPayment: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-payments/{InternationalPaymentId}
+          CreateInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-scheduled-payment-consents
+          GetInternationalScheduledPaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-scheduled-payment-consents/{ConsentId}
+          GetInternationalScheduledPaymentConsentsConsentIdFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-scheduled-payment-consents/{ConsentId}/funds-confirmation
+          CreateInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-scheduled-payments
+          GetInternationalScheduledPayment: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-scheduled-payments/{InternationalScheduledPaymentId}
+          CreateInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-standing-order-consents
+          GetInternationalStandingOrderConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-standing-order-consents/{ConsentId}
+          CreateInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-standing-orders
+          GetInternationalStandingOrder: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/international-standing-orders/{InternationalStandingOrderId}
+          CreateFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/file-payment-consents
+          GetFilePaymentConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/file-payment-consents/{ConsentId}
+          CreateFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/file-payment-consents/{ConsentId}/file
+          GetFilePaymentFile: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/file-payment-consents/{ConsentId}/file
+          CreateFilePayment: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/file-payments
+          GetFilePayment: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/file-payments/{FilePaymentId}
+          GetFilePaymentReport: ${aspsp.baseUrl}/open-banking/v3.1.6/pisp/file-payments/{ConsentId}/report-file
+
+    accountAndTransactionAPI:
+      - version: v3.0
+        links:
+          CreateAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.0/aisp/account-access-consents
+          GetAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.0/aisp/account-access-consents/{ConsentId}
+          DeleteAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.0/aisp/account-access-consents/{ConsentId}
+          GetAccount: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}
+          GetAccountTransactions: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}/transactions
+          GetAccountBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}/beneficiaries
+          GetAccountBalances: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}/balances
+          GetAccountDirectDebits: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}/direct-debits
+          GetAccountStandingOrders: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}/standing-orders
+          GetAccountProduct: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}/product
+          GetAccounts: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts
+          GetStandingOrders: ${aspsp.baseUrl}/open-banking/v3.0/aisp/standing-orders
+          GetDirectDebits: ${aspsp.baseUrl}/open-banking/v3.0/aisp/direct-debits
+          GetBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.0/aisp/beneficiaries
+          GetTransactions: ${aspsp.baseUrl}/open-banking/v3.0/aisp/transactions
+          GetBalances: ${aspsp.baseUrl}/open-banking/v3.0/aisp/balances
+          GetProducts: ${aspsp.baseUrl}/open-banking/v3.0/aisp/products
+          GetAccountOffers: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}/offers
+          GetAccountParty: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}/party
+          GetAccountScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}/scheduled-payments
+          GetAccountStatements: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}/statements
+          GetAccountStatement: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}/statements/{StatementId}
+          GetAccountStatementFile: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}/statements/{StatementId}/file
+          GetAccountStatementTransactions: ${aspsp.baseUrl}/open-banking/v3.0/aisp/accounts/{AccountId}/statements/{StatementId}/transactions
+          GetOffers: ${aspsp.baseUrl}/open-banking/v3.0/aisp/offers
+          GetParty: ${aspsp.baseUrl}/open-banking/v3.0/aisp/party
+          GetScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.0/aisp/scheduled-payments
+          GetStatements: ${aspsp.baseUrl}/open-banking/v3.0/aisp/statements
+      - version: v3.1
+        links:
+          CreateAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1/aisp/account-access-consents
+          GetAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1/aisp/account-access-consents/{ConsentId}
+          DeleteAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1/aisp/account-access-consents/{ConsentId}
+          GetAccount: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}
+          GetAccountTransactions: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}/transactions
+          GetAccountBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}/beneficiaries
+          GetAccountBalances: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}/balances
+          GetAccountDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}/direct-debits
+          GetAccountStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}/standing-orders
+          GetAccountProduct: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}/product
+          GetAccounts: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts
+          GetStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1/aisp/standing-orders
+          GetDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1/aisp/direct-debits
+          GetBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1/aisp/beneficiaries
+          GetTransactions: ${aspsp.baseUrl}/open-banking/v3.1/aisp/transactions
+          GetBalances: ${aspsp.baseUrl}/open-banking/v3.1/aisp/balances
+          GetProducts: ${aspsp.baseUrl}/open-banking/v3.1/aisp/products
+          GetAccountOffers: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}/offers
+          GetAccountParty: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}/party
+          GetAccountScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}/scheduled-payments
+          GetAccountStatements: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}/statements
+          GetAccountStatement: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}/statements/{StatementId}
+          GetAccountStatementFile: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}/statements/{StatementId}/file
+          GetAccountStatementTransactions: ${aspsp.baseUrl}/open-banking/v3.1/aisp/accounts/{AccountId}/statements/{StatementId}/transactions
+          GetOffers: ${aspsp.baseUrl}/open-banking/v3.1/aisp/offers
+          GetParty: ${aspsp.baseUrl}/open-banking/v3.1/aisp/party
+          GetScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1/aisp/scheduled-payments
+          GetStatements: ${aspsp.baseUrl}/open-banking/v3.1/aisp/statements
+      - version: v3.1.1
+        links:
+          CreateAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/account-access-consents
+          GetAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/account-access-consents/{ConsentId}
+          DeleteAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/account-access-consents/{ConsentId}
+          GetAccount: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}
+          GetAccountTransactions: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}/transactions
+          GetAccountBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}/beneficiaries
+          GetAccountBalances: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}/balances
+          GetAccountDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}/direct-debits
+          GetAccountStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}/standing-orders
+          GetAccountProduct: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}/product
+          GetAccounts: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts
+          GetStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/standing-orders
+          GetDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/direct-debits
+          GetBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/beneficiaries
+          GetTransactions: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/transactions
+          GetBalances: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/balances
+          GetProducts: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/products
+          GetAccountOffers: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}/offers
+          GetAccountParty: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}/party
+          GetAccountParties: ${aspsp.baseUrl}/open-banking/v3.1.1/accounts/{AccountId}/parties
+          GetAccountScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}/scheduled-payments
+          GetAccountStatements: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}/statements
+          GetAccountStatement: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}/statements/{StatementId}
+          GetAccountStatementFile: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}/statements/{StatementId}/file
+          GetAccountStatementTransactions: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/accounts/{AccountId}/statements/{StatementId}/transactions
+          GetOffers: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/offers
+          GetParty: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/party
+          GetScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/scheduled-payments
+          GetStatements: ${aspsp.baseUrl}/open-banking/v3.1.1/aisp/statements
+      - version: v3.1.2
+        links:
+          CreateAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/account-access-consents
+          GetAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/account-access-consents/{ConsentId}
+          DeleteAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/account-access-consents/{ConsentId}
+          GetAccount: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}
+          GetAccountTransactions: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}/transactions
+          GetAccountBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}/beneficiaries
+          GetAccountBalances: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}/balances
+          GetAccountDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}/direct-debits
+          GetAccountStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}/standing-orders
+          GetAccountProduct: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}/product
+          GetAccounts: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts
+          GetStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/standing-orders
+          GetDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/direct-debits
+          GetBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/beneficiaries
+          GetTransactions: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/transactions
+          GetBalances: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/balances
+          GetProducts: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/products
+          GetAccountOffers: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}/offers
+          GetAccountParty: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}/party
+          GetAccountParties: ${aspsp.baseUrl}/open-banking/v3.1.2/accounts/{AccountId}/parties
+          GetAccountScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}/scheduled-payments
+          GetAccountStatements: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}/statements
+          GetAccountStatement: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}/statements/{StatementId}
+          GetAccountStatementFile: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}/statements/{StatementId}/file
+          GetAccountStatementTransactions: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/accounts/{AccountId}/statements/{StatementId}/transactions
+          GetOffers: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/offers
+          GetParty: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/party
+          GetScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/scheduled-payments
+          GetStatements: ${aspsp.baseUrl}/open-banking/v3.1.2/aisp/statements
+      - version: v3.1.3
+        links:
+          CreateAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/account-access-consents
+          GetAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/account-access-consents/{ConsentId}
+          DeleteAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/account-access-consents/{ConsentId}
+          GetAccount: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}
+          GetAccountTransactions: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}/transactions
+          GetAccountBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}/beneficiaries
+          GetAccountBalances: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}/balances
+          GetAccountDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}/direct-debits
+          GetAccountStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}/standing-orders
+          GetAccountProduct: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}/product
+          GetAccounts: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts
+          GetStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/standing-orders
+          GetDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/direct-debits
+          GetBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/beneficiaries
+          GetTransactions: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/transactions
+          GetBalances: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/balances
+          GetProducts: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/products
+          GetAccountOffers: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}/offers
+          GetAccountParty: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}/party
+          GetAccountParties: ${aspsp.baseUrl}/open-banking/v3.1.3/accounts/{AccountId}/parties
+          GetAccountScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}/scheduled-payments
+          GetAccountStatements: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}/statements
+          GetAccountStatement: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}/statements/{StatementId}
+          GetAccountStatementFile: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}/statements/{StatementId}/file
+          GetAccountStatementTransactions: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/accounts/{AccountId}/statements/{StatementId}/transactions
+          GetOffers: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/offers
+          GetParty: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/party
+          GetScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/scheduled-payments
+          GetStatements: ${aspsp.baseUrl}/open-banking/v3.1.3/aisp/statements
+      - version: v3.1.4
+        links:
+          CreateAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/account-access-consents
+          GetAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/account-access-consents/{ConsentId}
+          DeleteAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/account-access-consents/{ConsentId}
+          GetAccount: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}
+          GetAccountTransactions: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}/transactions
+          GetAccountBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}/beneficiaries
+          GetAccountBalances: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}/balances
+          GetAccountDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}/direct-debits
+          GetAccountStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}/standing-orders
+          GetAccountProduct: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}/product
+          GetAccounts: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts
+          GetStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/standing-orders
+          GetDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/direct-debits
+          GetBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/beneficiaries
+          GetTransactions: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/transactions
+          GetBalances: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/balances
+          GetProducts: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/products
+          GetAccountOffers: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}/offers
+          GetAccountParty: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}/party
+          GetAccountParties: ${aspsp.baseUrl}/open-banking/v3.1.4/accounts/{AccountId}/parties
+          GetAccountScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}/scheduled-payments
+          GetAccountStatements: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}/statements
+          GetAccountStatement: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}/statements/{StatementId}
+          GetAccountStatementFile: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}/statements/{StatementId}/file
+          GetAccountStatementTransactions: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/accounts/{AccountId}/statements/{StatementId}/transactions
+          GetOffers: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/offers
+          GetParty: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/party
+          GetScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/scheduled-payments
+          GetStatements: ${aspsp.baseUrl}/open-banking/v3.1.4/aisp/statements
+      - version: v3.1.5
+        links:
+          CreateAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/account-access-consents
+          GetAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/account-access-consents/{ConsentId}
+          DeleteAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/account-access-consents/{ConsentId}
+          GetAccount: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}
+          GetAccountTransactions: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}/transactions
+          GetAccountBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}/beneficiaries
+          GetAccountBalances: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}/balances
+          GetAccountDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}/direct-debits
+          GetAccountStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}/standing-orders
+          GetAccountProduct: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}/product
+          GetAccounts: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts
+          GetStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/standing-orders
+          GetDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/direct-debits
+          GetBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/beneficiaries
+          GetTransactions: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/transactions
+          GetBalances: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/balances
+          GetProducts: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/products
+          GetAccountOffers: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}/offers
+          GetAccountParty: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}/party
+          GetAccountParties: ${aspsp.baseUrl}/open-banking/v3.1.5/accounts/{AccountId}/parties
+          GetAccountScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}/scheduled-payments
+          GetAccountStatements: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}/statements
+          GetAccountStatement: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}/statements/{StatementId}
+          GetAccountStatementFile: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}/statements/{StatementId}/file
+          GetAccountStatementTransactions: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/accounts/{AccountId}/statements/{StatementId}/transactions
+          GetOffers: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/offers
+          GetParty: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/party
+          GetScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/scheduled-payments
+          GetStatements: ${aspsp.baseUrl}/open-banking/v3.1.5/aisp/statements
+      - version: v3.1.6
+        links:
+          CreateAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/account-access-consents
+          GetAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/account-access-consents/{ConsentId}
+          DeleteAccountAccessConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/account-access-consents/{ConsentId}
+          GetAccount: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}
+          GetAccountTransactions: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}/transactions
+          GetAccountBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}/beneficiaries
+          GetAccountBalances: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}/balances
+          GetAccountDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}/direct-debits
+          GetAccountStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}/standing-orders
+          GetAccountProduct: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}/product
+          GetAccounts: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts
+          GetStandingOrders: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/standing-orders
+          GetDirectDebits: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/direct-debits
+          GetBeneficiaries: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/beneficiaries
+          GetTransactions: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/transactions
+          GetBalances: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/balances
+          GetProducts: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/products
+          GetAccountOffers: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}/offers
+          GetAccountParty: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}/party
+          GetAccountParties: ${aspsp.baseUrl}/open-banking/v3.1.6/accounts/{AccountId}/parties
+          GetAccountScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}/scheduled-payments
+          GetAccountStatements: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}/statements
+          GetAccountStatement: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}/statements/{StatementId}
+          GetAccountStatementFile: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}/statements/{StatementId}/file
+          GetAccountStatementTransactions: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/accounts/{AccountId}/statements/{StatementId}/transactions
+          GetOffers: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/offers
+          GetParty: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/party
+          GetScheduledPayments: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/scheduled-payments
+          GetStatements: ${aspsp.baseUrl}/open-banking/v3.1.6/aisp/statements
+
+    fundsConfirmationAPI:
+      - version: v3.0
+        links:
+          CreateFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.0/cbpii/funds-confirmation-consents
+          GetFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.0/cbpii/funds-confirmation-consents/{ConsentId}
+          CreateFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.0/cbpii/funds-confirmations
+          DeleteFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.0/cbpii/funds-confirmations-consent
+      - version: v3.1
+        links:
+          CreateFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1/cbpii/funds-confirmation-consents
+          GetFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1/cbpii/funds-confirmation-consents/{ConsentId}
+          CreateFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1/cbpii/funds-confirmations
+          DeleteFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1/cbpii/funds-confirmations-consent
+      - version: v3.1.1
+        links:
+          CreateFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/cbpii/funds-confirmation-consents
+          GetFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/cbpii/funds-confirmation-consents/{ConsentId}
+          CreateFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.1/cbpii/funds-confirmations
+          DeleteFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.1/cbpii/funds-confirmations-consent
+      - version: v3.1.2
+        links:
+          CreateFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/cbpii/funds-confirmation-consents
+          GetFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/cbpii/funds-confirmation-consents/{ConsentId}
+          CreateFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.2/cbpii/funds-confirmations
+          DeleteFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.2/cbpii/funds-confirmations-consent
+      - version: v3.1.3
+        links:
+          CreateFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/cbpii/funds-confirmation-consents
+          GetFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/cbpii/funds-confirmation-consents/{ConsentId}
+          CreateFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.3/cbpii/funds-confirmations
+          DeleteFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.3/cbpii/funds-confirmations-consent
+      - version: v3.1.4
+        links:
+          CreateFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/cbpii/funds-confirmation-consents
+          GetFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/cbpii/funds-confirmation-consents/{ConsentId}
+          CreateFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.4/cbpii/funds-confirmations
+          DeleteFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.4/cbpii/funds-confirmations-consent
+      - version: v3.1.5
+        links:
+          CreateFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/cbpii/funds-confirmation-consents
+          GetFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/cbpii/funds-confirmation-consents/{ConsentId}
+          CreateFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.5/cbpii/funds-confirmations
+          DeleteFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.5/cbpii/funds-confirmations-consent
+      - version: v3.1.6
+        links:
+          CreateFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/cbpii/funds-confirmation-consents
+          GetFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/cbpii/funds-confirmation-consents/{ConsentId}
+          CreateFundsConfirmation: ${aspsp.baseUrl}/open-banking/v3.1.6/cbpii/funds-confirmations
+          DeleteFundsConfirmationConsent: ${aspsp.baseUrl}/open-banking/v3.1.6/cbpii/funds-confirmations-consent
+
+    eventNotificationAPI:
+      - version: v3.0
+        links:
+          CreateCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.0/callback-urls
+          GetCallbackUrls: ${aspsp.baseUrl}/open-banking/v3.0/callback-urls
+          AmendCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.0/callback-urls/{CallbackUrlId}
+          DeleteCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.0/callback-urls/{CallbackUrlId}
+      - version: v3.1
+        links:
+          CreateCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1/callback-urls
+          GetCallbackUrls: ${aspsp.baseUrl}/open-banking/v3.1/callback-urls
+          AmendCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1/callback-urls/{CallbackUrlId}
+          DeleteCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1/callback-urls/{CallbackUrlId}
+      - version: v3.1.1
+        links:
+          CreateCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.1/callback-urls
+          GetCallbackUrls: ${aspsp.baseUrl}/open-banking/v3.1.1/callback-urls
+          AmendCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.1/callback-urls/{CallbackUrlId}
+          DeleteCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.1/callback-urls/{CallbackUrlId}
+      - version: v3.1.2
+        links:
+          CreateCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.2/callback-urls
+          GetCallbackUrls: ${aspsp.baseUrl}/open-banking/v3.1.2/callback-urls
+          AmendCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.2/callback-urls/{CallbackUrlId}
+          DeleteCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.2/callback-urls/{CallbackUrlId}
+          CreateEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.2/event-subscriptions
+          GetEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.2/event-subscriptions
+          AmendEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.2/event-subscriptions/{EventSubscriptionId}
+          DeleteEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.2/event-subscriptions/{EventSubscriptionId}
+      - version: v3.1.3
+        links:
+          CreateCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.3/callback-urls
+          GetCallbackUrls: ${aspsp.baseUrl}/open-banking/v3.1.3/callback-urls
+          AmendCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.3/callback-urls/{CallbackUrlId}
+          DeleteCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.3/callback-urls/{CallbackUrlId}
+          CreateEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.3/event-subscriptions
+          GetEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.3/event-subscriptions
+          AmendEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.3/event-subscriptions/{EventSubscriptionId}
+          DeleteEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.3/event-subscriptions/{EventSubscriptionId}
+      - version: v3.1.4
+        links:
+          CreateCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.4/callback-urls
+          GetCallbackUrls: ${aspsp.baseUrl}/open-banking/v3.1.4/callback-urls
+          AmendCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.4/callback-urls/{CallbackUrlId}
+          DeleteCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.4/callback-urls/{CallbackUrlId}
+          CreateEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.4/event-subscriptions
+          GetEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.4/event-subscriptions
+          AmendEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.4/event-subscriptions/{EventSubscriptionId}
+          DeleteEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.4/event-subscriptions/{EventSubscriptionId}
+      - version: v3.1.5
+        links:
+          CreateCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.5/callback-urls
+          GetCallbackUrls: ${aspsp.baseUrl}/open-banking/v3.1.5/callback-urls
+          AmendCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.5/callback-urls/{CallbackUrlId}
+          DeleteCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.5/callback-urls/{CallbackUrlId}
+          CreateEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.5/event-subscriptions
+          GetEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.5/event-subscriptions
+          AmendEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.5/event-subscriptions/{EventSubscriptionId}
+          DeleteEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.5/event-subscriptions/{EventSubscriptionId}
+      - version: v3.1.6
+        links:
+          CreateCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.6/callback-urls
+          GetCallbackUrls: ${aspsp.baseUrl}/open-banking/v3.1.6/callback-urls
+          AmendCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.6/callback-urls/{CallbackUrlId}
+          DeleteCallbackUrl: ${aspsp.baseUrl}/open-banking/v3.1.6/callback-urls/{CallbackUrlId}
+          CreateEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.6/event-subscriptions
+          GetEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.6/event-subscriptions
+          AmendEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.6/event-subscriptions/{EventSubscriptionId}
+          DeleteEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.6/event-subscriptions/{EventSubscriptionId}

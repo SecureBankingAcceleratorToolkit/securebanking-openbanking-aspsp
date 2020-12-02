@@ -39,7 +39,7 @@ import static uk.org.openbanking.datamodel.service.converter.payment.OBDomesticC
 import static uk.org.openbanking.testsupport.payment.OBWriteDomesticConsentTestDataFactory.aValidOBWriteDomesticConsent4;
 
 /**
- * An SpringBoot test for the {@link DomesticPaymentConsentsApiController}.
+ * A SpringBoot test for the {@link DomesticPaymentConsentsApiController}.
  */
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 public class DomesticPaymentConsentsApiControllerTest {
@@ -54,7 +54,7 @@ public class DomesticPaymentConsentsApiControllerTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void shouldCreateDomesticPaymentConsent() throws Exception {
+    public void shouldCreateDomesticPaymentConsent() {
         // Given
         OBWriteDomesticConsent4 paymentConsent = aValidOBWriteDomesticConsent4();
         HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(paymentConsent, httpHeaders());
