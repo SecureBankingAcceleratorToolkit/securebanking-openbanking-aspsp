@@ -37,11 +37,12 @@ import uk.org.openbanking.datamodel.discovery.OBDiscoveryResponse;
 import java.util.Map;
 
 /**
- * Controller for the "Discovery" endpoint. Provides a list of URLs for the Open Banking Read/Write API that are supported by
- * a particular deployed instance.
+ * Controller for the "Discovery" endpoint. Provides a list of URLs for the Open Banking Read/Write API that are
+ * supported by a particular deployed instance.
  *
  * <p>
- * For example, a TPP may use this endpoint to see which specific versions and endpoints of the Read/Write API are supported.
+ * For example, a TPP may use this endpoint to see which specific versions and endpoints of the Read/Write API are
+ * supported.
  */
 @Controller
 @Slf4j
@@ -79,7 +80,7 @@ public class DiscoveryController {
         OBDiscovery discovery = new OBDiscovery();
         discovery.setFinancialId(discoveryAPIsConfigurationProperties.getFinancialId());
 
-        for (Map.Entry<OBGroupName, Map<String, OBDiscoveryAPI>> byGroup : discoveryAPIsService.getDiscoveryApisByVersionAndGroupName().entrySet()) {
+        for (Map.Entry<OBGroupName, Map<String, OBDiscoveryAPI>> byGroup : discoveryAPIsService.getDiscoveryApis().entrySet()) {
             if (byGroup.getValue().isEmpty()) {
                 continue;
             }

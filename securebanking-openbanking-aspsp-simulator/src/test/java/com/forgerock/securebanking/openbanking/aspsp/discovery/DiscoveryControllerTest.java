@@ -56,7 +56,7 @@ public class DiscoveryControllerTest {
     @Test
     public void shouldGetDiscoveryUrlsFilteredByVersion() {
         // Given
-        String[] enabledVersions = {"v3.1.1", "v3.1.2"};
+        String[] enabledVersions = {"v3.1.5", "v3.1.6"};
         String[] disabledVersions = {"v3.0", "v3.1", "v3.1.3"};
 
         // When
@@ -93,7 +93,7 @@ public class DiscoveryControllerTest {
     @Test
     public void shouldGetDiscoveryUrlsFilteredByVersionAndApiEndpoint() {
         // Given
-        String disabledVersion = "v3.1.2";
+        String disabledVersion = "v3.1.6";
         OBApiReference disabledEndpoint = OBApiReference.GET_ACCOUNT_STATEMENT;
 
         // When
@@ -105,7 +105,7 @@ public class DiscoveryControllerTest {
         List<OBDiscoveryAPI<OBDiscoveryAPILinks>> accountsApis = data.getAccountAndTransactionAPIs();
         assertThat(isEndpointDisabledByVersion(accountsApis, disabledVersion, disabledEndpoint)).isTrue();
         // assert others are not filtered
-        assertThat(isEndpointDisabledByVersion(accountsApis, "v3.1.1", disabledEndpoint)).isFalse();
+        assertThat(isEndpointDisabledByVersion(accountsApis, "v3.1.5", disabledEndpoint)).isFalse();
         assertThat(isEndpointDisabledByVersion(accountsApis, disabledVersion, OBApiReference.GET_BALANCES)).isFalse();
     }
 

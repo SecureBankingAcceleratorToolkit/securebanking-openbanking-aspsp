@@ -8,23 +8,26 @@ aspsp:
   discovery:
     financialId: 0015800001041REAAY
     versions:
-      # Only allow v3.1.1 and v3.1.2
+      # Only allow v3.1.5 and v3.1.6
       v3.0: false
       v3.1: false
-      v3.1.1: true
-      v3.1.2: true
+      v3.1.1: false
+      v3.1.2: false
       v3.1.3: false
       v3.1.4: false
-      v3.1.5: false
-      v3.1.6: false
+      v3.1.5: true
+      v3.1.6: true
     apis:
       # Disable transactions
       GetAccountTransactions: false
       GetTransactions: false
+      # Disable GetDomesticPaymentConsent
+      GetDomesticPaymentConsent: false
     versionApiOverrides:
-      # Disable statements for v3.1.2
+      # Disable statements and CreateDomesticPaymentConsent for v3.1.6
       # (Use underscore format to avoid binding error - due to more complicated map structure)
-      v3_1_2:
+      v3_1_6:
         GetAccountStatements: false
         GetAccountStatement: false
         GetStatements: false
+        CreateDomesticPaymentConsent: false

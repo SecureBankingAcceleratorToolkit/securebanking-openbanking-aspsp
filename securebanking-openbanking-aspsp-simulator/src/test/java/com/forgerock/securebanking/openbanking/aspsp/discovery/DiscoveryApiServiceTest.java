@@ -21,7 +21,6 @@
 package com.forgerock.securebanking.openbanking.aspsp.discovery;
 
 import com.forgerock.securebanking.openbanking.aspsp.common.OBGroupName;
-import com.forgerock.securebanking.openbanking.aspsp.common.OBApiReference;
 import com.google.common.collect.ImmutableMap;
 import org.junit.jupiter.api.Test;
 import uk.org.openbanking.datamodel.discovery.GenericOBDiscoveryAPILinks;
@@ -30,8 +29,11 @@ import uk.org.openbanking.datamodel.discovery.OBDiscoveryAPI;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.forgerock.securebanking.openbanking.aspsp.common.OBApiReference.GET_ACCOUNT;
+import static com.forgerock.securebanking.openbanking.aspsp.common.OBApiReference.GET_ACCOUNTS;
 import static com.forgerock.securebanking.openbanking.aspsp.testsupport.discovery.AvailableApisTestDataFactory.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 /**
  * Unit test for {@link DiscoveryApiService}.
@@ -40,16 +42,21 @@ public class DiscoveryApiServiceTest {
 
     private static final String TEST_VERSION = "v3.1.1";
 
+    private AvailableApiConfigurationProperties availableApis = getAvailableApiConfig();
+
+    private ControllerEndpointBlacklistHandler blacklistHandler = mock(ControllerEndpointBlacklistHandler.class);
+
     @Test
     public void shouldGetDiscoveryApisByVersionAndGroupName() {
         // Given
-        AvailableApiConfigurationProperties availableApis = getAvailableApiConfig();
-        DiscoveryApiService discoveryApiService = new DiscoveryApiService(new DiscoveryApiConfigurationProperties(), availableApis);
+        DiscoveryApiConfigurationProperties discoveryProperties = new DiscoveryApiConfigurationProperties();
+        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis, blacklistHandler);
 
         // When
-        Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = discoveryApiService.getDiscoveryApisByVersionAndGroupName();
+        discoveryApiService.init();
 
         // Then
+        Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = discoveryApiService.getDiscoveryApis();
         assertThat(discoveryApis).isNotNull();
         assertThat(containsAllVersions(discoveryApis.get(OBGroupName.AISP))).isTrue();
         assertThat(containsAllVersions(discoveryApis.get(OBGroupName.PISP))).isTrue();
@@ -60,15 +67,15 @@ public class DiscoveryApiServiceTest {
     @Test
     public void shouldGetDiscoveryApisWithoutSpecificVersion() {
         // Given
-        AvailableApiConfigurationProperties availableApis = getAvailableApiConfig();
         DiscoveryApiConfigurationProperties discoveryProperties = new DiscoveryApiConfigurationProperties();
         discoveryProperties.setVersions(ImmutableMap.of(TEST_VERSION, false));
-        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis);
+        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis, blacklistHandler);
 
         // When
-        Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = discoveryApiService.getDiscoveryApisByVersionAndGroupName();
+        discoveryApiService.init();
 
         // Then
+        Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = discoveryApiService.getDiscoveryApis();
         assertThat(discoveryApis).isNotNull();
         assertThat(containsAllVersionsExcept(discoveryApis.get(OBGroupName.AISP), 1)).isTrue();
         assertThat(containsAllVersionsExcept(discoveryApis.get(OBGroupName.PISP), 1)).isTrue();
@@ -79,86 +86,88 @@ public class DiscoveryApiServiceTest {
     @Test
     public void shouldGetDiscoveryApisWithoutSpecificEndpoint() {
         // Given
-        AvailableApiConfigurationProperties availableApis = getAvailableApiConfig();
         DiscoveryApiConfigurationProperties discoveryProperties = new DiscoveryApiConfigurationProperties();
-        discoveryProperties.setApis(ImmutableMap.of(OBApiReference.GET_ACCOUNT, false));
-        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis);
+        discoveryProperties.setApis(ImmutableMap.of(GET_ACCOUNT, false));
+        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis, blacklistHandler);
 
         // When
-        Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = discoveryApiService.getDiscoveryApisByVersionAndGroupName();
+        discoveryApiService.init();
 
         // Then
+        Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = discoveryApiService.getDiscoveryApis();
         Map<String, OBDiscoveryAPI> accountApis = discoveryApis.get(OBGroupName.AISP);
         assertThat(containsAllVersions(accountApis)).isTrue();
         Map<String, String> links = ((GenericOBDiscoveryAPILinks) accountApis.get(TEST_VERSION).getLinks()).getLinks();
         // assert GET_ACCOUNT is excluded but GET_ACCOUNTS is present
-        assertThat(links.containsKey(OBApiReference.GET_ACCOUNT.getReference())).isFalse();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + TEST_VERSION + "/aisp/accounts/{AccountId}")).isFalse();
-        assertThat(links.containsKey(OBApiReference.GET_ACCOUNTS.getReference())).isTrue();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + TEST_VERSION + "/aisp/accounts")).isTrue();
+        assertThat(links.containsKey(GET_ACCOUNT.getReference())).isFalse();
+        assertThat(links.containsValue(BASE_URL + TEST_VERSION + "/aisp/accounts/{AccountId}")).isFalse();
+        assertThat(links.containsKey(GET_ACCOUNTS.getReference())).isTrue();
+        assertThat(links.containsValue(BASE_URL + TEST_VERSION + "/aisp/accounts")).isTrue();
     }
 
     @Test
     public void shouldGetDiscoveryApisWithoutSpecificEndpointVersion() {
         // Given
-        AvailableApiConfigurationProperties availableApis = getAvailableApiConfig();
         DiscoveryApiConfigurationProperties discoveryProperties = new DiscoveryApiConfigurationProperties();
-        discoveryProperties.setVersionApiOverrides(ImmutableMap.of("v3_1_2", ImmutableMap.of(OBApiReference.GET_ACCOUNTS, false)));
-        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis);
+        discoveryProperties.setVersionApiOverrides(ImmutableMap.of("v3_1_2", ImmutableMap.of(GET_ACCOUNTS, false)));
+        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis, blacklistHandler);
 
         // When
-        Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = discoveryApiService.getDiscoveryApisByVersionAndGroupName();
+        discoveryApiService.init();
 
         // Then
+        Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = discoveryApiService.getDiscoveryApis();
         Map<String, OBDiscoveryAPI> accountApis = discoveryApis.get(OBGroupName.AISP);
         String version = "v3.1.2";
         Map<String, String> links = ((GenericOBDiscoveryAPILinks) accountApis.get(version).getLinks()).getLinks();
-        assertThat(links.containsKey(OBApiReference.GET_ACCOUNT.getReference())).isTrue();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + version + "/aisp/accounts/{AccountId}")).isTrue();
+        assertThat(links.containsKey(GET_ACCOUNT.getReference())).isTrue();
+        assertThat(links.containsValue(BASE_URL + version + "/aisp/accounts/{AccountId}")).isTrue();
         // assert GET_ACCOUNTS is excluded
-        assertThat(links.containsKey(OBApiReference.GET_ACCOUNTS.getReference())).isFalse();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + version + "/aisp/accounts")).isFalse();
+        assertThat(links.containsKey(GET_ACCOUNTS.getReference())).isFalse();
+        assertThat(links.containsValue(BASE_URL + version + "/aisp/accounts")).isFalse();
 
         // check another version and assert both links are included
         links = ((GenericOBDiscoveryAPILinks) accountApis.get(TEST_VERSION).getLinks()).getLinks();
-        assertThat(links.containsKey(OBApiReference.GET_ACCOUNT.getReference())).isTrue();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + TEST_VERSION + "/aisp/accounts/{AccountId}")).isTrue();
-        assertThat(links.containsKey(OBApiReference.GET_ACCOUNTS.getReference())).isTrue();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + TEST_VERSION + "/aisp/accounts")).isTrue();
+        assertThat(links.containsKey(GET_ACCOUNT.getReference())).isTrue();
+        assertThat(links.containsValue(BASE_URL + TEST_VERSION + "/aisp/accounts/{AccountId}")).isTrue();
+        assertThat(links.containsKey(GET_ACCOUNTS.getReference())).isTrue();
+        assertThat(links.containsValue(BASE_URL + TEST_VERSION + "/aisp/accounts")).isTrue();
     }
 
     @Test
     public void shouldGetEmptyDiscoveryApisGivenNoAvailableEndpoints() {
         // Given
         AvailableApiConfigurationProperties availableApis = new AvailableApiConfigurationProperties();
-        DiscoveryApiService discoveryApiService = new DiscoveryApiService(new DiscoveryApiConfigurationProperties(), availableApis);
+        DiscoveryApiConfigurationProperties discoveryProperties = new DiscoveryApiConfigurationProperties();
+        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis, blacklistHandler);
 
         // When
-        Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = discoveryApiService.getDiscoveryApisByVersionAndGroupName();
+        discoveryApiService.init();
 
         // Then
+        Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = discoveryApiService.getDiscoveryApis();
         assertThat(discoveryApis).isEmpty();
     }
 
     @Test
     public void shouldGetEmptyDiscoveryApisGivenAllVersionsDisabled() {
         // Given
-        AvailableApiConfigurationProperties availableApis = getAvailableApiConfig();
         DiscoveryApiConfigurationProperties discoveryProperties = new DiscoveryApiConfigurationProperties();
         discoveryProperties.setVersions(allVersionsDisabled());
-        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis);
+        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis, blacklistHandler);
 
         // When
-        Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = discoveryApiService.getDiscoveryApisByVersionAndGroupName();
+        discoveryApiService.init();
 
         // Then
+        Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = discoveryApiService.getDiscoveryApis();
         assertThat(discoveryApis).isEmpty();
     }
 
     private boolean containsAllVersions(Map<String, OBDiscoveryAPI> apiVersions) {
         boolean isValid = true;
-        for (int patch = 1; patch <= PATCH_VERSIONS; patch++) {
-            if (!apiVersions.containsKey(BASE_VERSION + patch)) {
+        for (int patch = 1; patch <= PATCHES; patch++) {
+            if (!apiVersions.containsKey(VERSION_PREFIX + patch)) {
                 isValid = false;
             }
         }
@@ -167,8 +176,8 @@ public class DiscoveryApiServiceTest {
 
     private boolean containsAllVersionsExcept(Map<String, OBDiscoveryAPI> apiVersions, int excludedPatch) {
         boolean isValid = true;
-        for (int patch = 1; patch <= PATCH_VERSIONS; patch++) {
-            if (patch != excludedPatch && !apiVersions.containsKey(BASE_VERSION + patch)) {
+        for (int patch = 1; patch <= PATCHES; patch++) {
+            if (patch != excludedPatch && !apiVersions.containsKey(VERSION_PREFIX + patch)) {
                 isValid = false;
             }
         }
@@ -177,8 +186,8 @@ public class DiscoveryApiServiceTest {
 
     private Map<String, Boolean> allVersionsDisabled() {
         Map<String, Boolean> versions = new HashMap<>();
-        for (int patch = 1; patch <= PATCH_VERSIONS; patch++) {
-            versions.put(BASE_VERSION + patch, false);
+        for (int patch = 1; patch <= PATCHES; patch++) {
+            versions.put(VERSION_PREFIX + patch, false);
         }
         return versions;
     }

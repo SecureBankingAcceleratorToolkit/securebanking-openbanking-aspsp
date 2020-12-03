@@ -78,9 +78,9 @@ public class AvailableApiConfigurationPropertiesTest {
         List<AvailableApi> accountApis = filterByGroupName(OBGroupName.AISP, availableApis);
         Map<OBApiReference, String> links = getLinksForVersion(TEST_VERSION, accountApis);
         assertThat(links.containsKey(OBApiReference.GET_ACCOUNT)).isTrue();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + TEST_VERSION + "/aisp/accounts/{AccountId}")).isTrue();
+        assertThat(links.containsValue(BASE_URL + TEST_VERSION + "/aisp/accounts/{AccountId}")).isTrue();
         assertThat(links.containsKey(OBApiReference.GET_ACCOUNTS)).isTrue();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + TEST_VERSION + "/aisp/accounts")).isTrue();
+        assertThat(links.containsValue(BASE_URL + TEST_VERSION + "/aisp/accounts")).isTrue();
     }
 
     @Test
@@ -97,9 +97,9 @@ public class AvailableApiConfigurationPropertiesTest {
         List<AvailableApi> paymentApis = filterByGroupName(OBGroupName.PISP, availableApis);
         Map<OBApiReference, String> links = getLinksForVersion(TEST_VERSION, paymentApis);
         assertThat(links.containsKey(OBApiReference.CREATE_DOMESTIC_PAYMENT_CONSENT)).isTrue();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + TEST_VERSION + "/pisp/domestic-payment-consents")).isTrue();
+        assertThat(links.containsValue(BASE_URL + TEST_VERSION + "/pisp/domestic-payment-consents")).isTrue();
         assertThat(links.containsKey(OBApiReference.GET_DOMESTIC_PAYMENT_CONSENT)).isTrue();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + TEST_VERSION + "/pisp/domestic-payment-consents/{ConsentId}")).isTrue();
+        assertThat(links.containsValue(BASE_URL + TEST_VERSION + "/pisp/domestic-payment-consents/{ConsentId}")).isTrue();
     }
 
     @Test
@@ -116,9 +116,9 @@ public class AvailableApiConfigurationPropertiesTest {
         List<AvailableApi> eventApis = filterByGroupName(OBGroupName.EVENT, availableApis);
         Map<OBApiReference, String> links = getLinksForVersion(TEST_VERSION, eventApis);
         assertThat(links.containsKey(OBApiReference.CREATE_CALLBACK_URL)).isTrue();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + TEST_VERSION + "/callback-urls")).isTrue();
+        assertThat(links.containsValue(BASE_URL + TEST_VERSION + "/callback-urls")).isTrue();
         assertThat(links.containsKey(OBApiReference.GET_CALLBACK_URLS)).isTrue();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + TEST_VERSION + "/callback-urls/{CallbackUrlId}")).isTrue();
+        assertThat(links.containsValue(BASE_URL + TEST_VERSION + "/callback-urls/{CallbackUrlId}")).isTrue();
     }
 
     @Test
@@ -135,9 +135,9 @@ public class AvailableApiConfigurationPropertiesTest {
         List<AvailableApi> fundApis = filterByGroupName(OBGroupName.CBPII, availableApis);
         Map<OBApiReference, String> links = getLinksForVersion(TEST_VERSION, fundApis);
         assertThat(links.containsKey(OBApiReference.CREATE_FUNDS_CONFIRMATION)).isTrue();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + TEST_VERSION + "/cbpii/funds-confirmations")).isTrue();
+        assertThat(links.containsValue(BASE_URL + TEST_VERSION + "/cbpii/funds-confirmations")).isTrue();
         assertThat(links.containsKey(OBApiReference.GET_FUNDS_CONFIRMATION)).isTrue();
-        assertThat(links.containsValue("${aspsp.baseUrl}/open-banking/" + TEST_VERSION + "/cbpii/funds-confirmations/{FundsConfirmationId}")).isTrue();
+        assertThat(links.containsValue(BASE_URL + TEST_VERSION + "/cbpii/funds-confirmations/{FundsConfirmationId}")).isTrue();
     }
 
     private List<AvailableApi> filterByGroupName(OBGroupName groupName, List<AvailableApi> availableApis) {
@@ -151,8 +151,8 @@ public class AvailableApiConfigurationPropertiesTest {
 
     private boolean containsAllVersions(List<AvailableApi> availableApis) {
         boolean containsAll = true;
-        for (int patch = 1; patch <= PATCH_VERSIONS; patch++) {
-            if (!containsVersion(availableApis, BASE_VERSION + patch)) {
+        for (int patch = 1; patch <= PATCHES; patch++) {
+            if (!containsVersion(availableApis, VERSION_PREFIX + patch)) {
                 containsAll = false;
             }
         }

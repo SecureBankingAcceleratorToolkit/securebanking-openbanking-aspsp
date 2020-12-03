@@ -37,9 +37,9 @@ import java.util.Map;
  */
 public class AvailableApisTestDataFactory {
 
-    public static final String BASE_VERSION = "v3.1.";
-    public static final int PATCH_VERSIONS = 6;
-    public static final String BASE_URL = "${aspsp.baseUrl}/open-banking/" + BASE_VERSION;
+    public static final String BASE_URL = "http://aspsp/open-banking/";
+    public static final String VERSION_PREFIX = "v3.1.";
+    public static final int PATCHES = 6;
 
     public static AvailableApiConfigurationProperties getAvailableApiConfig() {
         AvailableApiConfigurationProperties availableApis = new AvailableApiConfigurationProperties();
@@ -84,9 +84,9 @@ public class AvailableApisTestDataFactory {
 
     private static List<AvailableApi> generateApi(OBGroupName groupName, List<Pair<OBApiReference, String>> content) {
         List<AvailableApi> apiVersions = new ArrayList<>();
-        for (int patch = 1; patch <= PATCH_VERSIONS; patch++) {
+        for (int patch = 1; patch <= PATCHES; patch++) {
             Map<OBApiReference, String> links = generateLinks(content, patch);
-            apiVersions.add(new AvailableApi(groupName, BASE_VERSION + patch, links));
+            apiVersions.add(new AvailableApi(groupName, VERSION_PREFIX + patch, links));
         }
         return apiVersions;
     }
@@ -94,7 +94,7 @@ public class AvailableApisTestDataFactory {
     private static Map<OBApiReference, String> generateLinks(List<Pair<OBApiReference, String>> content, int patch) {
         Map<OBApiReference, String> links = new HashMap<>();
         for (Pair<OBApiReference, String> refAndPath : content) {
-            links.put(refAndPath.getKey(), BASE_URL + patch + refAndPath.getValue());
+            links.put(refAndPath.getKey(), BASE_URL + VERSION_PREFIX + patch + refAndPath.getValue());
         }
         return links;
     }

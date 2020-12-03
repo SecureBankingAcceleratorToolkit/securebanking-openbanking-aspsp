@@ -20,166 +20,163 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.common;
 
+import org.springframework.http.HttpMethod;
+
 import java.util.Arrays;
 
+import static org.springframework.http.HttpMethod.*;
+
 /**
- * A reference for each Open Banking API endpoint.
+ * A version agnostic list of Open Banking API endpoints, along with their HTTP methods. This is used to help build up
+ * a list of endpoints that are supported by the application and returned in the Discovery endpoint. It is also used to
+ * disable specific controller methods that are not supported by the customer.
  */
 public enum OBApiReference {
 
-    //Apis group
-    ACCOUNT_REQUEST("AccountRequest"),
-    ACCOUNT_ACCESS_CONSENT("AccountAccessConsent"),
-    ACCOUNTS("Accounts"),
-    BALANCES("Balances"),
-    BENEFICIARIES("Beneficiaries"),
-    DIRECT_DEBITS("DirectDebits"),
-    PRODUCTS("Products"),
-    STANDING_ORDERS("StandingOrders"),
-    TRANSACTIONS("Transaction"),
-    OFFERS("Offers"),
-    PARTY("Party"),
-    SCHEDULED_PAYMENTS("ScheduledPayments"),
-    STATEMENTS("Statements"),
+    CREATE_ACCOUNT_ACCESS_CONSENT("CreateAccountAccessConsent", POST),
+    DELETE_ACCOUNT_ACCESS_CONSENT("DeleteAccountAccessConsent", DELETE),
+    GET_ACCOUNT_ACCESS_CONSENT("GetAccountAccessConsent", GET),
 
-    FUNDS("Funds"),
+    GET_ACCOUNTS("GetAccounts", GET),
+    GET_ACCOUNT("GetAccount", GET),
+    GET_ACCOUNT_TRANSACTIONS("GetAccountTransactions", GET),
+    GET_ACCOUNT_BENEFICIARIES("GetAccountBeneficiaries", GET),
+    GET_ACCOUNT_BALANCES("GetAccountBalances", GET),
+    GET_ACCOUNT_DIRECT_DEBITS("GetAccountDirectDebits", GET),
+    GET_ACCOUNT_STANDING_ORDERS("GetAccountStandingOrders", GET),
+    GET_ACCOUNT_PRODUCT("GetAccountProduct", GET),
+    GET_STANDING_ORDERS("GetStandingOrders", GET),
+    GET_DIRECT_DEBITS("GetDirectDebits", GET),
+    GET_BENEFICIARIES("GetBeneficiaries", GET),
+    GET_TRANSACTIONS("GetTransactions", GET),
+    GET_BALANCES("GetBalances", GET),
+    GET_PRODUCTS("GetProducts", GET),
+    GET_ACCOUNT_OFFERS("GetAccountOffers", GET),
+    GET_ACCOUNT_PARTY("GetAccountParty", GET),
+    GET_ACCOUNT_PARTIES("GetAccountParties", GET),
+    GET_ACCOUNT_SCHEDULED_PAYMENTS("GetAccountScheduledPayments", GET),
+    GET_ACCOUNT_STATEMENTS("GetAccountStatements", GET),
+    GET_ACCOUNT_STATEMENT("GetAccountStatement", GET),
+    GET_ACCOUNT_STATEMENT_FILE("GetAccountStatementFile", GET),
+    GET_ACCOUNT_STATEMENT_TRANSACTIONS("GetAccountStatementTransactions", GET),
+    GET_OFFERS("GetOffers", GET),
+    GET_PARTY("GetParty", GET),
+    GET_SCHEDULED_PAYMENTS("GetScheduledPayments", GET),
+    GET_STATEMENTS("GetStatements", GET),
 
-    EVENTS("Events"),
+    CREATE_FUNDS_CONFIRMATION_CONSENT("CreateFundsConfirmationConsent", POST),
+    GET_FUNDS_CONFIRMATION_CONSENT("GetFundsConfirmationConsent", GET),
+    CREATE_FUNDS_CONFIRMATION("CreateFundsConfirmation", POST),
+    GET_FUNDS_CONFIRMATION("GetFundsConfirmation", GET),
+    DELETE_FUNDS_CONFIRMATION_CONSENT("DeleteFundsConfirmationConsent", DELETE),
 
-    SINGLE_PAYMENTS("SinglePayments"),
-    SINGLE_PAYMENTS_SUBMISSION("SinglePaymentsSubmission"),
+    CREATE_CALLBACK_URL("CreateCallbackUrl", POST),
+    GET_CALLBACK_URLS("GetCallbackUrls", GET),
+    AMEND_CALLBACK_URL("AmendCallbackUrl", PUT),
+    DELETE_CALLBACK_URL("DeleteCallbackUrl", DELETE),
 
-    DOMESTIC_PAYMENTS("DomesticPayments"),
-    DOMESTIC_SCHEDULED_PAYMENTS("DomesticScheduledPayments"),
-    DOMESTIC_STANDING_ORDERS_PAYMENTS("DomesticStandingOrdersPayments"),
+    CREATE_EVENT_SUBSCRIPTION("CreateEventSubscription", POST),
+    GET_EVENT_SUBSCRIPTION("GetEventSubscription", GET),
+    AMEND_EVENT_SUBSCRIPTION("AmendEventSubscription", PUT),
+    DELETE_EVENT_SUBSCRIPTION("DeleteEventSubscription", DELETE),
 
-    INTERNATIONAL_PAYMENTS("InternationalPayments"),
-    INTERNATIONAL_SCHEDULED_PAYMENTS("InternationalScheduledPayments"),
-    INTERNATIONAL_STANDING_ORDERS_PAYMENTS("InternationalStandingOrdersPayments"),
+    EVENT_AGGREGATED_POLLING("EventAggregatedPolling", GET),
 
-    FILE_PAYMENTS("FilePayments"),
+    CREATE_SINGLE_IMMEDIATE_PAYMENT("CreateSingleImmediatePayment", POST),
+    GET_SINGLE_IMMEDIATE_PAYMENT("GetSingleImmediatePayment", GET),
+    CREATE_PAYMENT_SUBMISSION("CreatePaymentSubmission", POST),
+    GET_PAYMENT_SUBMISSION("GetPaymentSubmission", GET),
 
-    //Apis
-    CREATE_ACCOUNT_REQUEST("CreateAccountRequest"),
-    DELETE_ACCOUNT_REQUEST("DeleteAccountRequest"),
-    GET_ACCOUNT_REQUEST("GetAccountRequest"),
+    CREATE_DOMESTIC_PAYMENT_CONSENT("CreateDomesticPaymentConsent", POST),
+    GET_DOMESTIC_PAYMENT_CONSENT("GetDomesticPaymentConsent", GET),
+    CREATE_DOMESTIC_PAYMENT("CreateDomesticPayment", POST),
+    GET_DOMESTIC_PAYMENT("GetDomesticPayment", GET),
+    GET_DOMESTIC_PAYMENT_CONSENTS_CONSENT_ID_FUNDS_CONFIRMATION("GetDomesticPaymentConsentsConsentIdFundsConfirmation", GET),
+    GET_DOMESTIC_PAYMENTS_DOMESTIC_PAYMENT_ID_PAYMENT_DETAILS("GetDomesticPaymentsDomesticPaymentIdPaymentDetails", GET),
 
-    CREATE_ACCOUNT_ACCESS_CONSENT("CreateAccountAccessConsent"),
-    DELETE_ACCOUNT_ACCESS_CONSENT("DeleteAccountAccessConsent"),
-    GET_ACCOUNT_ACCESS_CONSENT("GetAccountAccessConsent"),
+    CREATE_DOMESTIC_SCHEDULED_PAYMENT_CONSENT("CreateDomesticScheduledPaymentConsent", POST),
+    GET_DOMESTIC_SCHEDULED_PAYMENT_CONSENT("GetDomesticScheduledPaymentConsent", GET),
+    CREATE_DOMESTIC_SCHEDULED_PAYMENT("CreateDomesticScheduledPayment", POST),
+    GET_DOMESTIC_SCHEDULED_PAYMENT("GetDomesticScheduledPayment", GET),
+    GET_DOMESTIC_SCHEDULED_PAYMENTS_DOMESTIC_SCHEDULED_PAYMENT_ID_PAYMENT_DETAILS("GetDomesticScheduledPaymentsDomesticScheduledPaymentIdPaymentDetails", GET),
 
-    GET_ACCOUNTS("GetAccounts"),
-    GET_ACCOUNT("GetAccount"),
-    GET_ACCOUNT_TRANSACTIONS("GetAccountTransactions"),
-    GET_ACCOUNT_BENEFICIARIES("GetAccountBeneficiaries"),
-    GET_ACCOUNT_BALANCES("GetAccountBalances"),
-    GET_ACCOUNT_DIRECT_DEBITS("GetAccountDirectDebits"),
-    GET_ACCOUNT_STANDING_ORDERS("GetAccountStandingOrders"),
-    GET_ACCOUNT_PRODUCT("GetAccountProduct"),
-    GET_STANDING_ORDERS("GetStandingOrders"),
-    GET_DIRECT_DEBITS("GetDirectDebits"),
-    GET_BENEFICIARIES("GetBeneficiaries"),
-    GET_TRANSACTIONS("GetTransactions"),
-    GET_BALANCES("GetBalances"),
-    GET_PRODUCTS("GetProducts"),
-    GET_ACCOUNT_OFFERS("GetAccountOffers"),
-    GET_ACCOUNT_PARTY("GetAccountParty"),
-    GET_ACCOUNT_PARTIES("GetAccountParties"),
-    GET_ACCOUNT_SCHEDULED_PAYMENTS("GetAccountScheduledPayments"),
-    GET_ACCOUNT_STATEMENTS("GetAccountStatements"),
-    GET_ACCOUNT_STATEMENT("GetAccountStatement"),
-    GET_ACCOUNT_STATEMENT_FILE("GetAccountStatementFile"),
-    GET_ACCOUNT_STATEMENT_TRANSACTIONS("GetAccountStatementTransactions"),
-    GET_OFFERS("GetOffers"),
-    GET_PARTY("GetParty"),
-    GET_SCHEDULED_PAYMENTS("GetScheduledPayments"),
-    GET_STATEMENTS("GetStatements"),
+    CREATE_DOMESTIC_STANDING_ORDER_CONSENT("CreateDomesticStandingOrderConsent", POST),
+    GET_DOMESTIC_STANDING_ORDER_CONSENT("GetDomesticStandingOrderConsent", GET),
+    CREATE_DOMESTIC_STANDING_ORDER("CreateDomesticStandingOrder", POST),
+    GET_DOMESTIC_STANDING_ORDER("GetDomesticStandingOrder", GET),
+    GET_DOMESTIC_STANDING_ORDERS_DOMESTIC_STANDING_ORDER_ID_PAYMENT_DETAILS("GetDomesticStandingOrdersDomesticStandingOrderIdPaymentDetails", GET),
 
-    CREATE_FUNDS_CONFIRMATION_CONSENT("CreateFundsConfirmationConsent"),
-    GET_FUNDS_CONFIRMATION_CONSENT("GetFundsConfirmationConsent"),
-    CREATE_FUNDS_CONFIRMATION("CreateFundsConfirmation"),
-    GET_FUNDS_CONFIRMATION("GetFundsConfirmation"),
-    DELETE_FUNDS_CONFIRMATION_CONSENT("DeleteFundsConfirmationConsent"),
+    CREATE_INTERNATIONAL_PAYMENT_CONSENT("CreateInternationalPaymentConsent", POST),
+    GET_INTERNATIONAL_PAYMENT_CONSENT("GetInternationalPaymentConsent", GET),
+    CREATE_INTERNATIONAL_PAYMENT("CreateInternationalPayment", POST),
+    GET_INTERNATIONAL_PAYMENT("GetInternationalPayment", GET),
+    GET_INTERNATIONAL_PAYMENT_CONSENTS_CONSENT_ID_FUNDS_CONFIRMATION("GetInternationalPaymentConsentsConsentIdFundsConfirmation", GET),
+    GET_INTERNATIONAL_PAYMENTS_INTERNATIONAL_PAYMENT_ID_PAYMENT_DETAILS("GetInternationalPaymentsInternationalPaymentIdPaymentDetails", GET),
 
-    CREATE_CALLBACK_URL("CreateCallbackUrl"),
-    GET_CALLBACK_URLS("GetCallbackUrls"),
-    AMEND_CALLBACK_URL("AmendCallbackUrl"),
-    DELETE_CALLBACK_URL("DeleteCallbackUrl"),
+    CREATE_INTERNATIONAL_SCHEDULED_PAYMENT_CONSENT("CreateInternationalScheduledPaymentConsent", POST),
+    GET_INTERNATIONAL_SCHEDULED_PAYMENT_CONSENT("GetInternationalScheduledPaymentConsent", GET),
+    CREATE_INTERNATIONAL_SCHEDULED_PAYMENT("CreateInternationalScheduledPayment", POST),
+    GET_INTERNATIONAL_SCHEDULED_PAYMENT("GetInternationalScheduledPayment", GET),
+    GET_INTERNATIONAL_SCHEDULED_PAYMENT_CONSENTS_CONSENT_ID_FUNDS_CONFIRMATION("GetInternationalScheduledPaymentConsentsConsentIdFundsConfirmation", GET),
+    GET_INTERNATIONAL_SCHEDULED_PAYMENT_DETAILS("GetInternationalScheduledPaymentDetails", GET),
 
-    CREATE_EVENT_SUBSCRIPTION("CreateEventSubscription"),
-    GET_EVENT_SUBSCRIPTION("GetEventSubscription"),
-    AMEND_EVENT_SUBSCRIPTION("AmendEventSubscription"),
-    DELETE_EVENT_SUBSCRIPTION("DeleteEventSubscription"),
+    CREATE_INTERNATIONAL_STANDING_ORDER_CONSENT("CreateInternationalStandingOrderConsent", POST),
+    GET_INTERNATIONAL_STANDING_ORDER_CONSENT("GetInternationalStandingOrderConsent", GET),
+    CREATE_INTERNATIONAL_STANDING_ORDER("CreateInternationalStandingOrder", POST),
+    GET_INTERNATIONAL_STANDING_ORDER("GetInternationalStandingOrder", GET),
+    GET_INTERNATIONAL_STANDING_ORDER_PAYMENT_DETAILS("GetInternationalStandingOrderPaymentDetails", GET),
 
-    EVENT_AGGREGATED_POLLING("EventAggregatedPolling"),
+    CREATE_FILE_PAYMENT_CONSENT("CreateFilePaymentConsent", POST),
+    GET_FILE_PAYMENT_CONSENT("GetFilePaymentConsent", GET),
 
-    CREATE_SINGLE_IMMEDIATE_PAYMENT("CreateSingleImmediatePayment"),
-    GET_SINGLE_IMMEDIATE_PAYMENT("GetSingleImmediatePayment"),
-    CREATE_PAYMENT_SUBMISSION("CreatePaymentSubmission"),
-    GET_PAYMENT_SUBMISSION("GetPaymentSubmission"),
+    CREATE_FILE_PAYMENT_FILE("CreateFilePaymentFile", POST),
+    GET_FILE_PAYMENT_FILE("GetFilePaymentFile", GET),
 
-    CREATE_DOMESTIC_PAYMENT_CONSENT("CreateDomesticPaymentConsent"),
-    GET_DOMESTIC_PAYMENT_CONSENT("GetDomesticPaymentConsent"),
-    CREATE_DOMESTIC_PAYMENT("CreateDomesticPayment"),
-    GET_DOMESTIC_PAYMENT("GetDomesticPayment"),
-    GET_DOMESTIC_PAYMENT_CONSENTS_CONSENT_ID_FUNDS_CONFIRMATION("GetDomesticPaymentConsentsConsentIdFundsConfirmation"),
-    GET_DOMESTIC_PAYMENTS_DOMESTIC_PAYMENT_ID_PAYMENT_DETAILS("GetDomesticPaymentsDomesticPaymentIdPaymentDetails"),
-
-    CREATE_DOMESTIC_SCHEDULED_PAYMENT_CONSENT("CreateDomesticScheduledPaymentConsent"),
-    GET_DOMESTIC_SCHEDULED_PAYMENT_CONSENT("GetDomesticScheduledPaymentConsent"),
-    CREATE_DOMESTIC_SCHEDULED_PAYMENT("CreateDomesticScheduledPayment"),
-    GET_DOMESTIC_SCHEDULED_PAYMENT("GetDomesticScheduledPayment"),
-    GET_DOMESTIC_SCHEDULED_PAYMENTS_DOMESTIC_SCHEDULED_PAYMENT_ID_PAYMENT_DETAILS("GetDomesticScheduledPaymentsDomesticScheduledPaymentIdPaymentDetails"),
-
-    CREATE_DOMESTIC_STANDING_ORDER_CONSENT("CreateDomesticStandingOrderConsent"),
-    GET_DOMESTIC_STANDING_ORDER_CONSENT("GetDomesticStandingOrderConsent"),
-    CREATE_DOMESTIC_STANDING_ORDER("CreateDomesticStandingOrder"),
-    GET_DOMESTIC_STANDING_ORDER("GetDomesticStandingOrder"),
-    GET_DOMESTIC_STANDING_ORDERS_DOMESTIC_STANDING_ORDER_ID_PAYMENT_DETAILS("GetDomesticStandingOrdersDomesticStandingOrderIdPaymentDetails"),
-
-    CREATE_INTERNATIONAL_PAYMENT_CONSENT("CreateInternationalPaymentConsent"),
-    GET_INTERNATIONAL_PAYMENT_CONSENT("GetInternationalPaymentConsent"),
-    CREATE_INTERNATIONAL_PAYMENT("CreateInternationalPayment"),
-    GET_INTERNATIONAL_PAYMENT("GetInternationalPayment"),
-    GET_INTERNATIONAL_PAYMENT_CONSENTS_CONSENT_ID_FUNDS_CONFIRMATION("GetInternationalPaymentConsentsConsentIdFundsConfirmation"),
-    GET_INTERNATIONAL_PAYMENTS_INTERNATIONAL_PAYMENT_ID_PAYMENT_DETAILS("GetInternationalPaymentsInternationalPaymentIdPaymentDetails"),
-
-    CREATE_INTERNATIONAL_SCHEDULED_PAYMENT_CONSENT("CreateInternationalScheduledPaymentConsent"),
-    GET_INTERNATIONAL_SCHEDULED_PAYMENT_CONSENT("GetInternationalScheduledPaymentConsent"),
-    CREATE_INTERNATIONAL_SCHEDULED_PAYMENT("CreateInternationalScheduledPayment"),
-    GET_INTERNATIONAL_SCHEDULED_PAYMENT("GetInternationalScheduledPayment"),
-    GET_INTERNATIONAL_SCHEDULED_PAYMENT_CONSENTS_CONSENT_ID_FUNDS_CONFIRMATION("GetInternationalScheduledPaymentConsentsConsentIdFundsConfirmation"),
-    GET_INTERNATIONAL_SCHEDULED_PAYMENT_DETAILS("GetInternationalScheduledPaymentDetails"),
-
-    CREATE_INTERNATIONAL_STANDING_ORDER_CONSENT("CreateInternationalStandingOrderConsent"),
-    GET_INTERNATIONAL_STANDING_ORDER_CONSENT("GetInternationalStandingOrderConsent"),
-    CREATE_INTERNATIONAL_STANDING_ORDER("CreateInternationalStandingOrder"),
-    GET_INTERNATIONAL_STANDING_ORDER("GetInternationalStandingOrder"),
-    GET_INTERNATIONAL_STANDING_ORDER_PAYMENT_DETAILS("GetInternationalStandingOrderPaymentDetails"),
-
-    CREATE_FILE_PAYMENT_CONSENT("CreateFilePaymentConsent"),
-    GET_FILE_PAYMENT_CONSENT("GetFilePaymentConsent"),
-
-    CREATE_FILE_PAYMENT_FILE("CreateFilePaymentFile"),
-    GET_FILE_PAYMENT_FILE("GetFilePaymentFile"),
-
-    CREATE_FILE_PAYMENT("CreateFilePayment"),
-    GET_FILE_PAYMENT("GetFilePayment"),
-    GET_FILE_PAYMENT_DETAILS("GetFilePaymentDetails"),
-    GET_FILE_PAYMENT_REPORT("GetFilePaymentReport"),
-
-    NONE("");
+    CREATE_FILE_PAYMENT("CreateFilePayment", POST),
+    GET_FILE_PAYMENT("GetFilePayment", GET),
+    GET_FILE_PAYMENT_DETAILS("GetFilePaymentDetails", GET),
+    GET_FILE_PAYMENT_REPORT("GetFilePaymentReport", GET);
 
     private static final OBApiReference[] REFERENCES = OBApiReference.values();
 
-    private String reference;
+    /**
+     * A reference to the endpoint which is returned in the Discovery endpoint.
+     */
+    private final String reference;
 
+    /**
+     * The HTTP method (e.g. GET). This is used to help map an API URL to a specific endpoint (e.g. GET
+     * and DELETE share the same URL).
+     */
+    private final HttpMethod httpMethod;
+
+    /**
+     * Constructor used by Spring to instantiate from references in config.
+     *
+     * @param reference a reference for the API endpoint.
+     */
     OBApiReference(String reference) {
         this.reference = reference;
+        this.httpMethod = fromReference(reference) != null ? fromReference(reference).httpMethod : null;
+    }
+
+    /**
+     * Constructor used by enum values above.
+     *
+     * @param reference a reference for the API endpoint.
+     * @param httpMethod the HTTP method (e.g. GET) for the endpoint.
+     */
+    OBApiReference(String reference, HttpMethod httpMethod) {
+        this.reference = reference;
+        this.httpMethod = httpMethod;
     }
 
     public String getReference() {
         return reference;
+    }
+
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
     }
 
     public static OBApiReference fromReference(String reference) {
