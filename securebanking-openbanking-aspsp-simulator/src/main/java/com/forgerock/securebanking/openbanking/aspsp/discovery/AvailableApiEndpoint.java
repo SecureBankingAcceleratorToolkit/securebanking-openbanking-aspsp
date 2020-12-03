@@ -20,29 +20,29 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.discovery;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBGroupName;
 import com.forgerock.securebanking.openbanking.aspsp.common.OBApiReference;
+import com.forgerock.securebanking.openbanking.aspsp.common.OBGroupName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
-
 /**
- * This class is used to load all of the available Read/Write API endpoints from the application's spring configuration. These are the
- * endpoints that this application supports (so long as a customer has not disabled it in their configuration).
+ * This class represents an "available" endpoint in the Read/Write API. It is available in the sense that it is
+ * has been implemented by this application.
  *
  * <p>
- * If a customer does not support any of these endpoints, then they should disable them in their application configuration
+ * If a customer does not support an API endpoint, then they should disable it in their application configuration
  * (which subsequently changes the output of the Discovery endpoint).
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AvailableApi {
+public class AvailableApiEndpoint {
     private OBGroupName groupName;
     private String version;
-    private Map<OBApiReference, String> links;
+    private OBApiReference apiReference;
+    private String url;
+    private ControllerMethod controllerMethod;
 }
