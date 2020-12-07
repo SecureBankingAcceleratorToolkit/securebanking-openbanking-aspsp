@@ -21,6 +21,15 @@ Issue: https://github.com/SecureBankingAcceleratorToolkit/SecureBankingAccelerat
 
 Issue: https://github.com/SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit/issues/2
 ### GitHub [#5](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/pull/5) 2: Add CHANGELOG.md generation to pom.xml
+[dc28150f705fe9e](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/dc28150f705fe9e) Matt Wills *2020-12-02 09:59:26*
+5: Load all API endpoints from config (#7)
+
+5: Supported endpoints via Discovery API
+
+- Load all available Read/Write API endpoints from application.yml
+- Filter supported APIs according to customer's config (if applicable)
+
+Issue: SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit#5
 [84d81622e49af84](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/84d81622e49af84) Matt Wills *2020-11-23 14:23:52*
 2: Add CHANGELOG.md generation to pom.xml (#5)
 
@@ -35,6 +44,16 @@ Issue: https://github.com/SecureBankingAcceleratorToolkit/SecureBankingAccelerat
 - Use Spring HATEOAS to generate a self link for a resource
 
 Issue: https://github.com/SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit/issues/5
+### GitHub [#7](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/pull/7) Supported endpoints via Discovery API
+[dc28150f705fe9e](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/dc28150f705fe9e) Matt Wills *2020-12-02 09:59:26*
+5: Load all API endpoints from config (#7)
+
+5: Supported endpoints via Discovery API
+
+- Load all available Read/Write API endpoints from application.yml
+- Filter supported APIs according to customer's config (if applicable)
+
+Issue: SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit#5
 [b4d0e28645d0542](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/b4d0e28645d0542) Matt Wills *2020-11-19 13:05:05*
 2: Initial SpringBoot project
 

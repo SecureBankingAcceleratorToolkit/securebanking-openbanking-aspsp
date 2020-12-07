@@ -20,46 +20,50 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.discovery;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBGroupName;
 import com.forgerock.securebanking.openbanking.aspsp.common.OBApiReference;
+import com.forgerock.securebanking.openbanking.aspsp.common.OBGroupName;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import uk.org.openbanking.datamodel.discovery.GenericOBDiscoveryAPILinks;
 import uk.org.openbanking.datamodel.discovery.OBDiscoveryAPI;
 
+import javax.annotation.PostConstruct;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Examines customer specific config (if applicable) and determines which of the available APIs should be enabled/disabled.
- * The resulting list of supported APIs is provided by the Discovery API.
+ * Examines customer specific config (if applicable) and determines which of the available APIs should be
+ * enabled/disabled. The resulting list of supported APIs is provided by the Discovery API.
  */
 @Component
+@Slf4j
 public class DiscoveryApiService {
 
     private final DiscoveryApiConfigurationProperties discoveryProperties;
 
     private final AvailableApiConfigurationProperties availableApiProperties;
 
-    private Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApisByVersionAndGroupName;
+    private final ControllerEndpointBlacklistHandler blacklistHandler;
 
-    public DiscoveryApiService(DiscoveryApiConfigurationProperties discoveryProperties, AvailableApiConfigurationProperties availableApiProperties) {
+    private final Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = new HashMap<>();
+
+    public DiscoveryApiService(DiscoveryApiConfigurationProperties discoveryProperties,
+                               AvailableApiConfigurationProperties availableApiProperties,
+                               ControllerEndpointBlacklistHandler blacklistHandler) {
         this.discoveryProperties = discoveryProperties;
         this.availableApiProperties = availableApiProperties;
+        this.blacklistHandler = blacklistHandler;
     }
 
     /**
-     * Provides a {@link Map} of Open Banking APIs that both the application and customer supports. The APIs are grouped by "group" name
-     * (e.g. AISP, PISP) and listed by version.
-     *
-     * @return a {@link Map} of supported Open Banking APIs.
+     * Builds a {@link Map} of Open Banking APIs that both the application and customer supports. The APIs are grouped
+     * by "group" name (e.g. AISP, PISP) and listed by version.
      */
-    public Map<OBGroupName, Map<String, OBDiscoveryAPI>> getDiscoveryApisByVersionAndGroupName() {
-        if (discoveryApisByVersionAndGroupName != null) {
-            return discoveryApisByVersionAndGroupName;
-        }
-        discoveryApisByVersionAndGroupName = new HashMap<>();
-
+    @PostConstruct
+    protected void init() {
         List<AvailableApi> availableApis = availableApiProperties.getAvailableApis();
 
         // iterate over each API and its map of links
@@ -71,39 +75,64 @@ public class DiscoveryApiService {
                         && isVersionOverrideEnabled(availableApi.getVersion(), link.getKey())) {
 
                     // Init map
-                    if (!discoveryApisByVersionAndGroupName.containsKey(availableApi.getGroupName())) {
-                        discoveryApisByVersionAndGroupName.put(availableApi.getGroupName(), new HashMap<>());
+                    if (!discoveryApis.containsKey(availableApi.getGroupName())) {
+                        discoveryApis.put(availableApi.getGroupName(), new HashMap<>());
                     }
-                    if (!discoveryApisByVersionAndGroupName.get(availableApi.getGroupName()).containsKey(availableApi.getVersion())) {
-                        discoveryApisByVersionAndGroupName.get(availableApi.getGroupName())
+                    if (!discoveryApis.get(availableApi.getGroupName()).containsKey(availableApi.getVersion())) {
+                        discoveryApis.get(availableApi.getGroupName())
                                 .put(availableApi.getVersion(), new OBDiscoveryAPI<GenericOBDiscoveryAPILinks>()
                                         .version(availableApi.getVersion())
-                                        .links(new GenericOBDiscoveryAPILinks())
-                                );
+                                        .links(new GenericOBDiscoveryAPILinks()));
                     }
-                    GenericOBDiscoveryAPILinks links = (GenericOBDiscoveryAPILinks) discoveryApisByVersionAndGroupName.get(availableApi.getGroupName()).get(availableApi.getVersion()).getLinks();
+                    GenericOBDiscoveryAPILinks links = (GenericOBDiscoveryAPILinks) discoveryApis
+                            .get(availableApi.getGroupName())
+                            .get(availableApi.getVersion())
+                            .getLinks();
                     links.addLink(link.getKey().getReference(), link.getValue());
+                }
+
+                else {
+                    log.warn("Disabling endpoint: [{}], with URL: [{}]", link.getKey().getReference(), link.getValue());
+                    try {
+                        blacklistHandler.blacklistEndpoint(link.getKey(), new URL(link.getValue()));
+                    } catch (MalformedURLException e) {
+                        log.error("Unable to add API endpoint to blacklist. Invalid URL from configuration: {}", link.getValue());
+                        throw new IllegalStateException("Invalid URL in application configuration: " + link.getValue());
+                    }
                 }
             }
         }
+    }
 
-        return discoveryApisByVersionAndGroupName;
+    /**
+     * @return a {@link Map} of supported Open Banking APIs.
+     */
+    public Map<OBGroupName, Map<String, OBDiscoveryAPI>> getDiscoveryApis() {
+        return discoveryApis;
+    }
+
+    public ControllerEndpointBlacklistHandler getControllerBlackListHandler() {
+        return blacklistHandler;
     }
 
     private boolean isVersionEnabled(String version) {
-        return !discoveryProperties.getVersions().containsKey(version) || discoveryProperties.getVersions().get(version);
+        return !discoveryProperties.getVersions().containsKey(version) ||
+                discoveryProperties.getVersions().get(version);
     }
 
     private boolean isApiEnabled(OBApiReference obApiReference) {
-        return !discoveryProperties.getApis().containsKey(obApiReference) || discoveryProperties.getApis().get(obApiReference);
+        return !discoveryProperties.getApis().containsKey(obApiReference) ||
+                discoveryProperties.getApis().get(obApiReference);
     }
 
     private boolean isVersionOverrideEnabled(String version, OBApiReference obApiReference) {
         // Use _ instead of . in yaml to reduce ambiguity over yml separator vs version
         String yamlVersion = version.replace(".", "_");
         Map<String, Map<OBApiReference, Boolean>> versionApiOverrides = discoveryProperties.getVersionApiOverrides();
-        if (versionApiOverrides.containsKey(yamlVersion) && versionApiOverrides.get(yamlVersion).containsKey(obApiReference)) {
-            return versionApiOverrides.get(yamlVersion).get(obApiReference);
+        Map<OBApiReference, Boolean> referenceApiOverrides = versionApiOverrides.get(yamlVersion);
+
+        if (versionApiOverrides.containsKey(yamlVersion) && referenceApiOverrides.containsKey(obApiReference)) {
+            return referenceApiOverrides.get(obApiReference);
         }
         return true;
     }
