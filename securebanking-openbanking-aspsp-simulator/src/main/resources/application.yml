@@ -658,3 +658,10 @@ aspsp:
           GetEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.6/event-subscriptions
           AmendEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.6/event-subscriptions/{EventSubscriptionId}
           DeleteEventSubscription: ${aspsp.baseUrl}/open-banking/v3.1.6/event-subscriptions/{EventSubscriptionId}
+
+#Swagger
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs

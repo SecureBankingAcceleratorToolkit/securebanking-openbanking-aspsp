@@ -51,7 +51,7 @@
         <java.version>11</java.version>
 
         <validation-api.version>2.0.1.Final</validation-api.version>
-        <springfox.version>2.10.5</springfox.version>
+        <springfox.version>3.0.0</springfox.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <joda-time.version>2.10.8</joda-time.version>
         <jackson-joda.version>2.9.7</jackson-joda.version>
@@ -92,6 +92,12 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${springfox.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
