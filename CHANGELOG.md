@@ -21,6 +21,19 @@ Issue: https://github.com/SecureBankingAcceleratorToolkit/SecureBankingAccelerat
 
 Issue: https://github.com/SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit/issues/2
 ### GitHub [#5](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/pull/5) 2: Add CHANGELOG.md generation to pom.xml
+[245861e14329568](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/245861e14329568) Matt Wills *2020-12-08 10:22:15*
+5: Swagger specification endpoint (#9)
+
+- Add endpoint to retrieve full swagger specification
+ - Add documentation to README.md detailing how to enable/disable API endpoints.
+
+Issue: SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit#5
+[cb5ff36119a07df](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/cb5ff36119a07df) Matt Wills *2020-12-07 10:47:35*
+5: Discovery blacklist functionality (#8)
+
+- Reject requests (with a 404) to any API endpoint that has been explicitly disabled in the config
+
+Issue: SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit#5
 [dc28150f705fe9e](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/dc28150f705fe9e) Matt Wills *2020-12-02 09:59:26*
 5: Load all API endpoints from config (#7)
 
@@ -52,6 +65,21 @@ Issue: https://github.com/SecureBankingAcceleratorToolkit/SecureBankingAccelerat
 
 - Load all available Read/Write API endpoints from application.yml
 - Filter supported APIs according to customer's config (if applicable)
+
+Issue: SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit#5
+### GitHub [#8](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/pull/8) Discovery blacklist functionality
+[cb5ff36119a07df](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/cb5ff36119a07df) Matt Wills *2020-12-07 10:47:35*
+5: Discovery blacklist functionality (#8)
+
+- Reject requests (with a 404) to any API endpoint that has been explicitly disabled in the config
+
+Issue: SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit#5
+### GitHub [#9](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/pull/9) Swagger specification endpoint and README update
+[245861e14329568](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/245861e14329568) Matt Wills *2020-12-08 10:22:15*
+5: Swagger specification endpoint (#9)
+
+- Add endpoint to retrieve full swagger specification
+ - Add documentation to README.md detailing how to enable/disable API endpoints.
 
 Issue: SecureBankingAcceleratorToolkit/SecureBankingAcceleratorToolkit#5
 [b4d0e28645d0542](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/b4d0e28645d0542) Matt Wills *2020-11-19 13:05:05*
