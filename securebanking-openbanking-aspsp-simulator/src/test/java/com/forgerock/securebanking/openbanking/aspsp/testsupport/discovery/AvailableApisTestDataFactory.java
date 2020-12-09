@@ -20,20 +20,18 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.testsupport.discovery;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBGroupName;
 import com.forgerock.securebanking.openbanking.aspsp.common.OBApiReference;
-import com.forgerock.securebanking.openbanking.aspsp.discovery.AvailableApi;
-import com.forgerock.securebanking.openbanking.aspsp.discovery.AvailableApiConfigurationProperties;
+import com.forgerock.securebanking.openbanking.aspsp.common.OBGroupName;
+import com.forgerock.securebanking.openbanking.aspsp.discovery.AvailableApiEndpoint;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Test data factory to generate a list of Read/Write APIs that are supported by the application (though not necessarily by the customer).
+ * Test data factory to generate a list of Read/Write APIs that are supported by the application (though not
+ * necessarily by the customer).
  */
 public class AvailableApisTestDataFactory {
 
@@ -41,16 +39,16 @@ public class AvailableApisTestDataFactory {
     public static final String VERSION_PREFIX = "v3.1.";
     public static final int PATCHES = 6;
 
-    public static AvailableApiConfigurationProperties getAvailableApiConfig() {
-        AvailableApiConfigurationProperties availableApis = new AvailableApiConfigurationProperties();
-        availableApis.setAccountAndTransactionApi(generateAccountApis());
-        availableApis.setPaymentInitiationApi(generatePaymentApis());
-        availableApis.setEventNotificationApi(generateEventApis());
-        availableApis.setFundsConfirmationApi(generateFundApis());
+    public static List<AvailableApiEndpoint> getAvailableApiEndpoints() {
+        List<AvailableApiEndpoint> availableApis = new ArrayList<>();
+        availableApis.addAll(generateAccountApis());
+        availableApis.addAll(generatePaymentApis());
+        availableApis.addAll(generateEventApis());
+        availableApis.addAll(generateFundApis());
         return availableApis;
     }
 
-    public static List<AvailableApi> generateAccountApis() {
+    public static List<AvailableApiEndpoint> generateAccountApis() {
         List<Pair<OBApiReference, String>> content = ImmutableList.of(
                 Pair.of(OBApiReference.GET_ACCOUNT, "/aisp/accounts/{AccountId}"),
                 Pair.of(OBApiReference.GET_ACCOUNTS, "/aisp/accounts")
@@ -58,7 +56,7 @@ public class AvailableApisTestDataFactory {
         return generateApi(OBGroupName.AISP, content);
     }
 
-    public static List<AvailableApi> generatePaymentApis() {
+    public static List<AvailableApiEndpoint> generatePaymentApis() {
         List<Pair<OBApiReference, String>> content = ImmutableList.of(
                 Pair.of(OBApiReference.CREATE_DOMESTIC_PAYMENT_CONSENT, "/pisp/domestic-payment-consents"),
                 Pair.of(OBApiReference.GET_DOMESTIC_PAYMENT_CONSENT, "/pisp/domestic-payment-consents/{ConsentId}")
@@ -66,7 +64,7 @@ public class AvailableApisTestDataFactory {
         return generateApi(OBGroupName.PISP, content);
     }
 
-    public static List<AvailableApi> generateEventApis() {
+    public static List<AvailableApiEndpoint> generateEventApis() {
         List<Pair<OBApiReference, String>> content = ImmutableList.of(
                 Pair.of(OBApiReference.CREATE_CALLBACK_URL, "/callback-urls"),
                 Pair.of(OBApiReference.GET_CALLBACK_URLS, "/callback-urls/{CallbackUrlId}")
@@ -74,7 +72,7 @@ public class AvailableApisTestDataFactory {
         return generateApi(OBGroupName.EVENT, content);
     }
 
-    public static List<AvailableApi> generateFundApis() {
+    public static List<AvailableApiEndpoint> generateFundApis() {
         List<Pair<OBApiReference, String>> content = ImmutableList.of(
                 Pair.of(OBApiReference.CREATE_FUNDS_CONFIRMATION, "/cbpii/funds-confirmations"),
                 Pair.of(OBApiReference.GET_FUNDS_CONFIRMATION, "/cbpii/funds-confirmations/{FundsConfirmationId}")
@@ -82,20 +80,20 @@ public class AvailableApisTestDataFactory {
         return generateApi(OBGroupName.CBPII, content);
     }
 
-    private static List<AvailableApi> generateApi(OBGroupName groupName, List<Pair<OBApiReference, String>> content) {
-        List<AvailableApi> apiVersions = new ArrayList<>();
+    private static List<AvailableApiEndpoint> generateApi(OBGroupName groupName, List<Pair<OBApiReference, String>> content) {
+        List<AvailableApiEndpoint> apiVersions = new ArrayList<>();
         for (int patch = 1; patch <= PATCHES; patch++) {
-            Map<OBApiReference, String> links = generateLinks(content, patch);
-            apiVersions.add(new AvailableApi(groupName, VERSION_PREFIX + patch, links));
+            for (Pair<OBApiReference, String> refAndPath : content) {
+                String url = BASE_URL + VERSION_PREFIX + patch + refAndPath.getValue();
+                AvailableApiEndpoint apiEndpoint = AvailableApiEndpoint.builder()
+                        .groupName(groupName)
+                        .version(VERSION_PREFIX + patch)
+                        .apiReference(refAndPath.getKey())
+                        .url(url)
+                        .build();
+                apiVersions.add(apiEndpoint);
+            }
         }
         return apiVersions;
-    }
-
-    private static Map<OBApiReference, String> generateLinks(List<Pair<OBApiReference, String>> content, int patch) {
-        Map<OBApiReference, String> links = new HashMap<>();
-        for (Pair<OBApiReference, String> refAndPath : content) {
-            links.put(refAndPath.getKey(), BASE_URL + VERSION_PREFIX + patch + refAndPath.getValue());
-        }
-        return links;
     }
 }

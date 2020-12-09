@@ -33,6 +33,7 @@ import uk.org.openbanking.datamodel.discovery.*;
 
 import java.util.List;
 
+import static com.forgerock.securebanking.openbanking.aspsp.common.OBApiReference.*;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -56,8 +57,8 @@ public class DiscoveryControllerTest {
     @Test
     public void shouldGetDiscoveryUrlsFilteredByVersion() {
         // Given
-        String[] enabledVersions = {"v3.1.5", "v3.1.6"};
-        String[] disabledVersions = {"v3.0", "v3.1", "v3.1.3"};
+        String[] enabledVersions = {"v3.1.5"};
+        String[] disabledVersions = {"v3.1.6"};
 
         // When
         ResponseEntity<OBDiscoveryResponse> response = restTemplate.getForEntity(discoveryUrl(), OBDiscoveryResponse.class);
@@ -66,17 +67,17 @@ public class DiscoveryControllerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         OBDiscovery data = response.getBody().getData();
         assertThat(data.getFinancialId()).isEqualTo(FINANCIAL_ID);
-        List<OBDiscoveryAPI<OBDiscoveryAPILinks>> accountsApis = data.getAccountAndTransactionAPIs();
-        assertThat(containsVersions(accountsApis, enabledVersions)).isTrue();
+        List<OBDiscoveryAPI<OBDiscoveryAPILinks>> paymentApis = data.getPaymentInitiationAPIs();
+        assertThat(containsVersions(paymentApis, enabledVersions)).isTrue();
         // assert others are filtered
-        assertThat(containsVersions(accountsApis, disabledVersions)).isFalse();
+        assertThat(containsVersions(paymentApis, disabledVersions)).isFalse();
     }
 
     @Test
     public void shouldGetDiscoveryUrlsFilteredByApiEndpoint() {
         // Given
-        OBApiReference[] disabledEndpoints = {OBApiReference.GET_ACCOUNT_TRANSACTIONS, OBApiReference.GET_TRANSACTIONS};
-        OBApiReference[] enabledEndpoints = {OBApiReference.GET_ACCOUNT, OBApiReference.GET_ACCOUNT_BALANCES};
+        OBApiReference[] disabledEndpoints = {GET_DOMESTIC_PAYMENT_CONSENT};
+        OBApiReference[] enabledEndpoints = {CREATE_DOMESTIC_PAYMENT_CONSENT, GET_DOMESTIC_PAYMENT};
 
         // When
         ResponseEntity<OBDiscoveryResponse> response = restTemplate.getForEntity(discoveryUrl(), OBDiscoveryResponse.class);
@@ -84,17 +85,17 @@ public class DiscoveryControllerTest {
         // Then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         OBDiscovery data = response.getBody().getData();
-        List<OBDiscoveryAPI<OBDiscoveryAPILinks>> accountsApis = data.getAccountAndTransactionAPIs();
-        assertThat(isEndpointDisabled(accountsApis, disabledEndpoints)).isTrue();
+        List<OBDiscoveryAPI<OBDiscoveryAPILinks>> paymentApis = data.getPaymentInitiationAPIs();
+        assertThat(isEndpointDisabled(paymentApis, disabledEndpoints)).isTrue();
         // assert others are not filtered
-        assertThat(isEndpointDisabled(accountsApis, enabledEndpoints)).isFalse();
+        assertThat(isEndpointDisabled(paymentApis, enabledEndpoints)).isFalse();
     }
 
     @Test
     public void shouldGetDiscoveryUrlsFilteredByVersionAndApiEndpoint() {
         // Given
-        String disabledVersion = "v3.1.6";
-        OBApiReference disabledEndpoint = OBApiReference.GET_ACCOUNT_STATEMENT;
+        String version = "v3.1.5";
+        OBApiReference disabledEndpoint = CREATE_DOMESTIC_PAYMENT;
 
         // When
         ResponseEntity<OBDiscoveryResponse> response = restTemplate.getForEntity(discoveryUrl(), OBDiscoveryResponse.class);
@@ -102,11 +103,12 @@ public class DiscoveryControllerTest {
         // Then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         OBDiscovery data = response.getBody().getData();
-        List<OBDiscoveryAPI<OBDiscoveryAPILinks>> accountsApis = data.getAccountAndTransactionAPIs();
-        assertThat(isEndpointDisabledByVersion(accountsApis, disabledVersion, disabledEndpoint)).isTrue();
+        List<OBDiscoveryAPI<OBDiscoveryAPILinks>> paymentApis = data.getPaymentInitiationAPIs();
+        assertThat(isEndpointDisabledByVersion(paymentApis, version, disabledEndpoint)).isTrue();
         // assert others are not filtered
-        assertThat(isEndpointDisabledByVersion(accountsApis, "v3.1.5", disabledEndpoint)).isFalse();
-        assertThat(isEndpointDisabledByVersion(accountsApis, disabledVersion, OBApiReference.GET_BALANCES)).isFalse();
+        // enable when more APIs are added
+        //assertThat(isEndpointDisabledByVersion(paymentApis, "v3.1.5", disabledEndpoint)).isFalse();
+        assertThat(isEndpointDisabledByVersion(paymentApis, version, CREATE_DOMESTIC_PAYMENT_CONSENT)).isFalse();
     }
 
     private boolean containsVersions(List<OBDiscoveryAPI<OBDiscoveryAPILinks>> api, String... versions) {

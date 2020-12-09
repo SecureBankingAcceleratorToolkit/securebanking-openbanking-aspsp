@@ -28,8 +28,6 @@ import uk.org.openbanking.datamodel.discovery.GenericOBDiscoveryAPILinks;
 import uk.org.openbanking.datamodel.discovery.OBDiscoveryAPI;
 
 import javax.annotation.PostConstruct;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,17 +42,17 @@ public class DiscoveryApiService {
 
     private final DiscoveryApiConfigurationProperties discoveryProperties;
 
-    private final AvailableApiConfigurationProperties availableApiProperties;
+    private final AvailableApiEndpointsResolver availableApiEndpointsResolver;
 
     private final ControllerEndpointBlacklistHandler blacklistHandler;
 
     private final Map<OBGroupName, Map<String, OBDiscoveryAPI>> discoveryApis = new HashMap<>();
 
     public DiscoveryApiService(DiscoveryApiConfigurationProperties discoveryProperties,
-                               AvailableApiConfigurationProperties availableApiProperties,
+                               AvailableApiEndpointsResolver availableApiEndpointsResolver,
                                ControllerEndpointBlacklistHandler blacklistHandler) {
         this.discoveryProperties = discoveryProperties;
-        this.availableApiProperties = availableApiProperties;
+        this.availableApiEndpointsResolver = availableApiEndpointsResolver;
         this.blacklistHandler = blacklistHandler;
     }
 
@@ -64,42 +62,38 @@ public class DiscoveryApiService {
      */
     @PostConstruct
     protected void init() {
-        List<AvailableApi> availableApis = availableApiProperties.getAvailableApis();
+        List<AvailableApiEndpoint> availableEndpoints = availableApiEndpointsResolver.getAvailableApiEndpoints();
 
-        // iterate over each API and its map of links
-        for (AvailableApi availableApi : availableApis) {
-            for (Map.Entry<OBApiReference, String> link : availableApi.getLinks().entrySet()) {
+        // iterate over each API endpoint
+        for (AvailableApiEndpoint availableEndpoint : availableEndpoints) {
+            String version = availableEndpoint.getVersion();
+            OBApiReference endpointReference = availableEndpoint.getApiReference();
+            String endpointUrl = availableEndpoint.getUrl();
 
-                if (isVersionEnabled(availableApi.getVersion())
-                        && isApiEnabled(link.getKey())
-                        && isVersionOverrideEnabled(availableApi.getVersion(), link.getKey())) {
+            if (isVersionEnabled(version)
+                    && isApiEnabled(endpointReference)
+                    && isVersionOverrideEnabled(version, endpointReference)) {
 
-                    // Init map
-                    if (!discoveryApis.containsKey(availableApi.getGroupName())) {
-                        discoveryApis.put(availableApi.getGroupName(), new HashMap<>());
-                    }
-                    if (!discoveryApis.get(availableApi.getGroupName()).containsKey(availableApi.getVersion())) {
-                        discoveryApis.get(availableApi.getGroupName())
-                                .put(availableApi.getVersion(), new OBDiscoveryAPI<GenericOBDiscoveryAPILinks>()
-                                        .version(availableApi.getVersion())
-                                        .links(new GenericOBDiscoveryAPILinks()));
-                    }
-                    GenericOBDiscoveryAPILinks links = (GenericOBDiscoveryAPILinks) discoveryApis
-                            .get(availableApi.getGroupName())
-                            .get(availableApi.getVersion())
-                            .getLinks();
-                    links.addLink(link.getKey().getReference(), link.getValue());
+                // Init map
+                if (!discoveryApis.containsKey(availableEndpoint.getGroupName())) {
+                    discoveryApis.put(availableEndpoint.getGroupName(), new HashMap<>());
                 }
-
-                else {
-                    log.warn("Disabling endpoint: [{}], with URL: [{}]", link.getKey().getReference(), link.getValue());
-                    try {
-                        blacklistHandler.blacklistEndpoint(link.getKey(), new URL(link.getValue()));
-                    } catch (MalformedURLException e) {
-                        log.error("Unable to add API endpoint to blacklist. Invalid URL from configuration: {}", link.getValue());
-                        throw new IllegalStateException("Invalid URL in application configuration: " + link.getValue());
-                    }
+                if (!discoveryApis.get(availableEndpoint.getGroupName()).containsKey(availableEndpoint.getVersion())) {
+                    discoveryApis.get(availableEndpoint.getGroupName())
+                            .put(availableEndpoint.getVersion(), new OBDiscoveryAPI<GenericOBDiscoveryAPILinks>()
+                                    .version(availableEndpoint.getVersion())
+                                    .links(new GenericOBDiscoveryAPILinks()));
                 }
+                GenericOBDiscoveryAPILinks links = (GenericOBDiscoveryAPILinks) discoveryApis
+                        .get(availableEndpoint.getGroupName())
+                        .get(availableEndpoint.getVersion())
+                        .getLinks();
+                links.addLink(endpointReference.getReference(), endpointUrl);
+            }
+
+            else {
+                log.warn("Disabling endpoint: [{}], with URL: [{}]", endpointReference.getReference(), endpointUrl);
+                blacklistHandler.blacklistEndpoint(availableEndpoint.getControllerMethod());
             }
         }
     }

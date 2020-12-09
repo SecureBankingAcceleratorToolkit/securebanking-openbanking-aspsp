@@ -44,8 +44,8 @@ public class ControllerEndpointBlacklistHandlerTest {
 
     private static final String BASE_URL = "http://localhost:";
     private static final String ENABLED_VERSION = "v3.1.5";
-    private static final String DISABLED_VERSION = "v3.1.3";
-    private static final String DISABLED_ENDPOINT_OVERRIDE_VERSION = "v3.1.6";
+    private static final String DISABLED_VERSION = "v3.1.6";
+    private static final String DISABLED_ENDPOINT_OVERRIDE_VERSION = "v3.1.5";
 
     @LocalServerPort
     private int port;
@@ -82,7 +82,7 @@ public class ControllerEndpointBlacklistHandlerTest {
     }
 
     @Test
-    public void shouldFailToGetDomesticPaymentConsentGivenApiEndpointIsEnabled() {
+    public void shouldFailToGetDomesticPaymentConsentGivenApiEndpointIsDisabled() {
         // Given
         HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(aValidOBWriteDomesticConsent4(), httpHeaders());
         ResponseEntity<OBWriteDomesticConsentResponse5> persistedConsent = restTemplate.postForEntity(
@@ -99,11 +99,11 @@ public class ControllerEndpointBlacklistHandlerTest {
     }
 
     @Test
-    public void shouldFailToCreateDomesticPaymentConsentGivenApiEndpointIsDisabledForVersion() {
+    public void shouldFailToCreateDomesticPaymentGivenApiEndpointIsDisabledForVersion() {
         // Given
         OBWriteDomesticConsent4 paymentConsent = aValidOBWriteDomesticConsent4();
         HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(paymentConsent, httpHeaders());
-        String url = paymentConsentsUrl(DISABLED_ENDPOINT_OVERRIDE_VERSION);
+        String url = paymentsUrl(DISABLED_ENDPOINT_OVERRIDE_VERSION);
 
         // When
         ResponseEntity<?> response = restTemplate.postForEntity(url, request, OBWriteDomesticConsentResponse5.class);
@@ -112,6 +112,9 @@ public class ControllerEndpointBlacklistHandlerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
+    private String paymentsUrl(String version) {
+        return BASE_URL + port + "/open-banking/" + version + "/pisp/domestic-payments";
+    }
 
     private String paymentConsentsUrl(String version) {
         return BASE_URL + port + "/open-banking/" + version + "/pisp/domestic-payment-consents";
@@ -130,5 +133,4 @@ public class ControllerEndpointBlacklistHandlerTest {
         headers.add("x-jws-signature", "dummyJwsSignature");
         return headers;
     }
-
 }

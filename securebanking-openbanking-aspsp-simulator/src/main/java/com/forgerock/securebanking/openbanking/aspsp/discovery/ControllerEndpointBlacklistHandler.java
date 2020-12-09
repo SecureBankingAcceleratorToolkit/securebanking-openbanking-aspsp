@@ -20,18 +20,11 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.discovery;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBApiReference;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -42,64 +35,35 @@ import java.util.Set;
 @Slf4j
 @Component
 public class ControllerEndpointBlacklistHandler {
-
-    private final RequestMappingHandlerMapping requestHandlerMapping;
     /**
-     * Set of all controller methods that are not in discovery
+     * Set of all controller methods that are not provided by the Discovery endpoint.
      */
-    private final Set<String> blackList = new HashSet<>();
-
-    public ControllerEndpointBlacklistHandler(RequestMappingHandlerMapping requestHandlerMapping) {
-        this.requestHandlerMapping = requestHandlerMapping;
-    }
+    private final Set<ControllerMethod> blackList = new HashSet<>();
 
     /**
-     * Adds the API endpoint to the list of ones to block.
+     * Adds the provided API endpoint to the list of ones to block.
      *
-     * @param obEndpointReference the {@link OBApiReference} from the list of available endpoints.
-     * @param obEndpointUrl the {@link URL} of the endpoint from the list of available endpoints.
+     * @param controllerMethod Represents the endpoint's corresponding Spring controller method.
      */
-    public void blacklistEndpoint(OBApiReference obEndpointReference, URL obEndpointUrl) {
-        Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestHandlerMapping.getHandlerMethods();
-        for (Map.Entry<RequestMappingInfo, HandlerMethod> item : handlerMethods.entrySet()) {
-            RequestMappingInfo mapping = item.getKey();
-            HandlerMethod method = item.getValue();
-
-            if (isOBApiEndpoint(mapping, obEndpointReference, obEndpointUrl)) {
-                addToBlacklist(method.getBeanType(), method.getMethod());
-            }
+    public void blacklistEndpoint(ControllerMethod controllerMethod) {
+        if (controllerMethod != null) {
+            blackList.add(controllerMethod);
+            log.info("Disabled Controller method: {}", controllerMethod);
         }
     }
 
+    /**
+     * Determines if the provided API endpoint is blacklisted.
+     *
+     * @param clazz The API endpoint's corresponding Spring controller class.
+     * @param method The API endpoint's implementing method in the corresponding Spring controller class.
+     * @return <code>true</code> if the endpoint is blacklisted.
+     */
     public boolean isBlacklisted(Class clazz, Method method) {
         if (clazz == null || method == null) {
             return false;
         }
-        String methodName = formatString(clazz, method);
-        return blackList.contains(methodName);
-    }
-
-    private boolean isOBApiEndpoint(RequestMappingInfo mapping, OBApiReference obApiEndpoint, URL obApiUrl) {
-        Set<String> patterns = mapping.getPatternsCondition().getPatterns();
-        Set<RequestMethod> methods = mapping.getMethodsCondition().getMethods();
-        if (patterns.isEmpty() || methods.isEmpty()) {
-            return false;
-        }
-
-        String urlPattern = patterns.iterator().next();
-        String httpMethod = methods.iterator().next().name();
-        return obApiUrl.getPath().equals(urlPattern) && httpMethod.equals(obApiEndpoint.getHttpMethod().name());
-    }
-
-    private void addToBlacklist(Class clazz, Method method) {
-        if (clazz != null && method != null) {
-            String methodName = formatString(clazz, method);
-            blackList.add(methodName);
-            log.info("Disabled Controller method: {}", methodName);
-        }
-    }
-
-    private static String formatString(Class clazz, Method method) {
-        return String.format("%s.%s", clazz.getName(), method.getName());
+        ControllerMethod controllerMethod = ControllerMethod.of(clazz, method);
+        return blackList.contains(controllerMethod);
     }
 }

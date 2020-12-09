@@ -32,8 +32,10 @@ import java.util.Map;
 import static com.forgerock.securebanking.openbanking.aspsp.common.OBApiReference.GET_ACCOUNT;
 import static com.forgerock.securebanking.openbanking.aspsp.common.OBApiReference.GET_ACCOUNTS;
 import static com.forgerock.securebanking.openbanking.aspsp.testsupport.discovery.AvailableApisTestDataFactory.*;
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Unit test for {@link DiscoveryApiService}.
@@ -42,7 +44,7 @@ public class DiscoveryApiServiceTest {
 
     private static final String TEST_VERSION = "v3.1.1";
 
-    private AvailableApiConfigurationProperties availableApis = getAvailableApiConfig();
+    private AvailableApiEndpointsResolver availableApisResolver = mock(AvailableApiEndpointsResolver.class);
 
     private ControllerEndpointBlacklistHandler blacklistHandler = mock(ControllerEndpointBlacklistHandler.class);
 
@@ -50,7 +52,8 @@ public class DiscoveryApiServiceTest {
     public void shouldGetDiscoveryApisByVersionAndGroupName() {
         // Given
         DiscoveryApiConfigurationProperties discoveryProperties = new DiscoveryApiConfigurationProperties();
-        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis, blacklistHandler);
+        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApisResolver, blacklistHandler);
+        when(availableApisResolver.getAvailableApiEndpoints()).thenReturn(getAvailableApiEndpoints());
 
         // When
         discoveryApiService.init();
@@ -69,7 +72,8 @@ public class DiscoveryApiServiceTest {
         // Given
         DiscoveryApiConfigurationProperties discoveryProperties = new DiscoveryApiConfigurationProperties();
         discoveryProperties.setVersions(ImmutableMap.of(TEST_VERSION, false));
-        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis, blacklistHandler);
+        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApisResolver, blacklistHandler);
+        when(availableApisResolver.getAvailableApiEndpoints()).thenReturn(getAvailableApiEndpoints());
 
         // When
         discoveryApiService.init();
@@ -88,7 +92,8 @@ public class DiscoveryApiServiceTest {
         // Given
         DiscoveryApiConfigurationProperties discoveryProperties = new DiscoveryApiConfigurationProperties();
         discoveryProperties.setApis(ImmutableMap.of(GET_ACCOUNT, false));
-        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis, blacklistHandler);
+        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApisResolver, blacklistHandler);
+        when(availableApisResolver.getAvailableApiEndpoints()).thenReturn(getAvailableApiEndpoints());
 
         // When
         discoveryApiService.init();
@@ -110,7 +115,8 @@ public class DiscoveryApiServiceTest {
         // Given
         DiscoveryApiConfigurationProperties discoveryProperties = new DiscoveryApiConfigurationProperties();
         discoveryProperties.setVersionApiOverrides(ImmutableMap.of("v3_1_2", ImmutableMap.of(GET_ACCOUNTS, false)));
-        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis, blacklistHandler);
+        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApisResolver, blacklistHandler);
+        when(availableApisResolver.getAvailableApiEndpoints()).thenReturn(getAvailableApiEndpoints());
 
         // When
         discoveryApiService.init();
@@ -137,9 +143,9 @@ public class DiscoveryApiServiceTest {
     @Test
     public void shouldGetEmptyDiscoveryApisGivenNoAvailableEndpoints() {
         // Given
-        AvailableApiConfigurationProperties availableApis = new AvailableApiConfigurationProperties();
         DiscoveryApiConfigurationProperties discoveryProperties = new DiscoveryApiConfigurationProperties();
-        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis, blacklistHandler);
+        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApisResolver, blacklistHandler);
+        when(availableApisResolver.getAvailableApiEndpoints()).thenReturn(emptyList());
 
         // When
         discoveryApiService.init();
@@ -154,7 +160,8 @@ public class DiscoveryApiServiceTest {
         // Given
         DiscoveryApiConfigurationProperties discoveryProperties = new DiscoveryApiConfigurationProperties();
         discoveryProperties.setVersions(allVersionsDisabled());
-        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApis, blacklistHandler);
+        DiscoveryApiService discoveryApiService = new DiscoveryApiService(discoveryProperties, availableApisResolver, blacklistHandler);
+        when(availableApisResolver.getAvailableApiEndpoints()).thenReturn(getAvailableApiEndpoints());
 
         // When
         discoveryApiService.init();
