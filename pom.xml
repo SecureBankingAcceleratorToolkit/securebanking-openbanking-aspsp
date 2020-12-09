@@ -70,6 +70,7 @@
         <license-maven-plugin.version>3.0</license-maven-plugin.version>
         <openapi-generator.version>4.3.1</openapi-generator.version>
         <git-changelog-maven-plugin.version>1.63</git-changelog-maven-plugin.version>
+        <jib-maven-plugin.version>2.5.2</jib-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -243,6 +244,37 @@
                     <groupId>org.openapitools</groupId>
                     <artifactId>openapi-generator-maven-plugin</artifactId>
                     <version>${openapi-generator.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib-maven-plugin.version}</version>
+                    <configuration>
+                        <from>
+                            <image>openjdk:11-jre</image>
+                        </from>
+                        <to>
+                            <image>eu.gcr.io/openbanking-214714/securebanking/ob-aspsp-simulator</image>
+                            <tags>
+                                <tag>${project.version}</tag>
+                                <tag>latest</tag>
+                            </tags>
+                        </to>
+                        <container>
+                            <jvmFlags>
+                                <jvmFlag>-Xms512m</jvmFlag>
+                                <jvmFlag>-Xdebug</jvmFlag>
+                            </jvmFlags>
+                        </container>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
