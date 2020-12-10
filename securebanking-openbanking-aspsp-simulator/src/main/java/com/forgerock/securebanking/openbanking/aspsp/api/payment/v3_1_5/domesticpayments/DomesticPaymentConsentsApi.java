@@ -95,8 +95,11 @@ public interface DomesticPaymentConsentsApi {
             @ApiParam(value = "Indicates the user-agent that the PSU is using.")
             @RequestHeader(value = "x-customer-user-agent", required = false) String xCustomerUserAgent,
 
-            @ApiParam(value = "The PISP ID")
-            @RequestHeader(value = "x-ob-client-id", required = false) String clientId,
+            @ApiParam(value = "The TPP ID")
+            @RequestHeader(value = "x-ob-tpp-id", required = true) String tppId,
+
+            @ApiParam(value = "The TPP Name")
+            @RequestHeader(value = "x-ob-tpp-name", required = true) String tppName,
 
             HttpServletRequest request,
 

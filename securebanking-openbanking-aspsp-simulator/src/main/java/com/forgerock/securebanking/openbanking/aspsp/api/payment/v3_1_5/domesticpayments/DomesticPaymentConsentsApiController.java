@@ -25,6 +25,7 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_5.domesticpayments;
 
+import com.forgerock.securebanking.openbanking.aspsp.api.common.IntentType;
 import com.forgerock.securebanking.openbanking.aspsp.common.error.OBErrorResponseException;
 import com.forgerock.securebanking.openbanking.aspsp.common.util.PaginationUtil;
 import com.forgerock.securebanking.openbanking.aspsp.common.util.VersionPathExtractor;
@@ -32,6 +33,8 @@ import com.forgerock.securebanking.openbanking.aspsp.persistence.document.paymen
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.FRDomesticConsent;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRWriteDomesticConsent;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticConsentRepository;
+import com.forgerock.securebanking.openbanking.aspsp.service.AnalyticsService;
+import com.forgerock.securebanking.openbanking.aspsp.service.balance.FundsAvailabilityService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.http.HttpStatus;
@@ -43,7 +46,6 @@ import uk.org.openbanking.datamodel.payment.*;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.forgerock.securebanking.openbanking.aspsp.api.common.LinksHelper.createDomesticPaymentConsentLink;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.common.FRAccountIdentifierConverter.toOBDebtorIdentification1;
@@ -60,9 +62,15 @@ import static com.forgerock.securebanking.openbanking.aspsp.service.IdempotencyS
 public class DomesticPaymentConsentsApiController implements DomesticPaymentConsentsApi {
 
     private final DomesticConsentRepository domesticConsentRepository;
+    private final FundsAvailabilityService fundsAvailabilityService;
+    private final AnalyticsService analyticsService;
 
-    public DomesticPaymentConsentsApiController(DomesticConsentRepository domesticConsentRepository) {
+    public DomesticPaymentConsentsApiController(DomesticConsentRepository domesticConsentRepository,
+                                                FundsAvailabilityService fundsAvailabilityService,
+                                                AnalyticsService analyticsService) {
         this.domesticConsentRepository = domesticConsentRepository;
+        this.fundsAvailabilityService = fundsAvailabilityService;
+        this.analyticsService = analyticsService;
     }
 
     @Override
@@ -75,7 +83,8 @@ public class DomesticPaymentConsentsApiController implements DomesticPaymentCons
             String xFapiCustomerIpAddress,
             String xFapiInteractionId,
             String xCustomerUserAgent,
-            String clientId,
+            String tppId,
+            String tppName,
             HttpServletRequest request,
             Principal principal
     ) throws OBErrorResponseException {
@@ -83,9 +92,6 @@ public class DomesticPaymentConsentsApiController implements DomesticPaymentCons
         FRWriteDomesticConsent frWriteDomesticConsent = toFRWriteDomesticConsent(obWriteDomesticConsent4);
         log.trace("Converted to: '{}'", frWriteDomesticConsent);
 
-        // TODO #6 - get tpp ID (client ID) from JWT
-        String tppId = "123456";
-        String tppName = "A TPP name";
         Optional<FRDomesticConsent> consentByIdempotencyKey = domesticConsentRepository.findByIdempotencyKeyAndPispId(xIdempotencyKey, tppId);
         if (consentByIdempotencyKey.isPresent()) {
             validateIdempotencyRequest(xIdempotencyKey, frWriteDomesticConsent, consentByIdempotencyKey.get(), () -> consentByIdempotencyKey.get().getDomesticConsent());
@@ -95,8 +101,7 @@ public class DomesticPaymentConsentsApiController implements DomesticPaymentCons
         log.debug("No consent with matching idempotency key has been found. Creating new consent.");
 
         FRDomesticConsent domesticConsent = FRDomesticConsent.builder()
-                // TODO #6 - fix intent ID
-                .id(generateIntentId())
+                .id(IntentType.PAYMENT_DOMESTIC_CONSENT.generateIntentId())
                 .status(ConsentStatusCode.AWAITINGAUTHORISATION)
                 .domesticConsent(frWriteDomesticConsent)
                 .pispId(tppId)
@@ -106,8 +111,10 @@ public class DomesticPaymentConsentsApiController implements DomesticPaymentCons
                 .obVersion(VersionPathExtractor.getVersionFromPath(request))
                 .build();
         log.debug("Saving consent: '{}'", domesticConsent);
-        // TODO #6 - determine log statement for analytics
-        //consentMetricService.sendConsentActivity(new ConsentStatusEntry(domesticConsent.getId(), domesticConsent.getStatus().name()));
+        analyticsService.recordActivity("Saved consent with ID [{}] and status [{}]",
+                domesticConsent.getId(),
+                domesticConsent.getStatus().name());
+
         domesticConsent = domesticConsentRepository.save(domesticConsent);
         log.info("Created consent id: '{}'", domesticConsent.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(packageResponse(domesticConsent));
@@ -123,7 +130,7 @@ public class DomesticPaymentConsentsApiController implements DomesticPaymentCons
             String xCustomerUserAgent,
             HttpServletRequest request,
             Principal principal
-    ) throws OBErrorResponseException {
+    ) {
         Optional<FRDomesticConsent> isDomesticConsent = domesticConsentRepository.findById(consentId);
         if (!isDomesticConsent.isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Domestic consent '" + consentId + "' can't be found");
@@ -144,19 +151,17 @@ public class DomesticPaymentConsentsApiController implements DomesticPaymentCons
             String httpUrl,
             HttpServletRequest request,
             Principal principal
-    ) throws OBErrorResponseException {
+    ) {
         Optional<FRDomesticConsent> isDomesticConsent = domesticConsentRepository.findById(consentId);
         if (!isDomesticConsent.isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Domestic consent '" + consentId + "' can't be found");
         }
         FRDomesticConsent domesticConsent = isDomesticConsent.get();
 
-        // TODO #6 - check if funds are available - do we need to do this?
-        boolean areFundsAvailable = true;
-//        // Check if funds are available on the account selected in consent
-//        boolean areFundsAvailable = fundsAvailabilityService.isFundsAvailable(
-//                domesticConsent.getAccountId(),
-//                domesticConsent.getInitiation().getInstructedAmount().getAmount());
+        // Check if funds are available on the account selected in consent
+        boolean areFundsAvailable = fundsAvailabilityService.isFundsAvailable(
+                domesticConsent.getAccountId(),
+                domesticConsent.getInitiation().getInstructedAmount().getAmount());
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -187,12 +192,6 @@ public class DomesticPaymentConsentsApiController implements DomesticPaymentCons
                 .links(createDomesticPaymentConsentLink(this.getClass(), domesticConsent.getId()))
                 .risk(toOBRisk1(domesticConsent.getRisk()))
                 .meta(new Meta());
-    }
-
-    // TODO #6 - use IntentType from aspsp
-    private String generateIntentId() {
-        String intentId = "PDC_" + UUID.randomUUID().toString();
-        return intentId.substring(0, Math.min(intentId.length(), 40));
     }
 
 }

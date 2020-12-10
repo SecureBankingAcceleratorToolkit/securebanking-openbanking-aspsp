@@ -18,26 +18,28 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.forgerock.securebanking.openbanking.aspsp.persistence.document.account;
+package com.forgerock.securebanking.openbanking.aspsp.testsupport;
 
-
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRCreditDebitIndicator;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.common.FRAmount;
 
-import java.math.BigDecimal;
+/**
+ * Test data factory for {@link FRAmount}.
+ */
+public class FRAmountTestDataFactory {
 
-public interface Balance {
+    /**
+     * @return a valid instance of {@link FRAmount}
+     */
+    public static FRAmount aValidFRAmount() {
+        return aValidFRAmountBuilder().build();
+    }
 
-    FRAmount getCurrencyAndAmount();
-
-    BigDecimal getAmount();
-
-    String getCurrency();
-
-    FRCreditDebitIndicator getCreditDebitIndicator();
-
-    void setAmount(BigDecimal amount);
-
-    void setCreditDebitIndicator(FRCreditDebitIndicator code);
-
+    /**
+     * @return an instance of {@link FRAmount.FRAmountBuilder} with the required values populated.
+     */
+    public static FRAmount.FRAmountBuilder aValidFRAmountBuilder() {
+        return FRAmount.builder()
+                .currency("GBP")
+                .amount("10.00");
+    }
 }
