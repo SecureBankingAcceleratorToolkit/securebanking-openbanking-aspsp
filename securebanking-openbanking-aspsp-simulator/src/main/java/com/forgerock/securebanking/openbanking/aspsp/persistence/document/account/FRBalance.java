@@ -40,14 +40,14 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * Representation of an account. This model is only useful for the demo
+ * Representation of an account's balance.
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Document
-public class FRBalance implements Balance {
+public class FRBalance {
     private final static NumberFormat FORMAT_AMOUNT = new DecimalFormat("#0.00");
 
     @Id
@@ -62,33 +62,26 @@ public class FRBalance implements Balance {
     @LastModifiedDate
     public Date updated;
 
-
-    @Override
     public FRAmount getCurrencyAndAmount() {
         return getBalance().getAmount();
     }
 
-    @Override
     public BigDecimal getAmount() {
         return new BigDecimal(getBalance().getAmount().getAmount());
     }
 
-    @Override
     public String getCurrency() {
         return getBalance().getAmount().getCurrency();
     }
 
-    @Override
     public FRCreditDebitIndicator getCreditDebitIndicator() {
         return getBalance().getCreditDebitIndicator();
     }
 
-    @Override
     public void setAmount(BigDecimal amount) {
         getBalance().getAmount().setAmount(FORMAT_AMOUNT.format(amount));
     }
 
-    @Override
     public void setCreditDebitIndicator(FRCreditDebitIndicator code) {
         getBalance().setCreditDebitIndicator(code);
     }

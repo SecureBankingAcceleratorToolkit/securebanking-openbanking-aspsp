@@ -26,7 +26,9 @@ import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.
 import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRWriteDomesticConsentData;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.common.FRDataAuthorisation;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticConsentRepository;
+import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticPaymentSubmissionRepository;
 import org.joda.time.DateTime;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,7 +43,7 @@ import uk.org.openbanking.datamodel.payment.OBWriteDomesticResponse5Data;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRPaymentRiskConverter.toFRRisk;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRWriteDomesticConsentConverter.toFRWriteDomesticDataInitiation;
 import static com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.common.FRDataAuthorisation.AuthorisationType.SINGLE;
-import static java.util.Collections.singletonList;
+import static com.forgerock.securebanking.openbanking.aspsp.testsupport.api.HttpHeadersTestDataFactory.requiredHttpHeaders;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static uk.org.openbanking.datamodel.service.converter.payment.OBDomesticConverter.toOBWriteDomestic2DataInitiation;
@@ -53,6 +55,7 @@ import static uk.org.openbanking.testsupport.payment.OBWriteDomesticConsentTestD
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 public class DomesticPaymentsApiControllerTest {
 
+    private static final HttpHeaders HTTP_HEADERS = requiredHttpHeaders();
     private static final String BASE_URL = "http://localhost:";
     private static final String DOMESTIC_PAYMENTS_URI = "/open-banking/v3.1.5/pisp/domestic-payments";
 
@@ -63,14 +66,23 @@ public class DomesticPaymentsApiControllerTest {
     private DomesticConsentRepository domesticConsentRepository;
 
     @Autowired
+    private DomesticPaymentSubmissionRepository domesticPaymentRepository;
+
+    @Autowired
     private TestRestTemplate restTemplate;
+
+    @AfterEach
+    void removeData() {
+        domesticConsentRepository.deleteAll();
+        domesticPaymentRepository.deleteAll();
+    }
 
     @Test
     public void shouldCreateDomesticPayment() {
         // Given
         OBWriteDomestic2 payment = aValidOBWriteDomestic2();
         savePaymentConsent(payment);
-        HttpEntity<OBWriteDomestic2> request = new HttpEntity<>(payment, httpHeaders());
+        HttpEntity<OBWriteDomestic2> request = new HttpEntity<>(payment, HTTP_HEADERS);
 
         // When
         ResponseEntity<OBWriteDomesticResponse5> response = restTemplate.postForEntity(paymentsUrl(), request, OBWriteDomesticResponse5.class);
@@ -89,12 +101,12 @@ public class DomesticPaymentsApiControllerTest {
         // Given
         OBWriteDomestic2 payment = aValidOBWriteDomestic2();
         savePaymentConsent(payment);
-        HttpEntity<OBWriteDomestic2> request = new HttpEntity<>(payment, httpHeaders());
+        HttpEntity<OBWriteDomestic2> request = new HttpEntity<>(payment, HTTP_HEADERS);
         ResponseEntity<OBWriteDomesticResponse5> persistedPayment = restTemplate.postForEntity(paymentsUrl(), request, OBWriteDomesticResponse5.class);
         String url = paymentIdUrl(persistedPayment.getBody().getData().getDomesticPaymentId());
 
         // When
-        ResponseEntity<OBWriteDomesticResponse5> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(httpHeaders()), OBWriteDomesticResponse5.class);
+        ResponseEntity<OBWriteDomesticResponse5> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(HTTP_HEADERS), OBWriteDomesticResponse5.class);
 
         // Then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -116,16 +128,6 @@ public class DomesticPaymentsApiControllerTest {
 
     private String paymentIdUrl(String id) {
         return paymentsUrl() + "/" + id;
-    }
-
-    private HttpHeaders httpHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(singletonList(MediaType.APPLICATION_JSON));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth("dummyAuthToken");
-        headers.add("x-idempotency-key", "dummyIdempotencyKey");
-        headers.add("x-jws-signature", "dummyJwsSignature");
-        return headers;
     }
 
     private FRDomesticConsent aValidFRDomesticConsent(OBWriteDomestic2 payment) {

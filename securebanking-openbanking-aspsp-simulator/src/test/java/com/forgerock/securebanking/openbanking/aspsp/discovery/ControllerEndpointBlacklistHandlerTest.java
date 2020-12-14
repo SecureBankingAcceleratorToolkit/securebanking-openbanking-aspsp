@@ -20,19 +20,22 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.discovery;
 
+import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticConsentRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import uk.org.openbanking.datamodel.payment.OBWriteDomesticConsent4;
 import uk.org.openbanking.datamodel.payment.OBWriteDomesticConsentResponse5;
 
-import java.util.UUID;
-
-import static java.util.Collections.singletonList;
+import static com.forgerock.securebanking.openbanking.aspsp.testsupport.api.HttpHeadersTestDataFactory.requiredHttpHeaders;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpMethod.GET;
@@ -42,6 +45,7 @@ import static uk.org.openbanking.testsupport.payment.OBWriteDomesticConsentTestD
 @ActiveProfiles("test")
 public class ControllerEndpointBlacklistHandlerTest {
 
+    private static HttpHeaders HTTP_HEADERS = requiredHttpHeaders();
     private static final String BASE_URL = "http://localhost:";
     private static final String ENABLED_VERSION = "v3.1.5";
     private static final String DISABLED_VERSION = "v3.1.6";
@@ -53,11 +57,19 @@ public class ControllerEndpointBlacklistHandlerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Autowired
+    private DomesticConsentRepository domesticConsentRepository;
+
+    @AfterEach
+    void removeData() {
+        domesticConsentRepository.deleteAll();
+    }
+
     @Test
     public void shouldCreateDomesticPaymentConsentGivenApiVersionIsEnabled() {
         // Given
         OBWriteDomesticConsent4 paymentConsent = aValidOBWriteDomesticConsent4();
-        HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(paymentConsent, httpHeaders());
+        HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(paymentConsent, HTTP_HEADERS);
         String url = paymentConsentsUrl(ENABLED_VERSION);
 
         // When
@@ -71,7 +83,7 @@ public class ControllerEndpointBlacklistHandlerTest {
     public void shouldFailToCreateDomesticPaymentConsentGivenApiVersionIsDisabled() {
         // Given
         OBWriteDomesticConsent4 paymentConsent = aValidOBWriteDomesticConsent4();
-        HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(paymentConsent, httpHeaders());
+        HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(paymentConsent, HTTP_HEADERS);
         String url = paymentConsentsUrl(DISABLED_VERSION);
 
         // When
@@ -84,7 +96,7 @@ public class ControllerEndpointBlacklistHandlerTest {
     @Test
     public void shouldFailToGetDomesticPaymentConsentGivenApiEndpointIsDisabled() {
         // Given
-        HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(aValidOBWriteDomesticConsent4(), httpHeaders());
+        HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(aValidOBWriteDomesticConsent4(), HTTP_HEADERS);
         ResponseEntity<OBWriteDomesticConsentResponse5> persistedConsent = restTemplate.postForEntity(
                 paymentConsentsUrl(ENABLED_VERSION),
                 request,
@@ -92,7 +104,7 @@ public class ControllerEndpointBlacklistHandlerTest {
         String url = paymentConsentIdUrl(ENABLED_VERSION, persistedConsent.getBody().getData().getConsentId());
 
         // When
-        ResponseEntity<?> response = restTemplate.exchange(url, GET, new HttpEntity<>(httpHeaders()), OBWriteDomesticConsentResponse5.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, GET, new HttpEntity<>(HTTP_HEADERS), OBWriteDomesticConsentResponse5.class);
 
         // Then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -102,7 +114,7 @@ public class ControllerEndpointBlacklistHandlerTest {
     public void shouldFailToCreateDomesticPaymentGivenApiEndpointIsDisabledForVersion() {
         // Given
         OBWriteDomesticConsent4 paymentConsent = aValidOBWriteDomesticConsent4();
-        HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(paymentConsent, httpHeaders());
+        HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(paymentConsent, HTTP_HEADERS);
         String url = paymentsUrl(DISABLED_ENDPOINT_OVERRIDE_VERSION);
 
         // When
@@ -122,15 +134,5 @@ public class ControllerEndpointBlacklistHandlerTest {
 
     private String paymentConsentIdUrl(String version, String id) {
         return paymentConsentsUrl(version) + "/" + id;
-    }
-
-    private HttpHeaders httpHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(singletonList(MediaType.APPLICATION_JSON));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth("dummyAuthToken");
-        headers.add("x-idempotency-key", UUID.randomUUID().toString());
-        headers.add("x-jws-signature", "dummyJwsSignature");
-        return headers;
     }
 }

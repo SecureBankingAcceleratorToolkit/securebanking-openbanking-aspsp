@@ -251,7 +251,8 @@
                     <version>${jib-maven-plugin.version}</version>
                     <configuration>
                         <from>
-                            <image>openjdk:11-jre</image>
+                            <!-- TODO #8 - use JRE instead of JDK -->
+                            <image>openjdk:14-alpine</image>
                         </from>
                         <to>
                             <image>eu.gcr.io/openbanking-214714/securebanking/ob-aspsp-simulator</image>
