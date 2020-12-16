@@ -104,31 +104,3 @@ example, `CreateDomesticPaymentConsent` and `GetDomesticPaymentConsent` are disa
 1. **versionApiOverrides**: Or more specifically, by listing both the version and name of the endpoint. In the above
 example, `GetStatements` and `GetAccountStatements` will be blocked in v3.1.3 and v3.1.4, but will work in the versions
 prior to this.
-
-*********************************************************************
-## TODO - move the following section to common's uk-datamodel project
-*********************************************************************
-### Open Banking Model Generation
-The project is set-up to make it easy to generate the OB model classes and skeleton API classes.
-For efficiency, the default maven profile does not generate the code, but it is simple to do so by 
-running the `code-gen` profile - for example:
-
-```bash
-mvn clean install -Pcode-gen
-```
-
-This will generate classes from the swagger specification into `securebanking-openbanking-aspsp-mock/target/generated-sources/swagger`.
-From here, the generated classes can be copied to the source folder under `src/main/java`.
-
-> CAUTION: When copying the newly generated files, be careful not to overwrite existing classes.
-
-This is because most of them have been generated using `swagger-codegen-cli-2.4.5.jar`, which is older than the
-`openapi-generator` maven plugin we are using. Also, we use a shared generic version of `Links`, `Meta`, `OBError1` and
-`OBErrorResponse1`.
-
-Note that the OB Read/Write API consists of several yaml files, however the `openapi-generator-maven-plugin` currently
-only generates code from one swagger file. Because of this, each individual yaml file is listed within the plugin and should
-be commented/uncommented as necessary.
-
-The configuration for the swagger generation is currently within `securebanking-openbanking-aspsp-mock/pom.xml` 
-and the swagger specification is within `securebanking-openbanking-aspsp-mock/src/main/resources/specification`.

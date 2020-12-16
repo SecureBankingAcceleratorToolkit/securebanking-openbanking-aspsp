@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2020 ForgeRock AS.
+    Copyright © 2020 ForgeRock AS (obst@forgerock.com)
 
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-      http://www.apache.org/licenses/LICENSE-2.0
+        http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -34,300 +29,27 @@
     <description>A mock Open Banking ASPSP for the Secure Banking Accelerator Toolkit</description>
 
     <modules>
-        <module>securebanking-openbanking-aspsp-model</module>
         <module>securebanking-openbanking-aspsp-simulator</module>
     </modules>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.5.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>com.forgerock.securebanking</groupId>
+        <artifactId>securebanking-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>11</java.version>
-
-        <validation-api.version>2.0.1.Final</validation-api.version>
-        <springfox.version>3.0.0</springfox.version>
-        <jaxb-api.version>2.3.1</jaxb-api.version>
-        <joda-time.version>2.10.8</joda-time.version>
-        <jackson-joda.version>2.9.7</jackson-joda.version>
-        <jackson.version>2.11.3</jackson.version>
-        <guava.version>30.0-jre</guava.version>
-        <lombok.version>1.18.16</lombok.version>
-        <bouncycastle.version>1.67</bouncycastle.version>
-        <model-mapper.version>2.3.8</model-mapper.version>
-
-        <junit-jupiter-engine.version>5.6.3</junit-jupiter-engine.version>
-        <assertj.core.version>3.18.1</assertj.core.version>
-        <mockito.version>3.5.15</mockito.version>
-        <flapdoodle-mongo.version>2.2.0</flapdoodle-mongo.version>
-
-        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-        <license-maven-plugin.version>3.0</license-maven-plugin.version>
-        <openapi-generator.version>4.3.1</openapi-generator.version>
-        <git-changelog-maven-plugin.version>1.63</git-changelog-maven-plugin.version>
-        <jib-maven-plugin.version>2.5.2</jib-maven-plugin.version>
-    </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- ForgeRock -->
+            <!-- ForgeRock BOM -->
             <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>securebanking-openbanking-aspsp-model</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <!-- External dependencies -->
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${springfox.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${springfox.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>${springfox.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>${validation-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>joda-time</groupId>
-                <artifactId>joda-time</artifactId>
-                <version>${joda-time.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-joda</artifactId>
-                <version>${jackson-joda.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.xml.bind</groupId>
-                <artifactId>jaxb-api</artifactId>
-                <version>${jaxb-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk15on</artifactId>
-                <version>${bouncycastle.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.modelmapper</groupId>
-                <artifactId>modelmapper</artifactId>
-                <version>${model-mapper.version}</version>
-            </dependency>
-
-            <!-- ForgeRock Test dependencies -->
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>securebanking-openbanking-aspsp-model</artifactId>
-                <version>${project.version}</version>
-                <type>test-jar</type>
-                <scope>test</scope>
-            </dependency>
-
-            <!-- External Test dependencies -->
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-engine</artifactId>
-                <version>${junit-jupiter-engine.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>${mockito.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>de.flapdoodle.embed</groupId>
-                <artifactId>de.flapdoodle.embed.mongo</artifactId>
-                <version>${flapdoodle-mongo.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.assertj</groupId>
-                <artifactId>assertj-core</artifactId>
-                <scope>test</scope>
-                <version>${assertj.core.version}</version>
+                <groupId>com.forgerock.securebanking</groupId>
+                <artifactId>securebanking-common-bom</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>${maven-enforcer-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>high-severity-errors</id>
-                            <!-- Important checks that fail the build if any of them are violated -->
-                            <goals>
-                                <goal>enforce</goal>
-                            </goals>
-                            <phase>validate</phase>
-                            <configuration>
-                                <rules>
-                                    <DependencyConvergence />
-                                    <bannedDependencies>
-                                        <searchTransitive>true</searchTransitive>
-                                        <excludes>
-                                            <!-- exclude junit 4 -->
-                                            <exclude>junit:junit</exclude>
-                                        </excludes>
-                                    </bannedDependencies>
-                                </rules>
-                                <failFast>true</failFast>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>com.mycila</groupId>
-                    <artifactId>license-maven-plugin</artifactId>
-                    <version>${license-maven-plugin.version}</version>
-                    <configuration>
-                        <header>file://${maven.multiModuleProjectDirectory}/legal/LICENSE.txt</header>
-                        <includes>
-                            <include>**/*.java</include>
-                            <include>pom.xml</include>
-                        </includes>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <phase>process-sources</phase>
-                            <goals>
-                                <goal>format</goal>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.openapitools</groupId>
-                    <artifactId>openapi-generator-maven-plugin</artifactId>
-                    <version>${openapi-generator.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>com.google.cloud.tools</groupId>
-                    <artifactId>jib-maven-plugin</artifactId>
-                    <version>${jib-maven-plugin.version}</version>
-                    <configuration>
-                        <from>
-                            <!-- TODO #8 - use JRE instead of JDK -->
-                            <image>openjdk:14-alpine</image>
-                        </from>
-                        <to>
-                            <image>eu.gcr.io/openbanking-214714/securebanking/ob-aspsp-simulator</image>
-                            <tags>
-                                <tag>${project.version}</tag>
-                                <tag>latest</tag>
-                            </tags>
-                        </to>
-                        <container>
-                            <jvmFlags>
-                                <jvmFlag>-Xms512m</jvmFlag>
-                                <jvmFlag>-Xdebug</jvmFlag>
-                            </jvmFlags>
-                        </container>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>build</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>se.bjurr.gitchangelog</groupId>
-                <artifactId>git-changelog-maven-plugin</artifactId>
-                <version>${git-changelog-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>changelog</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>git-changelog</goal>
-                        </goals>
-                        <inherited>false</inherited>
-                        <configuration>
-                            <noIssueName>test</noIssueName>
-                            <templateContent>
-                                <![CDATA[
-# Git Changelog Maven plugin changelog
-Changelog of Git Changelog Maven plugin.
-{{#tags}}
-## {{name}}
- {{#issues}}
-  {{#hasLink}}
-### {{name}} [{{issue}}]({{link}}) {{title}}
-  {{/hasLink}}
-  {{#commits}}
-[{{hash}}](https://github.com/SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp/commit/{{hash}}) {{authorName}} *{{commitTime}}*
-{{{message}}}
-  {{/commits}}
- {{/issues}}
-{{/tags}}
-]]>
-                            </templateContent>
-                            <file>CHANGELOG.md</file>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 
     <scm>
         <connection>scm:git:git@github.com:SecureBankingAcceleratorToolkit/securebanking-openbanking-aspsp.git

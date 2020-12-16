@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2020 ForgeRock AS.
+    Copyright © 2020 ForgeRock AS (obst@forgerock.com)
 
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-      http://www.apache.org/licenses/LICENSE-2.0
+        http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -47,8 +42,8 @@
     <dependencies>
         <!-- ForgeRock dependencies -->
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>securebanking-openbanking-aspsp-model</artifactId>
+            <groupId>com.forgerock.securebanking</groupId>
+            <artifactId>securebanking-common-openbanking-uk-datamodel</artifactId>
         </dependency>
 
         <!-- External dependencies -->
@@ -94,8 +89,8 @@
 
         <!-- ForgeRock Test dependencies -->
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>securebanking-openbanking-aspsp-model</artifactId>
+            <groupId>com.forgerock.securebanking</groupId>
+            <artifactId>securebanking-common-openbanking-uk-datamodel</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
@@ -115,17 +110,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <!-- ensure junit 4 tests aren't created by mistake -->
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>
@@ -142,16 +126,39 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
+                <configuration>
+                    <from>
+                        <!-- TODO #8 - use JRE instead of JDK -->
+                        <image>openjdk:14-alpine</image>
+                    </from>
+                    <to>
+                        <image>eu.gcr.io/openbanking-214714/securebanking/ob-aspsp-simulator</image>
+                        <tags>
+                            <tag>${project.version}</tag>
+                            <tag>latest</tag>
+                        </tags>
+                    </to>
+                    <container>
+                        <jvmFlags>
+                            <jvmFlag>-Xms512m</jvmFlag>
+                            <jvmFlag>-Xdebug</jvmFlag>
+                        </jvmFlags>
+                    </container>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
