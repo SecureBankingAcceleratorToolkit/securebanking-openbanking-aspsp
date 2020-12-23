@@ -23,6 +23,7 @@
     <groupId>com.forgerock.securebanking</groupId>
     <artifactId>securebanking-openbanking-aspsp-simulator</artifactId>
     <packaging>jar</packaging>
+    <version>1.0.0-SNAPSHOT</version>
     <name>securebanking-openbanking-aspsp-simulator</name>
     <description>An Open Banking ASPSP simulator for the Secure Banking Accelerator Toolkit</description>
 
@@ -134,8 +135,7 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <configuration>
                     <from>
-                        <!-- TODO #8 - use JRE instead of JDK -->
-                        <image>openjdk:14-alpine</image>
+                        <image>adoptopenjdk/openjdk14:jre-14.0.2_12</image>
                     </from>
                     <to>
                         <image>eu.gcr.io/openbanking-214714/securebanking/ob-aspsp-simulator</image>
@@ -145,6 +145,9 @@
                         </tags>
                     </to>
                     <container>
+                        <!-- Using this setting means the image is not truly reproducible, as a new one is created each
+                        time. However it gives it a proper creation date in the registry (rather than 1 Jan 1970!) -->
+                        <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
                         <jvmFlags>
                             <jvmFlag>-Xms512m</jvmFlag>
                             <jvmFlag>-Xdebug</jvmFlag>
@@ -153,7 +156,7 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>build</goal>
                         </goals>
