@@ -15,7 +15,7 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.converter.v3_1_3;
 
-import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.ConsentStatusCode;
+import com.forgerock.securebanking.common.openbanking.domain.payment.ConsentStatusCode;
 import uk.org.openbanking.datamodel.payment.*;
 
 public class ConsentStatusCodeToResponseDataStatusConverter {

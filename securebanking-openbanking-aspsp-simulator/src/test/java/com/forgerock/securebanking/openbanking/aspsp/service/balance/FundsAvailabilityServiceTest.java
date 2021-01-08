@@ -15,8 +15,8 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.service.balance;
 
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRCashBalance;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.account.FRBalance;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.FRCashBalance;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,7 +25,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRBalanceType.INTERIMAVAILABLE;
+import static com.forgerock.securebanking.common.openbanking.domain.account.data.FRBalanceType.INTERIMAVAILABLE;
 import static com.forgerock.securebanking.openbanking.aspsp.testsupport.FRCashBalanceTestDataFactory.aValidFRCashBalance;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;

@@ -15,7 +15,7 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.document.event;
 
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.event.FREventPollingError;
+import com.forgerock.securebanking.common.openbanking.domain.event.data.FREventPollingError;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

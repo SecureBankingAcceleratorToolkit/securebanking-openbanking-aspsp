@@ -27,7 +27,9 @@ import uk.org.openbanking.datamodel.account.OBCreditDebitCode;
 import java.util.List;
 import java.util.Set;
 
-import static com.forgerock.securebanking.openbanking.aspsp.common.OpenBankingConstants.*;
+import static com.forgerock.securebanking.openbanking.aspsp.common.OpenBankingConstants.BOOKED_TIME_DATE_FORMAT;
+import static com.forgerock.securebanking.openbanking.aspsp.common.OpenBankingConstants.ParametersFieldName.FROM_BOOKING_DATE_TIME;
+import static com.forgerock.securebanking.openbanking.aspsp.common.OpenBankingConstants.ParametersFieldName.TO_BOOKING_DATE_TIME;
 
 public interface FRTransactionRepository extends MongoRepository<FRTransaction, String>, FRTransactionRepositoryCustom {
 

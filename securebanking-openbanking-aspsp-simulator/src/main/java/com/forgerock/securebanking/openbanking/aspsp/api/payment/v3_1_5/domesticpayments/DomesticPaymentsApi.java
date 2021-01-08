@@ -20,7 +20,7 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_5.domesticpayments;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.error.OBErrorResponseException;
+import com.forgerock.securebanking.common.error.OBErrorResponseException;
 import io.swagger.annotations.*;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;

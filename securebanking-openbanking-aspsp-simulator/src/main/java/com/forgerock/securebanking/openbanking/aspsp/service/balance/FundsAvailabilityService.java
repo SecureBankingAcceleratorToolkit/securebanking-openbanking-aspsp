@@ -24,7 +24,7 @@ import org.springframework.util.StringUtils;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRBalanceType.INTERIMAVAILABLE;
+import static com.forgerock.securebanking.common.openbanking.domain.account.data.FRBalanceType.INTERIMAVAILABLE;
 
 @Service
 @Slf4j

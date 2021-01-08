@@ -15,8 +15,8 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.service.balance;
 
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRBalanceType;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.account.FRBalance;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRBalanceType;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.accounts.balances.FRBalanceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

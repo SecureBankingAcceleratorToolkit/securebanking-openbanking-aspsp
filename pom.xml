@@ -29,6 +29,7 @@
     <description>A mock Open Banking ASPSP for the Secure Banking Accelerator Toolkit</description>
 
     <modules>
+        <module>securebanking-openbanking-aspsp-common</module>
         <module>securebanking-openbanking-aspsp-simulator</module>
     </modules>
 

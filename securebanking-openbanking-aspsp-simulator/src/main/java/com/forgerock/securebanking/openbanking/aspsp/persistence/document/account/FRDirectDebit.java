@@ -15,7 +15,7 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.document.account;
 
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.FRDirectDebitData;
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRDirectDebitData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

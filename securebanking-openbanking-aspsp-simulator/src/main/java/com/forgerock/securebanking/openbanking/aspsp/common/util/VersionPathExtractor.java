@@ -15,7 +15,7 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.common.util;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBVersion;
+import com.forgerock.securebanking.openbanking.aspsp.common.version.OBVersion;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerMapping;

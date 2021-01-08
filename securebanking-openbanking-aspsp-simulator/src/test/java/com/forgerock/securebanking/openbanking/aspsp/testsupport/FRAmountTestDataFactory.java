@@ -15,7 +15,8 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.testsupport;
 
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.common.FRAmount;
+
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRAmount;
 
 /**
  * Test data factory for {@link FRAmount}.

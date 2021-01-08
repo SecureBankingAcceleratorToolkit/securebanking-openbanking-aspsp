@@ -15,11 +15,11 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.testsupport;
 
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.FRCashBalance;
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRCashBalance;
 import org.joda.time.DateTime;
 
-import static com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRBalanceType.INTERIMAVAILABLE;
-import static com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRCreditDebitIndicator.CREDIT;
+import static com.forgerock.securebanking.common.openbanking.domain.account.data.FRBalanceType.INTERIMAVAILABLE;
+import static com.forgerock.securebanking.common.openbanking.domain.account.data.FRCreditDebitIndicator.CREDIT;
 import static com.forgerock.securebanking.openbanking.aspsp.testsupport.FRAmountTestDataFactory.aValidFRAmount;
 
 /**

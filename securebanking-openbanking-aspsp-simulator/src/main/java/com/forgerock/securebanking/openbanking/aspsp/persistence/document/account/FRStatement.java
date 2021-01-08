@@ -17,7 +17,7 @@ package com.forgerock.securebanking.openbanking.aspsp.persistence.document.accou
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.FRStatementData;
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRStatementData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

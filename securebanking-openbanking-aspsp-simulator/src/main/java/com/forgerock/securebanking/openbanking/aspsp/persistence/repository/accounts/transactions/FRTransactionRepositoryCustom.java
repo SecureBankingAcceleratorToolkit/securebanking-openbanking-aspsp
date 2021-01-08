@@ -16,7 +16,7 @@
 package com.forgerock.securebanking.openbanking.aspsp.persistence.repository.accounts.transactions;
 
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.account.FRTransaction;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRExternalPermissionsCode;
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRExternalPermissionsCode;
 import org.joda.time.DateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +25,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.List;
 
-import static com.forgerock.securebanking.openbanking.aspsp.common.OpenBankingConstants.*;
+import static com.forgerock.securebanking.openbanking.aspsp.common.OpenBankingConstants.BOOKED_TIME_DATE_FORMAT;
+import static com.forgerock.securebanking.openbanking.aspsp.common.OpenBankingConstants.ParametersFieldName.FROM_BOOKING_DATE_TIME;
+import static com.forgerock.securebanking.openbanking.aspsp.common.OpenBankingConstants.ParametersFieldName.TO_BOOKING_DATE_TIME;
 
 public interface FRTransactionRepositoryCustom {
 

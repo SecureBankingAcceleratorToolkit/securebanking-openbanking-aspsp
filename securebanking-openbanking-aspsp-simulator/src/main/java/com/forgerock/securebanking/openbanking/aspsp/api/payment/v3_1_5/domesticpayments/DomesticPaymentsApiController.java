@@ -20,13 +20,13 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_5.domesticpayments;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.error.OBErrorResponseException;
-import com.forgerock.securebanking.openbanking.aspsp.common.error.OBRIErrorResponseCategory;
-import com.forgerock.securebanking.openbanking.aspsp.common.error.OBRIErrorType;
+import com.forgerock.securebanking.common.error.OBErrorResponseException;
+import com.forgerock.securebanking.common.error.OBRIErrorResponseCategory;
+import com.forgerock.securebanking.common.error.OBRIErrorType;
+import com.forgerock.securebanking.common.openbanking.domain.payment.FRDomesticConsent;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteDomestic;
 import com.forgerock.securebanking.openbanking.aspsp.common.util.VersionPathExtractor;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.FRDomesticConsent;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.FRDomesticPaymentSubmission;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRWriteDomestic;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.IdempotentRepositoryAdapter;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticConsentRepository;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticPaymentSubmissionRepository;
@@ -47,7 +47,7 @@ import java.util.Date;
 import java.util.Optional;
 
 import static com.forgerock.securebanking.openbanking.aspsp.api.common.LinksHelper.createDomesticPaymentLink;
-import static com.forgerock.securebanking.openbanking.aspsp.common.converter.common.FRAccountIdentifierConverter.toOBDebtorIdentification1;
+import static com.forgerock.securebanking.openbanking.aspsp.common.converter.FRAccountIdentifierConverter.toOBDebtorIdentification1;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRWriteDomesticConsentConverter.toOBWriteDomestic2DataInitiation;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRWriteDomesticConverter.toFRWriteDomestic;
 import static com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.converter.v3_1_5.ConsentStatusCodeToResponseDataStatusConverter.toOBWriteDomesticResponse5DataStatus;

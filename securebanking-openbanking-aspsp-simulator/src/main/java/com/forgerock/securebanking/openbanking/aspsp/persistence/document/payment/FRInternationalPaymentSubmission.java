@@ -15,8 +15,9 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBVersion;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRWriteInternational;
+import com.forgerock.securebanking.common.openbanking.domain.payment.PaymentSubmission;
+import com.forgerock.securebanking.openbanking.aspsp.common.version.OBVersion;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteInternational;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;

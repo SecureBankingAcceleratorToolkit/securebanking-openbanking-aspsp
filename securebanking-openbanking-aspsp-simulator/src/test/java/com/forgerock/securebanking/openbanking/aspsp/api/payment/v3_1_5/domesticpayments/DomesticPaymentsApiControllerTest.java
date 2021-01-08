@@ -15,11 +15,11 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_5.domesticpayments;
 
-import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.ConsentStatusCode;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.FRDomesticConsent;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRWriteDomesticConsent;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRWriteDomesticConsentData;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.common.FRDataAuthorisation;
+import com.forgerock.securebanking.common.openbanking.domain.payment.ConsentStatusCode;
+import com.forgerock.securebanking.common.openbanking.domain.payment.FRDomesticConsent;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRDataAuthorisation;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteDomesticConsent;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteDomesticConsentData;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticConsentRepository;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticPaymentSubmissionRepository;
 import org.joda.time.DateTime;
@@ -37,7 +37,7 @@ import uk.org.openbanking.datamodel.payment.OBWriteDomesticResponse5Data;
 
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRPaymentRiskConverter.toFRRisk;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRWriteDomesticConsentConverter.toFRWriteDomesticDataInitiation;
-import static com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.common.FRDataAuthorisation.AuthorisationType.SINGLE;
+import static com.forgerock.securebanking.common.openbanking.domain.payment.data.FRDataAuthorisation.AuthorisationType.SINGLE;
 import static com.forgerock.securebanking.openbanking.aspsp.testsupport.api.HttpHeadersTestDataFactory.requiredHttpHeaders;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;

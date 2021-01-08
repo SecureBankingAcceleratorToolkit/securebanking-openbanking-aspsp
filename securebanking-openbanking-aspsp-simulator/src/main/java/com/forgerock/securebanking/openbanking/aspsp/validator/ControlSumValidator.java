@@ -15,8 +15,8 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.validator;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.error.OBErrorException;
-import com.forgerock.securebanking.openbanking.aspsp.common.error.OBRIErrorType;
+import com.forgerock.securebanking.common.error.OBErrorException;
+import com.forgerock.securebanking.common.error.OBRIErrorType;
 import com.forgerock.securebanking.openbanking.aspsp.common.filepayment.PaymentFile;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.FRFileConsent;
 import lombok.extern.slf4j.Slf4j;

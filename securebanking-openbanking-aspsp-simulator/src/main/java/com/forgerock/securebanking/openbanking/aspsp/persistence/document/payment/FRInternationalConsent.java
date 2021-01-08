@@ -15,11 +15,13 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBVersion;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRWriteInternationalConsent;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRWriteInternationalDataInitiation;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.common.FRExchangeRateInformation;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.common.FRPaymentRisk;
+import com.forgerock.securebanking.common.openbanking.domain.payment.ConsentStatusCode;
+import com.forgerock.securebanking.common.openbanking.domain.payment.PaymentConsent;
+import com.forgerock.securebanking.openbanking.aspsp.common.version.OBVersion;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteInternationalConsent;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteInternationalDataInitiation;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRExchangeRateInformation;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRPaymentRisk;
 import com.forgerock.securebanking.openbanking.aspsp.service.currency.CurrencyRateService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
