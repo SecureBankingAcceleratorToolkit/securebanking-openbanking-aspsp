@@ -40,8 +40,18 @@
     </organization>
     <url>http://www.forgerock.org</url>
 
+    <properties>
+        <securebanking-openbanking-aspsp-common.version>1.0.0-SNAPSHOT</securebanking-openbanking-aspsp-common.version>
+    </properties>
+
     <dependencies>
         <!-- ForgeRock dependencies -->
+        <dependency>
+            <groupId>com.forgerock.securebanking</groupId>
+            <artifactId>securebanking-openbanking-aspsp-common</artifactId>
+            <version>${securebanking-openbanking-aspsp-common.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.forgerock.securebanking</groupId>
             <artifactId>securebanking-common-openbanking-uk-datamodel</artifactId>
@@ -82,10 +92,6 @@
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
         </dependency>
 
         <!-- ForgeRock Test dependencies -->

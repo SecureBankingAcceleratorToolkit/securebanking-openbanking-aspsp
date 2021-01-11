@@ -16,7 +16,7 @@
 package com.forgerock.securebanking.openbanking.aspsp.persistence.repository.accounts.beneficiaries;
 
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.account.FRBeneficiary;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRExternalPermissionsCode;
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRExternalPermissionsCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;

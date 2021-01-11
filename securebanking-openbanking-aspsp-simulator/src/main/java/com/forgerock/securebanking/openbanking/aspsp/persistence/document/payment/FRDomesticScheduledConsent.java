@@ -15,10 +15,12 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBVersion;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRWriteDomesticScheduledConsent;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRWriteDomesticScheduledDataInitiation;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.common.FRPaymentRisk;
+import com.forgerock.securebanking.common.openbanking.domain.payment.ConsentStatusCode;
+import com.forgerock.securebanking.common.openbanking.domain.payment.PaymentConsent;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRPaymentRisk;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteDomesticScheduledConsent;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteDomesticScheduledDataInitiation;
+import com.forgerock.securebanking.openbanking.aspsp.common.version.OBVersion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

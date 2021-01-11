@@ -16,7 +16,7 @@
 package com.forgerock.securebanking.openbanking.aspsp.persistence.repository.accounts.transactions;
 
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.account.FRTransaction;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRExternalPermissionsCode;
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRExternalPermissionsCode;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

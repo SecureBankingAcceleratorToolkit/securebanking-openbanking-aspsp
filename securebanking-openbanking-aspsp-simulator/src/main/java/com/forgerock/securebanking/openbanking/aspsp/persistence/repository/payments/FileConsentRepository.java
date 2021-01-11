@@ -15,7 +15,7 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments;
 
-import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.ConsentStatusCode;
+import com.forgerock.securebanking.common.openbanking.domain.payment.ConsentStatusCode;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.FRFileConsent;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;

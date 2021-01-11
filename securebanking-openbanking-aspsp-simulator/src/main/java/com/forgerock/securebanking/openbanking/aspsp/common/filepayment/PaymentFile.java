@@ -15,7 +15,7 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.common.filepayment;
 
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRFilePayment;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRFilePayment;
 import org.springframework.http.MediaType;
 
 import java.math.BigDecimal;

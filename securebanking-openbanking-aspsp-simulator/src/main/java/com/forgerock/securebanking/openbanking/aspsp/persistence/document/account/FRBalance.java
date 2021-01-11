@@ -15,9 +15,9 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.document.account;
 
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.FRCashBalance;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRCreditDebitIndicator;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.common.FRAmount;
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRCashBalance;
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRCreditDebitIndicator;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRAmount;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -15,10 +15,10 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.document.funds;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBVersion;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.ConsentStatusCode;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.common.FRAccountIdentifier;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.funds.FRFundsConfirmationConsentData;
+import com.forgerock.securebanking.common.openbanking.domain.funds.data.FRFundsConfirmationConsentData;
+import com.forgerock.securebanking.common.openbanking.domain.payment.ConsentStatusCode;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRAccountIdentifier;
+import com.forgerock.securebanking.openbanking.aspsp.common.version.OBVersion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

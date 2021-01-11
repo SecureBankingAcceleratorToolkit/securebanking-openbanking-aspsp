@@ -15,11 +15,15 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBVersion;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRFilePayment;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRWriteFileConsent;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRWriteFileDataInitiation;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.common.FRPaymentRisk;
+import com.forgerock.securebanking.common.openbanking.domain.payment.ConsentStatusCode;
+import com.forgerock.securebanking.common.openbanking.domain.payment.FileConsent;
+import com.forgerock.securebanking.common.openbanking.domain.payment.PaymentConsent;
+import com.forgerock.securebanking.common.openbanking.domain.payment.PaymentFileType;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRFilePayment;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRPaymentRisk;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteFileConsent;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteFileDataInitiation;
+import com.forgerock.securebanking.openbanking.aspsp.common.version.OBVersion;
 import lombok.*;
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;

@@ -15,7 +15,8 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBVersion;
+import com.forgerock.securebanking.common.openbanking.domain.payment.PaymentSubmission;
+import com.forgerock.securebanking.openbanking.aspsp.common.version.OBVersion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -15,9 +15,9 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.repository.accounts.accounts;
 
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRExternalPermissionsCode;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRAccountIdentifier;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.account.FRAccount;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRExternalPermissionsCode;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.common.FRAccountIdentifier;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

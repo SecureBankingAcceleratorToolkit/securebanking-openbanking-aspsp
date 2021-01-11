@@ -15,8 +15,8 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.repository.accounts.balances;
 
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRBalanceType;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.account.FRBalance;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRBalanceType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;

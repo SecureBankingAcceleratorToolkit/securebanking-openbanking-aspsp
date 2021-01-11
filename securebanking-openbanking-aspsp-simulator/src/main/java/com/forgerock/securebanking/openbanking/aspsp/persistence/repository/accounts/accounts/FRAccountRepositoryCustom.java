@@ -16,7 +16,7 @@
 package com.forgerock.securebanking.openbanking.aspsp.persistence.repository.accounts.accounts;
 
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.account.FRAccount;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRExternalPermissionsCode;
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRExternalPermissionsCode;
 import org.joda.time.DateTime;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;

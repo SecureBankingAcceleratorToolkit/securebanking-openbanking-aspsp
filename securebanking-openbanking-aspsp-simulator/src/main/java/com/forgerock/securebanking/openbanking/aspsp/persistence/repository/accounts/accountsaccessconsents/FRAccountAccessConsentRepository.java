@@ -16,7 +16,7 @@
 package com.forgerock.securebanking.openbanking.aspsp.persistence.repository.accounts.accountsaccessconsents;
 
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.account.FRAccountAccessConsent;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRExternalRequestStatusCode;
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRExternalRequestStatusCode;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 

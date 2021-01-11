@@ -15,8 +15,8 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.document.account;
 
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRExternalPermissionsCode;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.account.common.FRExternalRequestStatusCode;
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRExternalPermissionsCode;
+import com.forgerock.securebanking.common.openbanking.domain.account.data.FRExternalRequestStatusCode;
 import org.joda.time.DateTime;
 
 import java.util.List;

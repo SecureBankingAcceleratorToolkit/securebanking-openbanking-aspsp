@@ -20,13 +20,12 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_5.domesticpayments;
 
+import com.forgerock.securebanking.common.error.OBErrorResponseException;
+import com.forgerock.securebanking.common.openbanking.domain.payment.ConsentStatusCode;
+import com.forgerock.securebanking.common.openbanking.domain.payment.FRDomesticConsent;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteDomesticConsent;
 import com.forgerock.securebanking.openbanking.aspsp.api.common.IntentType;
-import com.forgerock.securebanking.openbanking.aspsp.common.error.OBErrorResponseException;
 import com.forgerock.securebanking.openbanking.aspsp.common.util.PaginationUtil;
-import com.forgerock.securebanking.openbanking.aspsp.common.util.VersionPathExtractor;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.ConsentStatusCode;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.FRDomesticConsent;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRWriteDomesticConsent;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticConsentRepository;
 import com.forgerock.securebanking.openbanking.aspsp.service.AnalyticsService;
 import com.forgerock.securebanking.openbanking.aspsp.service.balance.FundsAvailabilityService;
@@ -43,14 +42,14 @@ import java.security.Principal;
 import java.util.Optional;
 
 import static com.forgerock.securebanking.openbanking.aspsp.api.common.LinksHelper.createDomesticPaymentConsentLink;
-import static com.forgerock.securebanking.openbanking.aspsp.common.converter.common.FRAccountIdentifierConverter.toOBDebtorIdentification1;
+import static com.forgerock.securebanking.openbanking.aspsp.common.converter.FRAccountIdentifierConverter.toOBDebtorIdentification1;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRDataAuthorisationConverter.toOBWriteDomesticConsent4DataAuthorisation;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRDataSCASupportDataConverter.toOBWriteDomesticConsent4DataSCASupportData;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRPaymentRiskConverter.toOBRisk1;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRWriteDomesticConsentConverter.toFRWriteDomesticConsent;
 import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRWriteDomesticConsentConverter.toOBWriteDomestic2DataInitiation;
+import static com.forgerock.securebanking.openbanking.aspsp.common.service.IdempotencyService.validateIdempotencyRequest;
 import static com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.converter.v3_1_5.ConsentStatusCodeToResponseDataStatusConverter.toOBWriteDomesticConsentResponse5DataStatus;
-import static com.forgerock.securebanking.openbanking.aspsp.service.IdempotencyService.validateIdempotencyRequest;
 
 @Controller("DomesticPaymentConsentsApiV3.1.5")
 @Slf4j
@@ -103,7 +102,8 @@ public class DomesticPaymentConsentsApiController implements DomesticPaymentCons
                 .pispName(tppName)
                 .statusUpdate(DateTime.now())
                 .idempotencyKey(xIdempotencyKey)
-                .obVersion(VersionPathExtractor.getVersionFromPath(request))
+                // TODO - what is the OB version used for?
+                //.obVersion(VersionPathExtractor.getVersionFromPath(request))
                 .build();
         log.debug("Saving consent: '{}'", domesticConsent);
         analyticsService.recordActivity("Saved consent with ID [{}] and status [{}]",

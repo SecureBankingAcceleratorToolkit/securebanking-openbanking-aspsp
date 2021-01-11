@@ -15,11 +15,11 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.service.event;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.error.OBErrorResponseException;
-import com.forgerock.securebanking.openbanking.aspsp.common.error.OBRIErrorResponseCategory;
-import com.forgerock.securebanking.openbanking.aspsp.common.error.OBRIErrorType;
+import com.forgerock.securebanking.common.error.OBErrorResponseException;
+import com.forgerock.securebanking.common.error.OBRIErrorResponseCategory;
+import com.forgerock.securebanking.common.error.OBRIErrorType;
+import com.forgerock.securebanking.common.openbanking.domain.event.data.FREventPolling;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.document.event.FREventNotification;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.event.FREventPolling;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.events.FRPendingEventsRepository;
 import com.google.common.base.Preconditions;
 import lombok.extern.slf4j.Slf4j;

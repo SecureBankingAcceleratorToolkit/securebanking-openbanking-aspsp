@@ -15,8 +15,8 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.document.event;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBVersion;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.event.FREventSubscriptionData;
+import com.forgerock.securebanking.common.openbanking.domain.event.data.FREventSubscriptionData;
+import com.forgerock.securebanking.openbanking.aspsp.common.version.OBVersion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

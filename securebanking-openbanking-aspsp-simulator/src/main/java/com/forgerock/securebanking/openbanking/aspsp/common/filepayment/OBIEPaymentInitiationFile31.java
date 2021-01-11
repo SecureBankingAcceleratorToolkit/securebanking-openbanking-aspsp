@@ -18,14 +18,14 @@ package com.forgerock.securebanking.openbanking.aspsp.common.filepayment;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.forgerock.securebanking.openbanking.aspsp.common.error.FileParseException;
-import com.forgerock.securebanking.openbanking.aspsp.common.error.OBErrorException;
-import com.forgerock.securebanking.openbanking.aspsp.common.error.OBRIErrorType;
+import com.forgerock.securebanking.common.error.FileParseException;
+import com.forgerock.securebanking.common.error.OBErrorException;
+import com.forgerock.securebanking.common.error.OBRIErrorType;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRAmount;
+import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRFilePayment;
+import com.forgerock.securebanking.common.openbanking.domain.payment.PaymentFileType;
+import com.forgerock.securebanking.openbanking.aspsp.common.converter.FRAmountConverter;
 import com.forgerock.securebanking.openbanking.aspsp.common.util.JsonUtils;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.PaymentFileType;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.common.FRAmount;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.domain.payment.FRFilePayment;
-import com.forgerock.securebanking.openbanking.aspsp.common.converter.common.FRAmountConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.http.MediaType;
@@ -37,8 +37,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static com.forgerock.securebanking.openbanking.aspsp.common.converter.common.FRAmountConverter.toFRAmount;
 
 
 /**
