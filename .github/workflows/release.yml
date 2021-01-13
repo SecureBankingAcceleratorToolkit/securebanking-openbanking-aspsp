@@ -24,7 +24,7 @@ jobs:
         if: contains(github.ref, 'SNAPSHOT')
         uses: actions/setup-java@v1
         with: # running setup-java and overwrites the settings.xml
-          java-version: "11"
+          java-version: "14"
           architecture: x64
           server-id: maven.forgerock.org-community-snapshots # Value of the distributionManagement/repository/id field of the pom.xml
           server-username: MAVEN_USERNAME # env variable for username in deploy
