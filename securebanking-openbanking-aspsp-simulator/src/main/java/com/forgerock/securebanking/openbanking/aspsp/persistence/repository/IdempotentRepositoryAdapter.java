@@ -16,8 +16,8 @@
 package com.forgerock.securebanking.openbanking.aspsp.persistence.repository;
 
 import com.forgerock.securebanking.common.error.OBErrorResponseException;
-import com.forgerock.securebanking.openbanking.aspsp.common.service.IdempotencyService;
-import com.forgerock.securebanking.common.openbanking.domain.payment.PaymentSubmission;
+import com.forgerock.securebanking.openbanking.aspsp.service.IdempotencyService;
+import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.PaymentSubmission;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

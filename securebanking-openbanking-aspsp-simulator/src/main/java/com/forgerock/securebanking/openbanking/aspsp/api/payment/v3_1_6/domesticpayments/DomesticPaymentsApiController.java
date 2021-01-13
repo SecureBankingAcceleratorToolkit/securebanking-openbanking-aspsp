@@ -20,7 +20,6 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_6.domesticpayments;
 
-import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticConsentRepository;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticPaymentSubmissionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -31,8 +30,7 @@ public class DomesticPaymentsApiController
         extends com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_5.domesticpayments.DomesticPaymentsApiController
         implements DomesticPaymentsApi {
 
-    public DomesticPaymentsApiController(DomesticConsentRepository domesticConsentRepository,
-                                         DomesticPaymentSubmissionRepository domesticPaymentSubmissionRepository) {
-        super(domesticConsentRepository, domesticPaymentSubmissionRepository);
+    public DomesticPaymentsApiController(DomesticPaymentSubmissionRepository domesticPaymentSubmissionRepository) {
+        super(domesticPaymentSubmissionRepository);
     }
 }

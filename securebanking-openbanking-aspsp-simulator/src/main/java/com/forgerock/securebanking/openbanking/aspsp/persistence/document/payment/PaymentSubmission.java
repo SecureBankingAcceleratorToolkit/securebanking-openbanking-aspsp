@@ -13,10 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments;
+package com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment;
 
-import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.FRPaymentSubmission;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.joda.time.DateTime;
 
-public interface FRPaymentSubmissionRepository extends MongoRepository<FRPaymentSubmission, String> {
+public interface PaymentSubmission {
+    String getId();
+
+    DateTime getCreated();
+
+    default String getIdempotencyKey() {
+        return null; // Not used on V1.1, V2.0
+    }
 }

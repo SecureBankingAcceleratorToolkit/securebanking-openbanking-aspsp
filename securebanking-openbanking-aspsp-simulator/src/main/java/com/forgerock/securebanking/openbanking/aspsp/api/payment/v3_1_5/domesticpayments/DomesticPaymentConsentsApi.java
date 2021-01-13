@@ -27,12 +27,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.org.openbanking.datamodel.error.OBErrorResponse1;
-import uk.org.openbanking.datamodel.payment.OBWriteDomesticConsent4;
-import uk.org.openbanking.datamodel.payment.OBWriteDomesticConsentResponse5;
 import uk.org.openbanking.datamodel.payment.OBWriteFundsConfirmationResponse1;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.security.Principal;
 
 import static com.forgerock.securebanking.openbanking.aspsp.common.OpenBankingConstants.HTTP_DATE_FORMAT;
@@ -43,108 +40,6 @@ import static com.forgerock.securebanking.openbanking.aspsp.common.OpenBankingCo
 @Api(value = "domestic-payment-consents", description = "the domestic-payment-consents API")
 @RequestMapping(value = "/open-banking/v3.1.5/pisp")
 public interface DomesticPaymentConsentsApi {
-
-    @ApiOperation(value = "Create Domestic Payment Consents", nickname = "createDomesticPaymentConsents", notes = "", response = OBWriteDomesticConsentResponse5.class, authorizations = {
-            @Authorization(value = "TPPOAuth2Security", scopes = {
-                    @AuthorizationScope(scope = "payments", description = "Generic payment scope")
-            })
-    }, tags = {"Domestic Payments",})
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Domestic Payment Consents Created", response = OBWriteDomesticConsentResponse5.class),
-            @ApiResponse(code = 400, message = "Bad request", response = OBErrorResponse1.class),
-            @ApiResponse(code = 401, message = "Unauthorized"),
-            @ApiResponse(code = 403, message = "Forbidden", response = OBErrorResponse1.class),
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 405, message = "Method Not Allowed"),
-            @ApiResponse(code = 406, message = "Not Acceptable"),
-            @ApiResponse(code = 429, message = "Too Many Requests"),
-            @ApiResponse(code = 500, message = "Internal Server Error", response = OBErrorResponse1.class)})
-    @RequestMapping(value = "/domestic-payment-consents",
-            produces = {"application/json; charset=utf-8", "application/jose+jwe"},
-            consumes = {"application/json; charset=utf-8", "application/jose+jwe"},
-            method = RequestMethod.POST)
-    ResponseEntity<OBWriteDomesticConsentResponse5> createDomesticPaymentConsents(
-            @ApiParam(value = "Default", required = true)
-            @Valid
-            @RequestBody OBWriteDomesticConsent4 obWriteDomesticConsent4,
-
-            @ApiParam(value = "An Authorisation Token as per https://tools.ietf.org/html/rfc6750", required = true)
-            @RequestHeader(value = "Authorization", required = true) String authorization,
-
-            @ApiParam(value = "Every request will be processed only once per x-idempotency-key.  The Idempotency Key will be valid for 24 hours. ", required = true)
-            @RequestHeader(value = "x-idempotency-key", required = true) String xIdempotencyKey,
-
-            @ApiParam(value = "A detached JWS signature of the body of the payload.", required = true)
-            @RequestHeader(value = "x-jws-signature", required = true) String xJwsSignature,
-
-            @ApiParam(value = "The time when the PSU last logged in with the TPP.  All dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below:  Sun, 10 Sep 2017 19:43:31 UTC")
-            @RequestHeader(value = "x-fapi-auth-date", required = false)
-            @DateTimeFormat(pattern = HTTP_DATE_FORMAT) DateTime xFapiAuthDate,
-
-            @ApiParam(value = "The PSU's IP address if the PSU is currently logged in with the TPP.")
-            @RequestHeader(value = "x-fapi-customer-ip-address", required = false) String xFapiCustomerIpAddress,
-
-            @ApiParam(value = "An RFC4122 UID used as a correlation id.")
-            @RequestHeader(value = "x-fapi-interaction-id", required = false) String xFapiInteractionId,
-
-            @ApiParam(value = "Indicates the user-agent that the PSU is using.")
-            @RequestHeader(value = "x-customer-user-agent", required = false) String xCustomerUserAgent,
-
-            @ApiParam(value = "The TPP ID")
-            @RequestHeader(value = "x-ob-tpp-id", required = true) String tppId,
-
-            @ApiParam(value = "The TPP Name")
-            @RequestHeader(value = "x-ob-tpp-name", required = true) String tppName,
-
-            HttpServletRequest request,
-
-            Principal principal
-    ) throws OBErrorResponseException;
-
-
-    @ApiOperation(value = "Get Domestic Payment Consents", nickname = "getDomesticPaymentConsentsConsentId", notes = "", response = OBWriteDomesticConsentResponse5.class, authorizations = {
-            @Authorization(value = "TPPOAuth2Security", scopes = {
-                    @AuthorizationScope(scope = "payments", description = "Generic payment scope")
-            })
-    }, tags = {"Domestic Payments",})
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Domestic Payment Consents Read", response = OBWriteDomesticConsentResponse5.class),
-            @ApiResponse(code = 400, message = "Bad request", response = OBErrorResponse1.class),
-            @ApiResponse(code = 401, message = "Unauthorized"),
-            @ApiResponse(code = 403, message = "Forbidden", response = OBErrorResponse1.class),
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 405, message = "Method Not Allowed"),
-            @ApiResponse(code = 406, message = "Not Acceptable"),
-            @ApiResponse(code = 429, message = "Too Many Requests"),
-            @ApiResponse(code = 500, message = "Internal Server Error", response = OBErrorResponse1.class)})
-    @RequestMapping(value = "/domestic-payment-consents/{ConsentId}",
-            produces = {"application/json; charset=utf-8", "application/jose+jwe"},
-            method = RequestMethod.GET)
-    ResponseEntity<OBWriteDomesticConsentResponse5> getDomesticPaymentConsentsConsentId(
-            @ApiParam(value = "ConsentId", required = true)
-            @PathVariable("ConsentId") String consentId,
-
-            @ApiParam(value = "An Authorisation Token as per https://tools.ietf.org/html/rfc6750", required = true)
-            @RequestHeader(value = "Authorization", required = true) String authorization,
-
-            @ApiParam(value = "The time when the PSU last logged in with the TPP.  All dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below:  Sun, 10 Sep 2017 19:43:31 UTC")
-            @RequestHeader(value = "x-fapi-auth-date", required = false)
-            @DateTimeFormat(pattern = HTTP_DATE_FORMAT) DateTime xFapiAuthDate,
-
-            @ApiParam(value = "The PSU's IP address if the PSU is currently logged in with the TPP.")
-            @RequestHeader(value = "x-fapi-customer-ip-address", required = false) String xFapiCustomerIpAddress,
-
-            @ApiParam(value = "An RFC4122 UID used as a correlation id.")
-            @RequestHeader(value = "x-fapi-interaction-id", required = false) String xFapiInteractionId,
-
-            @ApiParam(value = "Indicates the user-agent that the PSU is using.")
-            @RequestHeader(value = "x-customer-user-agent", required = false) String xCustomerUserAgent,
-
-            HttpServletRequest request,
-
-            Principal principal
-    ) throws OBErrorResponseException;
-
 
     @ApiOperation(value = "Get Domestic Payment Consents",
             nickname = "getDomesticPaymentConsentsConsentIdFundsConfirmation",
@@ -166,9 +61,15 @@ public interface DomesticPaymentConsentsApi {
     @RequestMapping(value = "/domestic-payment-consents/{ConsentId}/funds-confirmation",
             produces = {"application/json; charset=utf-8", "application/jose+jwe"},
             method = RequestMethod.GET)
-    ResponseEntity<OBWriteFundsConfirmationResponse1> getDomesticPaymentConsentsConsentIdFundsConfirmation(
+    ResponseEntity<OBWriteFundsConfirmationResponse1> getDomesticPaymentConsentsFundsConfirmation(
             @ApiParam(value = "ConsentId", required = true)
             @PathVariable("ConsentId") String consentId,
+
+            @ApiParam(value = "AccountId", required = true)
+            @RequestParam("accountId") String accountId,
+
+            @ApiParam(value = "Amount", required = true)
+            @RequestParam("amount") String amount,
 
             @ApiParam(value = "An Authorisation Token as per https://tools.ietf.org/html/rfc6750", required = true)
             @RequestHeader(value = "Authorization", required = true) String authorization,

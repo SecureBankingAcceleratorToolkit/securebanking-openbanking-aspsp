@@ -15,12 +15,8 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_5.domesticpayments;
 
-import com.forgerock.securebanking.common.openbanking.domain.payment.ConsentStatusCode;
-import com.forgerock.securebanking.common.openbanking.domain.payment.FRDomesticConsent;
 import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRDataAuthorisation;
-import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteDomesticConsent;
 import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteDomesticConsentData;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticConsentRepository;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticPaymentSubmissionRepository;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.AfterEach;
@@ -35,9 +31,8 @@ import uk.org.openbanking.datamodel.payment.OBWriteDomestic2;
 import uk.org.openbanking.datamodel.payment.OBWriteDomesticResponse5;
 import uk.org.openbanking.datamodel.payment.OBWriteDomesticResponse5Data;
 
-import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRPaymentRiskConverter.toFRRisk;
-import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRWriteDomesticConsentConverter.toFRWriteDomesticDataInitiation;
 import static com.forgerock.securebanking.common.openbanking.domain.payment.data.FRDataAuthorisation.AuthorisationType.SINGLE;
+import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRWriteDomesticConsentConverter.toFRWriteDomesticDataInitiation;
 import static com.forgerock.securebanking.openbanking.aspsp.testsupport.api.HttpHeadersTestDataFactory.requiredHttpHeaders;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -58,9 +53,6 @@ public class DomesticPaymentsApiControllerTest {
     private int port;
 
     @Autowired
-    private DomesticConsentRepository domesticConsentRepository;
-
-    @Autowired
     private DomesticPaymentSubmissionRepository domesticPaymentRepository;
 
     @Autowired
@@ -68,7 +60,6 @@ public class DomesticPaymentsApiControllerTest {
 
     @AfterEach
     void removeData() {
-        domesticConsentRepository.deleteAll();
         domesticPaymentRepository.deleteAll();
     }
 
@@ -76,7 +67,6 @@ public class DomesticPaymentsApiControllerTest {
     public void shouldCreateDomesticPayment() {
         // Given
         OBWriteDomestic2 payment = aValidOBWriteDomestic2();
-        savePaymentConsent(payment);
         HttpEntity<OBWriteDomestic2> request = new HttpEntity<>(payment, HTTP_HEADERS);
 
         // When
@@ -95,7 +85,6 @@ public class DomesticPaymentsApiControllerTest {
     public void shouldGetDomesticPaymentById() {
         // Given
         OBWriteDomestic2 payment = aValidOBWriteDomestic2();
-        savePaymentConsent(payment);
         HttpEntity<OBWriteDomestic2> request = new HttpEntity<>(payment, HTTP_HEADERS);
         ResponseEntity<OBWriteDomesticResponse5> persistedPayment = restTemplate.postForEntity(paymentsUrl(), request, OBWriteDomesticResponse5.class);
         String url = paymentIdUrl(persistedPayment.getBody().getData().getDomesticPaymentId());
@@ -111,31 +100,12 @@ public class DomesticPaymentsApiControllerTest {
         assertThat(response.getBody().getLinks().getSelf().endsWith("/domestic-payments/" + paymentData.getDomesticPaymentId())).isTrue();
     }
 
-    private FRDomesticConsent savePaymentConsent(OBWriteDomestic2 payment) {
-        FRDomesticConsent frDomesticConsent = aValidFRDomesticConsent(payment);
-        domesticConsentRepository.save(frDomesticConsent);
-        return frDomesticConsent;
-    }
-
     private String paymentsUrl() {
         return BASE_URL + port + DOMESTIC_PAYMENTS_URI;
     }
 
     private String paymentIdUrl(String id) {
         return paymentsUrl() + "/" + id;
-    }
-
-    private FRDomesticConsent aValidFRDomesticConsent(OBWriteDomestic2 payment) {
-        return FRDomesticConsent.builder()
-                .id(payment.getData().getConsentId())
-                .domesticConsent(FRWriteDomesticConsent.builder()
-                        .data(toFRWriteDomesticConsentData(payment.getData()))
-                        .risk(toFRRisk(payment.getRisk()))
-                        .build())
-                .created(new DateTime())
-                .statusUpdate(new DateTime())
-                .status(ConsentStatusCode.AUTHORISED)
-                .build();
     }
 
     private FRWriteDomesticConsentData toFRWriteDomesticConsentData(OBWriteDataDomestic2 data) {

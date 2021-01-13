@@ -15,7 +15,7 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.discovery;
 
-import com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_5.domesticpayments.DomesticPaymentConsentsApiController;
+import com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_5.domesticpayments.DomesticPaymentsApiController;
 import com.forgerock.securebanking.openbanking.aspsp.common.OBApiReference;
 import com.forgerock.securebanking.openbanking.aspsp.common.OBGroupName;
 import org.junit.jupiter.api.Test;
@@ -82,10 +82,10 @@ public class AvailableApiEndpointsResolverTest {
     }
 
     private RequestMappingInfo createConsentMappingInfo(HandlerMethod handlerMethod) {
-        Class<?> controllerClass = DomesticPaymentConsentsApiController.class;
+        Class<?> controllerClass = DomesticPaymentsApiController.class;
         BDDMockito.<Class<?>>given(handlerMethod.getBeanType()).willReturn(controllerClass);
         Method controllerMethod = Arrays.stream(controllerClass.getDeclaredMethods())
-                .filter(m -> m.getName().equals("createDomesticPaymentConsents"))
+                .filter(m -> m.getName().equals("createDomesticPayments"))
                 .findFirst()
                 .get();
         given(handlerMethod.getMethod()).willReturn(controllerMethod);
@@ -96,10 +96,10 @@ public class AvailableApiEndpointsResolverTest {
     }
 
     private RequestMappingInfo getConsentMappingInfo(HandlerMethod handlerMethod) {
-        Class<?> controllerClass = DomesticPaymentConsentsApiController.class;
+        Class<?> controllerClass = DomesticPaymentsApiController.class;
         BDDMockito.<Class<?>>given(handlerMethod.getBeanType()).willReturn(controllerClass);
         Method controllerMethod = Arrays.stream(controllerClass.getDeclaredMethods())
-                .filter(m -> m.getName().equals("getDomesticPaymentConsentsConsentId"))
+                .filter(m -> m.getName().equals("getDomesticPaymentsDomesticPaymentId"))
                 .findFirst()
                 .get();
         given(handlerMethod.getMethod()).willReturn(controllerMethod);

@@ -12,10 +12,10 @@ aspsp:
       v3.1.5: true
       v3.1.6: false
     apis:
-      # Disable GetDomesticPaymentConsent
-      GetDomesticPaymentConsent: false
+      # Disable GetDomesticPaymentConsentIdFundsConfirmation
+      GetDomesticPaymentConsentIdFundsConfirmation: false
     versionApiOverrides:
-      # Disable statements and CreateDomesticPaymentConsent for v3.1.6
+      # Disable  for v3.1.6
       # (Use underscore format to avoid binding error - due to more complicated map structure)
       v3_1_5:
-        CreateDomesticPayment: false
+        GetDomesticPayment: false
