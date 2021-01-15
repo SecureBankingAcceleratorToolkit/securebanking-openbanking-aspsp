@@ -29,6 +29,8 @@ import static org.springframework.http.HttpMethod.*;
  */
 public enum OBApiReference {
 
+    // TODO - remove consent related APIs
+
     /** Account and Transactions Api **/
     CREATE_ACCOUNT_ACCESS_CONSENT(AISP, "CreateAccountAccessConsent", POST, "/aisp/account-access-consents"),
     DELETE_ACCOUNT_ACCESS_CONSENT(AISP, "DeleteAccountAccessConsent", DELETE, "/aisp/account-access-consents/{ConsentId}"),

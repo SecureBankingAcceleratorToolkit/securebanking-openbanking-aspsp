@@ -15,18 +15,16 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment;
 
-import com.forgerock.securebanking.common.openbanking.domain.payment.PaymentSubmission;
 import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteDomestic;
 import com.forgerock.securebanking.openbanking.aspsp.common.version.OBVersion;
 import lombok.Builder;
 import lombok.Data;
+import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Date;
 
 @Builder
 @Data
@@ -35,16 +33,18 @@ public class FRDomesticPaymentSubmission implements PaymentSubmission {
 
     @Id
     @Indexed
-    public String id;
+    private String id;
 
-    public FRWriteDomestic domesticPayment;
+    private FRWriteDomestic domesticPayment;
+
+    private FRPaymentStatus paymentStatus;
 
     @CreatedDate
-    public Date created;
+    private DateTime created;
     @LastModifiedDate
-    public Date updated;
+    private DateTime updated;
 
-    public String idempotencyKey;
+    private String idempotencyKey;
 
-    public OBVersion obVersion;
+    private OBVersion obVersion;
 }

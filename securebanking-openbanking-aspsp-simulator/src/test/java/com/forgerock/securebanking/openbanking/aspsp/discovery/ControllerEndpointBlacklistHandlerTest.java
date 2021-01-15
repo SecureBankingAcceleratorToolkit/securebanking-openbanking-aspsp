@@ -15,7 +15,7 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.discovery;
 
-import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticConsentRepository;
+import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticPaymentSubmissionRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +27,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import uk.org.openbanking.datamodel.payment.OBWriteDomesticConsent4;
-import uk.org.openbanking.datamodel.payment.OBWriteDomesticConsentResponse5;
+import uk.org.openbanking.datamodel.payment.OBWriteDomestic2;
+import uk.org.openbanking.datamodel.payment.OBWriteDomesticResponse5;
 
 import static com.forgerock.securebanking.openbanking.aspsp.testsupport.api.HttpHeadersTestDataFactory.requiredHttpHeaders;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpMethod.GET;
-import static uk.org.openbanking.testsupport.payment.OBWriteDomesticConsentTestDataFactory.aValidOBWriteDomesticConsent4;
+import static uk.org.openbanking.testsupport.payment.OBWriteDomesticConsentTestDataFactory.aValidOBWriteDomestic2;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ActiveProfiles("test")
@@ -53,67 +53,71 @@ public class ControllerEndpointBlacklistHandlerTest {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    private DomesticConsentRepository domesticConsentRepository;
+    private DomesticPaymentSubmissionRepository domesticPaymentSubmissionRepository;
 
     @AfterEach
     void removeData() {
-        domesticConsentRepository.deleteAll();
+        domesticPaymentSubmissionRepository.deleteAll();
     }
 
     @Test
-    public void shouldCreateDomesticPaymentConsentGivenApiVersionIsEnabled() {
+    public void shouldCreateDomesticPaymentGivenApiVersionIsEnabled() {
         // Given
-        OBWriteDomesticConsent4 paymentConsent = aValidOBWriteDomesticConsent4();
-        HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(paymentConsent, HTTP_HEADERS);
-        String url = paymentConsentsUrl(ENABLED_VERSION);
+        OBWriteDomestic2 payment = aValidOBWriteDomestic2();
+        HttpEntity<OBWriteDomestic2> request = new HttpEntity<>(payment, HTTP_HEADERS);
+        String url = paymentsUrl(ENABLED_VERSION);
 
         // When
-        ResponseEntity<?> response = restTemplate.postForEntity(url, request, OBWriteDomesticConsentResponse5.class);
+        ResponseEntity<?> response = restTemplate.postForEntity(url, request, OBWriteDomesticResponse5.class);
 
         // Then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     }
 
     @Test
-    public void shouldFailToCreateDomesticPaymentConsentGivenApiVersionIsDisabled() {
+    public void shouldFailToCreateDomesticPaymentGivenApiVersionIsDisabled() {
         // Given
-        OBWriteDomesticConsent4 paymentConsent = aValidOBWriteDomesticConsent4();
-        HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(paymentConsent, HTTP_HEADERS);
-        String url = paymentConsentsUrl(DISABLED_VERSION);
+        OBWriteDomestic2 payment = aValidOBWriteDomestic2();
+        HttpEntity<OBWriteDomestic2> request = new HttpEntity<>(payment, HTTP_HEADERS);
+        String url = paymentsUrl(DISABLED_VERSION);
 
         // When
-        ResponseEntity<?> response = restTemplate.postForEntity(url, request, OBWriteDomesticConsentResponse5.class);
+        ResponseEntity<?> response = restTemplate.postForEntity(url, request, OBWriteDomesticResponse5.class);
 
         // Then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     @Test
-    public void shouldFailToGetDomesticPaymentConsentGivenApiEndpointIsDisabled() {
+    public void shouldFailToGetDomesticPaymentGivenApiEndpointIsDisabled() {
         // Given
-        HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(aValidOBWriteDomesticConsent4(), HTTP_HEADERS);
-        ResponseEntity<OBWriteDomesticConsentResponse5> persistedConsent = restTemplate.postForEntity(
-                paymentConsentsUrl(ENABLED_VERSION),
+        HttpEntity<OBWriteDomestic2> request = new HttpEntity<>(aValidOBWriteDomestic2(), HTTP_HEADERS);
+        ResponseEntity<OBWriteDomesticResponse5> persistedPayment = restTemplate.postForEntity(
+                paymentsUrl(ENABLED_VERSION),
                 request,
-                OBWriteDomesticConsentResponse5.class);
-        String url = paymentConsentIdUrl(ENABLED_VERSION, persistedConsent.getBody().getData().getConsentId());
+                OBWriteDomesticResponse5.class);
+        String url = paymentsIdUrl(ENABLED_VERSION, persistedPayment.getBody().getData().getDomesticPaymentId());
 
         // When
-        ResponseEntity<?> response = restTemplate.exchange(url, GET, new HttpEntity<>(HTTP_HEADERS), OBWriteDomesticConsentResponse5.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, GET, new HttpEntity<>(HTTP_HEADERS), OBWriteDomesticResponse5.class);
 
         // Then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     @Test
-    public void shouldFailToCreateDomesticPaymentGivenApiEndpointIsDisabledForVersion() {
+    public void shouldFailToGetDomesticPaymentFundsConfirmationGivenApiEndpointIsDisabledForVersion() {
         // Given
-        OBWriteDomesticConsent4 paymentConsent = aValidOBWriteDomesticConsent4();
-        HttpEntity<OBWriteDomesticConsent4> request = new HttpEntity<>(paymentConsent, HTTP_HEADERS);
-        String url = paymentsUrl(DISABLED_ENDPOINT_OVERRIDE_VERSION);
+        OBWriteDomestic2 obWriteDomestic2 = aValidOBWriteDomestic2();
+        HttpEntity<OBWriteDomestic2> request = new HttpEntity<>(obWriteDomestic2, HTTP_HEADERS);
+        String url = fundsConfirmationUrl(
+                DISABLED_ENDPOINT_OVERRIDE_VERSION,
+                obWriteDomestic2.getData().getConsentId(),
+                "1234",
+                "10.00");
 
         // When
-        ResponseEntity<?> response = restTemplate.postForEntity(url, request, OBWriteDomesticConsentResponse5.class);
+        ResponseEntity<?> response = restTemplate.postForEntity(url, request, OBWriteDomesticResponse5.class);
 
         // Then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -123,11 +127,15 @@ public class ControllerEndpointBlacklistHandlerTest {
         return BASE_URL + port + "/open-banking/" + version + "/pisp/domestic-payments";
     }
 
-    private String paymentConsentsUrl(String version) {
-        return BASE_URL + port + "/open-banking/" + version + "/pisp/domestic-payment-consents";
+    private String paymentsIdUrl(String version, String id) {
+        return paymentsUrl(version) + "/" + id;
     }
 
-    private String paymentConsentIdUrl(String version, String id) {
-        return paymentConsentsUrl(version) + "/" + id;
+    private String paymentConsentsUrl(String version, String consentId) {
+        return BASE_URL + port + "/open-banking/" + version + "/domestic-payment-consents/" + consentId;
+    }
+
+    private String fundsConfirmationUrl(String version, String consentId, String accountId, String amount) {
+        return paymentConsentsUrl(version, consentId) + "?accountId=" + accountId + "&amount=" + amount;
     }
 }

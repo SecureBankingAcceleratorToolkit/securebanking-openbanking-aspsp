@@ -71,8 +71,8 @@ public class DiscoveryControllerTest {
     @Test
     public void shouldGetDiscoveryUrlsFilteredByApiEndpoint() {
         // Given
-        OBApiReference[] disabledEndpoints = {GET_DOMESTIC_PAYMENT_CONSENT};
-        OBApiReference[] enabledEndpoints = {CREATE_DOMESTIC_PAYMENT_CONSENT, GET_DOMESTIC_PAYMENT};
+        OBApiReference[] disabledEndpoints = {GET_DOMESTIC_PAYMENT_CONSENT_ID_FUNDS_CONFIRMATION};
+        OBApiReference[] enabledEndpoints = {CREATE_DOMESTIC_PAYMENT};
 
         // When
         ResponseEntity<OBDiscoveryResponse> response = restTemplate.getForEntity(discoveryUrl(), OBDiscoveryResponse.class);
@@ -90,7 +90,7 @@ public class DiscoveryControllerTest {
     public void shouldGetDiscoveryUrlsFilteredByVersionAndApiEndpoint() {
         // Given
         String version = "v3.1.5";
-        OBApiReference disabledEndpoint = CREATE_DOMESTIC_PAYMENT;
+        OBApiReference disabledEndpoint = GET_DOMESTIC_PAYMENT;
 
         // When
         ResponseEntity<OBDiscoveryResponse> response = restTemplate.getForEntity(discoveryUrl(), OBDiscoveryResponse.class);
@@ -103,7 +103,7 @@ public class DiscoveryControllerTest {
         // assert others are not filtered
         // enable when more APIs are added
         //assertThat(isEndpointDisabledByVersion(paymentApis, "v3.1.5", disabledEndpoint)).isFalse();
-        assertThat(isEndpointDisabledByVersion(paymentApis, version, CREATE_DOMESTIC_PAYMENT_CONSENT)).isFalse();
+        assertThat(isEndpointDisabledByVersion(paymentApis, version, CREATE_DOMESTIC_PAYMENT)).isFalse();
     }
 
     private boolean containsVersions(List<OBDiscoveryAPI<OBDiscoveryAPILinks>> api, String... versions) {

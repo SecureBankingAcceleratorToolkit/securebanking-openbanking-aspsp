@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.forgerock.securebanking.openbanking.aspsp.common.service;
+package com.forgerock.securebanking.openbanking.aspsp.service;
 
 import com.forgerock.securebanking.common.error.OBErrorResponseException;
 import com.forgerock.securebanking.common.error.OBRIErrorResponseCategory;
 import com.forgerock.securebanking.common.error.OBRIErrorType;
-import com.forgerock.securebanking.openbanking.aspsp.common.OpenBankingConstants;
 import com.forgerock.securebanking.common.openbanking.domain.payment.ConsentStatusCode;
 import com.forgerock.securebanking.common.openbanking.domain.payment.FileConsent;
 import com.forgerock.securebanking.common.openbanking.domain.payment.PaymentConsent;
-import com.forgerock.securebanking.common.openbanking.domain.payment.PaymentSubmission;
+import com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.PaymentSubmission;
+import com.forgerock.securebanking.openbanking.aspsp.common.OpenBankingConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.http.HttpStatus;

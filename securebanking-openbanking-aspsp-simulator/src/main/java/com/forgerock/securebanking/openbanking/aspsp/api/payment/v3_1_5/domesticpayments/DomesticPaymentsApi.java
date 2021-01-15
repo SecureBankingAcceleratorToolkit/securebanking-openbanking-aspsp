@@ -64,7 +64,6 @@ public interface DomesticPaymentsApi {
             consumes = {"application/json; charset=utf-8", "application/jose+jwe"},
             method = RequestMethod.POST)
     ResponseEntity<OBWriteDomesticResponse5> createDomesticPayments(
-
             @ApiParam(value = "Default", required = true)
             @Valid @RequestBody OBWriteDomestic2 obWriteDomestic2,
 

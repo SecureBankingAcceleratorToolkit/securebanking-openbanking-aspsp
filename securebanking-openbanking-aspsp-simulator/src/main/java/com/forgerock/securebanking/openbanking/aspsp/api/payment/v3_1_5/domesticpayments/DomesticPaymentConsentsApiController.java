@@ -20,13 +20,7 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_5.domesticpayments;
 
-import com.forgerock.securebanking.common.error.OBErrorResponseException;
-import com.forgerock.securebanking.common.openbanking.domain.payment.ConsentStatusCode;
-import com.forgerock.securebanking.common.openbanking.domain.payment.FRDomesticConsent;
-import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteDomesticConsent;
-import com.forgerock.securebanking.openbanking.aspsp.api.common.IntentType;
 import com.forgerock.securebanking.openbanking.aspsp.common.util.PaginationUtil;
-import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticConsentRepository;
 import com.forgerock.securebanking.openbanking.aspsp.service.AnalyticsService;
 import com.forgerock.securebanking.openbanking.aspsp.service.balance.FundsAvailabilityService;
 import lombok.extern.slf4j.Slf4j;
@@ -35,109 +29,31 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import uk.org.openbanking.datamodel.account.Meta;
-import uk.org.openbanking.datamodel.payment.*;
+import uk.org.openbanking.datamodel.payment.OBFundsAvailableResult1;
+import uk.org.openbanking.datamodel.payment.OBWriteDataFundsConfirmationResponse1;
+import uk.org.openbanking.datamodel.payment.OBWriteFundsConfirmationResponse1;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.Optional;
-
-import static com.forgerock.securebanking.openbanking.aspsp.api.common.LinksHelper.createDomesticPaymentConsentLink;
-import static com.forgerock.securebanking.openbanking.aspsp.common.converter.FRAccountIdentifierConverter.toOBDebtorIdentification1;
-import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRDataAuthorisationConverter.toOBWriteDomesticConsent4DataAuthorisation;
-import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRDataSCASupportDataConverter.toOBWriteDomesticConsent4DataSCASupportData;
-import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRPaymentRiskConverter.toOBRisk1;
-import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRWriteDomesticConsentConverter.toFRWriteDomesticConsent;
-import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRWriteDomesticConsentConverter.toOBWriteDomestic2DataInitiation;
-import static com.forgerock.securebanking.openbanking.aspsp.common.service.IdempotencyService.validateIdempotencyRequest;
-import static com.forgerock.securebanking.openbanking.aspsp.persistence.document.payment.converter.v3_1_5.ConsentStatusCodeToResponseDataStatusConverter.toOBWriteDomesticConsentResponse5DataStatus;
 
 @Controller("DomesticPaymentConsentsApiV3.1.5")
 @Slf4j
 public class DomesticPaymentConsentsApiController implements DomesticPaymentConsentsApi {
 
-    private final DomesticConsentRepository domesticConsentRepository;
     private final FundsAvailabilityService fundsAvailabilityService;
     private final AnalyticsService analyticsService;
 
-    public DomesticPaymentConsentsApiController(DomesticConsentRepository domesticConsentRepository,
-                                                FundsAvailabilityService fundsAvailabilityService,
+    public DomesticPaymentConsentsApiController(FundsAvailabilityService fundsAvailabilityService,
                                                 AnalyticsService analyticsService) {
-        this.domesticConsentRepository = domesticConsentRepository;
         this.fundsAvailabilityService = fundsAvailabilityService;
         this.analyticsService = analyticsService;
     }
 
     @Override
-    public ResponseEntity<OBWriteDomesticConsentResponse5> createDomesticPaymentConsents(
-            OBWriteDomesticConsent4 obWriteDomesticConsent4,
-            String authorization,
-            String xIdempotencyKey,
-            String xJwsSignature,
-            DateTime xFapiAuthDate,
-            String xFapiCustomerIpAddress,
-            String xFapiInteractionId,
-            String xCustomerUserAgent,
-            String tppId,
-            String tppName,
-            HttpServletRequest request,
-            Principal principal
-    ) throws OBErrorResponseException {
-        log.debug("Received: '{}'", obWriteDomesticConsent4);
-        FRWriteDomesticConsent frWriteDomesticConsent = toFRWriteDomesticConsent(obWriteDomesticConsent4);
-        log.trace("Converted to: '{}'", frWriteDomesticConsent);
-
-        Optional<FRDomesticConsent> consentByIdempotencyKey = domesticConsentRepository.findByIdempotencyKeyAndPispId(xIdempotencyKey, tppId);
-        if (consentByIdempotencyKey.isPresent()) {
-            validateIdempotencyRequest(xIdempotencyKey, frWriteDomesticConsent, consentByIdempotencyKey.get(), () -> consentByIdempotencyKey.get().getDomesticConsent());
-            log.info("Idempotent request is valid. Returning [201 CREATED] but take no further action.");
-            return ResponseEntity.status(HttpStatus.CREATED).body(packageResponse(consentByIdempotencyKey.get()));
-        }
-        log.debug("No consent with matching idempotency key has been found. Creating new consent.");
-
-        FRDomesticConsent domesticConsent = FRDomesticConsent.builder()
-                .id(IntentType.PAYMENT_DOMESTIC_CONSENT.generateIntentId())
-                .status(ConsentStatusCode.AWAITINGAUTHORISATION)
-                .domesticConsent(frWriteDomesticConsent)
-                .pispId(tppId)
-                .pispName(tppName)
-                .statusUpdate(DateTime.now())
-                .idempotencyKey(xIdempotencyKey)
-                // TODO - what is the OB version used for?
-                //.obVersion(VersionPathExtractor.getVersionFromPath(request))
-                .build();
-        log.debug("Saving consent: '{}'", domesticConsent);
-        analyticsService.recordActivity("Saved consent with ID [{}] and status [{}]",
-                domesticConsent.getId(),
-                domesticConsent.getStatus().name());
-
-        domesticConsent = domesticConsentRepository.save(domesticConsent);
-        log.info("Created consent id: '{}'", domesticConsent.getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(packageResponse(domesticConsent));
-    }
-
-    @Override
-    public ResponseEntity getDomesticPaymentConsentsConsentId(
+    public ResponseEntity getDomesticPaymentConsentsFundsConfirmation(
             String consentId,
-            String authorization,
-            DateTime xFapiAuthDate,
-            String xFapiCustomerIpAddress,
-            String xFapiInteractionId,
-            String xCustomerUserAgent,
-            HttpServletRequest request,
-            Principal principal
-    ) {
-        Optional<FRDomesticConsent> isDomesticConsent = domesticConsentRepository.findById(consentId);
-        if (!isDomesticConsent.isPresent()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Domestic consent '" + consentId + "' can't be found");
-        }
-        FRDomesticConsent domesticConsent = isDomesticConsent.get();
-
-        return ResponseEntity.ok(packageResponse(domesticConsent));
-    }
-
-    @Override
-    public ResponseEntity getDomesticPaymentConsentsConsentIdFundsConfirmation(
-            String consentId,
+            String accountId,
+            String amount,
             String authorization,
             DateTime xFapiAuthDate,
             String xFapiCustomerIpAddress,
@@ -147,16 +63,8 @@ public class DomesticPaymentConsentsApiController implements DomesticPaymentCons
             HttpServletRequest request,
             Principal principal
     ) {
-        Optional<FRDomesticConsent> isDomesticConsent = domesticConsentRepository.findById(consentId);
-        if (!isDomesticConsent.isPresent()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Domestic consent '" + consentId + "' can't be found");
-        }
-        FRDomesticConsent domesticConsent = isDomesticConsent.get();
-
         // Check if funds are available on the account selected in consent
-        boolean areFundsAvailable = fundsAvailabilityService.isFundsAvailable(
-                domesticConsent.getAccountId(),
-                domesticConsent.getInitiation().getInstructedAmount().getAmount());
+        boolean areFundsAvailable = fundsAvailabilityService.isFundsAvailable(accountId, amount);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -171,22 +79,4 @@ public class DomesticPaymentConsentsApiController implements DomesticPaymentCons
                 );
 
     }
-
-    private OBWriteDomesticConsentResponse5 packageResponse(FRDomesticConsent domesticConsent) {
-        return new OBWriteDomesticConsentResponse5()
-                .data(new OBWriteDomesticConsentResponse5Data()
-                        .initiation(toOBWriteDomestic2DataInitiation(domesticConsent.getInitiation()))
-                        .status(toOBWriteDomesticConsentResponse5DataStatus(domesticConsent.getStatus()))
-                        .creationDateTime(domesticConsent.getCreated())
-                        .statusUpdateDateTime(domesticConsent.getStatusUpdate())
-                        .consentId(domesticConsent.getId())
-                        .authorisation(toOBWriteDomesticConsent4DataAuthorisation(domesticConsent.getDomesticConsent().getData().getAuthorisation()))
-                        .scASupportData(toOBWriteDomesticConsent4DataSCASupportData(domesticConsent.getDomesticConsent().getData().getScASupportData()))
-                        .debtor(toOBDebtorIdentification1(domesticConsent.getInitiation().getDebtorAccount()))
-                )
-                .links(createDomesticPaymentConsentLink(this.getClass(), domesticConsent.getId()))
-                .risk(toOBRisk1(domesticConsent.getRisk()))
-                .meta(new Meta());
-    }
-
 }
