@@ -13,12 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_5.domesticpayments;
+package com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_6.domesticpayments;
 
-import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRDataAuthorisation;
-import com.forgerock.securebanking.common.openbanking.domain.payment.data.FRWriteDomesticConsentData;
 import com.forgerock.securebanking.openbanking.aspsp.persistence.repository.payments.DomesticPaymentSubmissionRepository;
-import org.joda.time.DateTime;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +23,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
-import uk.org.openbanking.datamodel.payment.OBWriteDataDomestic2;
 import uk.org.openbanking.datamodel.payment.OBWriteDomestic2;
 import uk.org.openbanking.datamodel.payment.OBWriteDomesticResponse5;
 import uk.org.openbanking.datamodel.payment.OBWriteDomesticResponse5Data;
 
-import static com.forgerock.securebanking.common.openbanking.domain.payment.data.FRDataAuthorisation.AuthorisationType.SINGLE;
-import static com.forgerock.securebanking.openbanking.aspsp.common.converter.payment.FRWriteDomesticConsentConverter.toFRWriteDomesticDataInitiation;
-import static com.forgerock.securebanking.openbanking.aspsp.testsupport.api.HttpHeadersTestDataFactory.requiredHttpHeaders;
+import static com.forgerock.securebanking.openbanking.aspsp.testsupport.api.HttpHeadersTestDataFactory.requiredPaymentHttpHeaders;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static uk.org.openbanking.datamodel.service.converter.payment.OBDomesticConverter.toOBWriteDomestic2DataInitiation;
@@ -45,9 +39,9 @@ import static uk.org.openbanking.testsupport.payment.OBWriteDomesticConsentTestD
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 public class DomesticPaymentsApiControllerTest {
 
-    private static final HttpHeaders HTTP_HEADERS = requiredHttpHeaders();
+    private static final HttpHeaders HTTP_HEADERS = requiredPaymentHttpHeaders();
     private static final String BASE_URL = "http://localhost:";
-    private static final String DOMESTIC_PAYMENTS_URI = "/open-banking/v3.1.5/pisp/domestic-payments";
+    private static final String DOMESTIC_PAYMENTS_URI = "/open-banking/v3.1.6/pisp/domestic-payments";
 
     @LocalServerPort
     private int port;
@@ -107,15 +101,4 @@ public class DomesticPaymentsApiControllerTest {
     private String paymentIdUrl(String id) {
         return paymentsUrl() + "/" + id;
     }
-
-    private FRWriteDomesticConsentData toFRWriteDomesticConsentData(OBWriteDataDomestic2 data) {
-        return FRWriteDomesticConsentData.builder()
-                .initiation(toFRWriteDomesticDataInitiation(data.getInitiation()))
-                .authorisation(FRDataAuthorisation.builder()
-                        .authorisationType(SINGLE)
-                        .completionDateTime(new DateTime())
-                        .build())
-                .build();
-    }
-
 }
