@@ -40,16 +40,16 @@ public class FRAccount implements Account {
 
     @Id
     @Indexed
-    public String id;
+    private String id;
     @Indexed
-    public String userID;
-    public FRFinancialAccount account;
+    private String userID;
+    private FRFinancialAccount account;
     @Indexed
-    public String latestStatementId;
+    private String latestStatementId;
 
     @CreatedDate
-    public Date created;
+    private Date created;
     @LastModifiedDate
-    public Date updated;
+    private Date updated;
 
 }

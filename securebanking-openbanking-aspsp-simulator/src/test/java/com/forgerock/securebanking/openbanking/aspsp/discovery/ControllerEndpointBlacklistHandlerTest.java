@@ -30,7 +30,7 @@ import org.springframework.test.context.ActiveProfiles;
 import uk.org.openbanking.datamodel.payment.OBWriteDomestic2;
 import uk.org.openbanking.datamodel.payment.OBWriteDomesticResponse5;
 
-import static com.forgerock.securebanking.openbanking.aspsp.testsupport.api.HttpHeadersTestDataFactory.requiredHttpHeaders;
+import static com.forgerock.securebanking.openbanking.aspsp.testsupport.api.HttpHeadersTestDataFactory.requiredPaymentHttpHeaders;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpMethod.GET;
@@ -40,7 +40,7 @@ import static uk.org.openbanking.testsupport.payment.OBWriteDomesticConsentTestD
 @ActiveProfiles("test")
 public class ControllerEndpointBlacklistHandlerTest {
 
-    private static HttpHeaders HTTP_HEADERS = requiredHttpHeaders();
+    private static HttpHeaders HTTP_HEADERS = requiredPaymentHttpHeaders();
     private static final String BASE_URL = "http://localhost:";
     private static final String ENABLED_VERSION = "v3.1.5";
     private static final String DISABLED_VERSION = "v3.1.6";
