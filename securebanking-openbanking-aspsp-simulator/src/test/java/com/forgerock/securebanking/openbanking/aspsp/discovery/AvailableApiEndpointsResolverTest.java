@@ -15,9 +15,9 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.discovery;
 
-import com.forgerock.securebanking.openbanking.aspsp.api.payment.v3_1_5.domesticpayments.DomesticPaymentsApiController;
+import com.forgerock.securebanking.openbanking.aspsp.api.obie.payment.v3_1_5.domesticpayments.DomesticPaymentsApiController;
 import com.forgerock.securebanking.openbanking.aspsp.common.OBApiReference;
-import com.forgerock.securebanking.openbanking.aspsp.common.OBGroupName;
+import com.forgerock.securebanking.common.openbanking.domain.common.OBGroupName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.web.bind.annotation.RequestMethod;

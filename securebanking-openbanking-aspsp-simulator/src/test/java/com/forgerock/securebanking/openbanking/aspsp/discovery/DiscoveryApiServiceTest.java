@@ -15,7 +15,7 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.discovery;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBGroupName;
+import com.forgerock.securebanking.common.openbanking.domain.common.OBGroupName;
 import com.google.common.collect.ImmutableMap;
 import org.junit.jupiter.api.Test;
 import uk.org.openbanking.datamodel.discovery.GenericOBDiscoveryAPILinks;

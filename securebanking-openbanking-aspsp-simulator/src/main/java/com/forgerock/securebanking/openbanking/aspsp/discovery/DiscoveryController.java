@@ -15,7 +15,7 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.discovery;
 
-import com.forgerock.securebanking.openbanking.aspsp.common.OBGroupName;
+import com.forgerock.securebanking.common.openbanking.domain.common.OBGroupName;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

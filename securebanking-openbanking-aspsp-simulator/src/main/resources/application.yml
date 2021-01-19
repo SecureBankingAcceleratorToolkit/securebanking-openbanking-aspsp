@@ -4,6 +4,13 @@ aspsp:
   discovery:
     financialId: 0015800001041REAAY
 
+  # Data creation limits (see com.forgerock.securebanking.openbanking.aspsp.api.data.DataCreator)
+  data:
+    upload:
+      limit:
+        accounts: 100
+        documents: 1000
+
 #Swagger
 springfox:
   documentation:

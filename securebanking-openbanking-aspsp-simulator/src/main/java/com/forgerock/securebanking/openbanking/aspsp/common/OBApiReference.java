@@ -15,11 +15,12 @@
  */
 package com.forgerock.securebanking.openbanking.aspsp.common;
 
+import com.forgerock.securebanking.common.openbanking.domain.common.OBGroupName;
 import org.springframework.http.HttpMethod;
 
 import java.util.Arrays;
 
-import static com.forgerock.securebanking.openbanking.aspsp.common.OBGroupName.*;
+import static com.forgerock.securebanking.common.openbanking.domain.common.OBGroupName.*;
 import static org.springframework.http.HttpMethod.*;
 
 /**
